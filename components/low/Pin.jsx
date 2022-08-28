@@ -1,15 +1,15 @@
 import React from 'react';
 
-const Post = ({ id }) => {
+const Pin = ({ id }) => {
    return (
-      <div className='post'>
-         <div className='postImg'>
+      <div className='pin'>
+         <div className='pinImg'>
             <img className='object-cover w-full' src='/images/cat.jpg' />
          </div>
 
-         <div className="postInfo"></div>
+         <div className="pinInfo"></div>
       </div>
    )
 }
 
-export default Post
+export default Pin

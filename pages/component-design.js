@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "../components/Header";
+import Sidebar from "../components/high/Sidebar";
 
 const ComponentDesign = () => {
 
 	return (
 		<>
-			<Header />
+			<Sidebar />
 		</>
 	);
 };

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useRef, useEffect } from "react";
+import React, { useLayoutEffect, useState, useRef } from "react";
 import Masonry from "react-masonry-css";
 
 const MasonryLayout = ({ children }) => {

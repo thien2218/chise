@@ -3,17 +3,27 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer component {
-	/* Posts */
-	.post {
+@layer base {
+   /* Input fields */
+   .input-bg {
+      @apply hover:bg-[#E7E7E7] bg-[#EFEFEF];
+   }
+
+   /* Buttons */
+   .primary-btn {
+      @apply text-white bg-[#E60023] hover:bg-[#AD081B] transition ease-in-out duration-100;
+   }
+
+	/* Pins */
+	.pin {
 		@apply px-2 pb-4 max-w-[266px];
 	}
 
-	.postImg {
+	.pinImg {
 		@apply w-full min-h-[100px] max-h-[500px] rounded-2xl overflow-hidden relative;
 	}
 
-	.postInfo {
+	.pinInfo {
 		@apply px-1.5 pt-2 pb-4 w-full;
 	}
 }
@@ -27,4 +37,8 @@
 .my-masonry-grid_column {
    max-width: 266px;
 	background-clip: padding-box;
+}
+
+.tags::-webkit-scrollbar {
+   display: none;
 }
