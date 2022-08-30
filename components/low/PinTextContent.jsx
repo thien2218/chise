@@ -3,7 +3,7 @@ import React from "react";
 const PinTextContent = ({ title, description }) => {
 	return (
 		<>
-			<h1 className="text-[2.25rem] leading-[3rem] font-semibold mt-4 pr-4">
+			<h1 className="heading mt-4 pr-4">
 				Dark Seduction And Persuasion Tactics: The Simplified Playbook Of
 				Charismatic Masters Of Deception. Leveraging Iq, Influence
 			</h1>

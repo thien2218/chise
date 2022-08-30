@@ -1,10 +1,10 @@
 import React from "react";
-import { PinContent, Layout } from "../components";
+import { UserLayout, Layout } from "../components";
 
 const ComponentDesign = () => {
 	return (
 		<Layout title='Component Design'>
-			<PinContent />
+			<UserLayout />
 		</Layout>
 	);
 };

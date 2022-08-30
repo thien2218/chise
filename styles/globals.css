@@ -12,9 +12,9 @@
 		/* Colors */
 		--clr-primary: 230 0 35;
 		--clr-secondary: 17 18 28;
-		--clr-icon: 118 118 118;
 		--clr-accent: 255 255 255;
 		--clr-primary-hover: 173 8 27;
+		--clr-dark-gray: 118 118 118;
 		--clr-dimmed-600: 208 208 208;
 		--clr-dimmed-500: 231 231 231;
 		--clr-dimmed-400: 239 239 239;
@@ -27,16 +27,16 @@
 
 	/* Buttons */
 	.primary-btn {
-		@apply text-white bg-primary hover:bg-primary-hover transition ease-in-out duration-100;
+		@apply text-white font-semibold bg-primary hover:bg-primary-hover transition ease-in-out duration-100;
 	}
    
 	.secondary-btn {
-		@apply bg-dimmed-400 hover:bg-dimmed-600 transition ease-in-out duration-100;
+		@apply bg-dimmed-500 font-semibold hover:bg-dimmed-600 transition ease-in-out duration-100;
 	}
    
-	.arbitrary-btn {
-		@apply text-white bg-primary hover:bg-primary-hover transition ease-in-out duration-100;
-	}
+   .icon-btn {
+      @apply h-12 w-12 p-3 rounded-full hover:bg-dimmed-500 cursor-pointer;
+   }
 
 	/* Pins */
 	.pin {
@@ -50,6 +50,11 @@
 	.pin-info {
 		@apply px-1.5 pt-2 pb-4 w-full;
 	}
+
+   /* Heading */
+   .heading {
+      @apply text-[2.25rem] leading-[3rem] font-semibold;
+   }
 }
 
 .tags::-webkit-scrollbar {
