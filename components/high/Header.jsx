@@ -6,7 +6,7 @@ import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 const Header = () => {
    return (
       <header className='fixed w-full top-0 left-0'>
-         <nav className="flex h-[80px] items-center px-4 gap-4 bg-white">
+         <nav className="flex h-[5rem] items-center px-4 gap-4 bg-white">
             <Link href='/'><a className='flex items-center'>
                <Image src='/images/cat.jpg' height={30} width={30} className='rounded-2xl' />
                <span className='ml-1.5'>CHISE</span>

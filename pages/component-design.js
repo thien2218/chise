@@ -1,12 +1,11 @@
 import React from "react";
-import Sidebar from "../components/high/Sidebar";
+import { PinContent, Layout } from "../components";
 
 const ComponentDesign = () => {
-
 	return (
-		<>
-			<Sidebar />
-		</>
+		<Layout title='Component Design'>
+			<PinContent />
+		</Layout>
 	);
 };
 

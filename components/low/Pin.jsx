@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Pin = ({ id }) => {
+const Pin = () => {
    return (
       <div className='pin'>
-         <div className='pinImg'>
+         <div className='pin-img'>
             <img className='object-cover w-full' src='/images/cat.jpg' />
          </div>
 
-         <div className="pinInfo"></div>
+         <div className="pin-info"></div>
       </div>
    )
 }

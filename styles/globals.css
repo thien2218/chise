@@ -4,41 +4,54 @@
 @tailwind utilities;
 
 @layer base {
-   /* Input fields */
-   .input-bg {
-      @apply hover:bg-[#E7E7E7] bg-[#EFEFEF];
-   }
+	html {
+		@apply text-secondary;
+	}
 
-   /* Buttons */
-   .primary-btn {
-      @apply text-white bg-[#E60023] hover:bg-[#AD081B] transition ease-in-out duration-100;
-   }
+	:root {
+		/* Colors */
+		--clr-primary: 230 0 35;
+		--clr-secondary: 17 18 28;
+		--clr-icon: 118 118 118;
+		--clr-accent: 255 255 255;
+		--clr-primary-hover: 173 8 27;
+		--clr-dimmed-600: 208 208 208;
+		--clr-dimmed-500: 231 231 231;
+		--clr-dimmed-400: 239 239 239;
+	}
+
+	/* Input fields */
+	.input-bg {
+		@apply hover:bg-dimmed-500 bg-dimmed-400;
+	}
+
+	/* Buttons */
+	.primary-btn {
+		@apply text-white bg-primary hover:bg-primary-hover transition ease-in-out duration-100;
+	}
+   
+	.secondary-btn {
+		@apply bg-dimmed-400 hover:bg-dimmed-600 transition ease-in-out duration-100;
+	}
+   
+	.arbitrary-btn {
+		@apply text-white bg-primary hover:bg-primary-hover transition ease-in-out duration-100;
+	}
 
 	/* Pins */
 	.pin {
 		@apply px-2 pb-4 max-w-[266px];
 	}
 
-	.pinImg {
+	.pin-img {
 		@apply w-full min-h-[100px] max-h-[500px] rounded-2xl overflow-hidden relative;
 	}
 
-	.pinInfo {
+	.pin-info {
 		@apply px-1.5 pt-2 pb-4 w-full;
 	}
 }
 
-.my-masonry-grid {
-	display: flex;
-	width: auto;
-   justify-content: center;
-}
-
-.my-masonry-grid_column {
-   max-width: 266px;
-	background-clip: padding-box;
-}
-
 .tags::-webkit-scrollbar {
-   display: none;
+	display: none;
 }

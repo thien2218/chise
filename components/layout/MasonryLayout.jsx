@@ -8,6 +8,7 @@ const MasonryLayout = ({ children }) => {
    useLayoutEffect(() => {
       const updateWidth = () => setWidth(masonryRef.current.offsetWidth);
       window.addEventListener('resize', updateWidth);
+      updateWidth();
       return () => window.removeEventListener('resize', updateWidth);
    }, [])
 
@@ -17,8 +18,8 @@ const MasonryLayout = ({ children }) => {
       <div ref={masonryRef}>
          <Masonry
             breakpointCols={cols > 2 ? cols : 2}
-            className="my-masonry-grid"
-            columnClassName="my-masonry-grid_column"
+            className="flex justify-center"
+            columnClassName="max-w-[266px] bg-clip-padding"
          >
             {children}
          </Masonry>

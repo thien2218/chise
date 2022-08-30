@@ -3,7 +3,7 @@ import Tag from '../low/Tag'
 
 const Sidebar = () => {
    return (
-      <div className='fixed top-[80px] left-0 w-[280px] h-[calc(100vh_-_80px)]'>
+      <div className='fixed top-[5rem] left-0 w-[17.5rem] h-[calc(100vh_-_5rem)]'>
          <div className='py-2 px-4 flex flex-col flex-wrap h-full'>
             <form className='w-full relative flex items-center'>
                <input className='w-full px-3 py-2 rounded-lg input-bg' type="text" placeholder='Your interest...' />
