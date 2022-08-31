@@ -1,10 +1,10 @@
 import React from "react";
-import { EntryLayout, Register } from "../components";
+import { EntryLayout, SignUp } from "../components";
 
 const ComponentDesign = () => {
 	return (
       <EntryLayout>
-         <Register />
+         <SignUp />
       </EntryLayout>
 	);
 };
