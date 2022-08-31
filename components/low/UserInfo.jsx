@@ -6,7 +6,7 @@ const UserInfo = ({ username, emailShort, description, follows, viewOthers }) =>
 		<div className="w-full flex flex-col items-center text-center mb-8 min-w-[375px]">
 			<div className="rounded-full overflow-hidden h-[7.5rem] w-[7.5rem] my-1">
 				<Image
-					src="/images/cat.jpg"
+					src="/assets/cat.jpg"
 					objectFit="cover"
 					layout="responsive"
 					height={1}

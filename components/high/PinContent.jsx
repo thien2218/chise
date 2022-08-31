@@ -10,12 +10,12 @@ const PinDetail = () => {
       <article>
          <div className="py-6 mx-auto w-full laptop:max-w-[64rem] max-w-[32rem]">
             <div className="rounded-[2rem] bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid laptop:grid-cols-2">
-               <PinImg img='/images/cat.jpg' />
+               <PinImg img='/assets/cat.jpg' />
 
                <div className="p-5 flex flex-col">
                   <PinActions />
                   <PinTextContent />
-                  <PinUserInfo img='/images/cat.jpg' username='Thien Huynh' />
+                  <PinUserInfo img='/assets/cat.jpg' username='Thien Huynh' />
                   <PinCommentSection />
                </div>
             </div>

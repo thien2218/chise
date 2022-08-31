@@ -55,6 +55,27 @@
    .heading {
       @apply text-[2.25rem] leading-[3rem] font-semibold;
    }
+
+   /* Register and login form */
+   .form {
+      @apply w-full max-w-sm py-8 px-12 bg-white rounded-2xl shadow-lg;
+   }
+
+   .form-field {
+      @apply flex flex-col;
+   }
+
+   .form-input {
+      @apply py-2 px-4 w-full rounded-2xl border outline-none border-[#cdcdcd] leading-7;
+   }
+
+   .form-label {
+      @apply ml-2 mb-1 text-sm;
+   }
+
+   .form-message {
+      @apply mt-2 text-primary;
+   }
 }
 
 .tags::-webkit-scrollbar {

@@ -16,6 +16,7 @@ module.exports = {
             'dimmed-600': 'rgb(var(--clr-dimmed-600) / 1)',
             'dimmed-500': 'rgb(var(--clr-dimmed-500) / 1)',
             'dimmed-400': 'rgb(var(--clr-dimmed-400) / 1)',
+            'black-overlay': 'rgb(0 0 0 / .5)'
          },
 
          screens: {
