@@ -8,5 +8,4 @@ export { default as EntryLayout } from './layout/EntryLayout';
 export { default as Header } from './high/Header';
 export { default as Sidebar } from './high/Sidebar';
 export { default as PinContent } from './high/PinContent';
-export { default as SignUp } from './high/SignUp';
-export { default as LogIn } from './high/LogIn';
+export { default as EntryForm } from './high/EntryForm';

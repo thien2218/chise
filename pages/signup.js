@@ -1,11 +1,9 @@
 import React from 'react';
-import { EntryLayout, SignUp } from "../components";
+import { EntryLayout } from "../components";
 
 const Signup = () => {
    return (
-      <EntryLayout pageName="Sign Up">
-         <SignUp />
-      </EntryLayout>
+      <EntryLayout pageName="Sign Up" />
    )
 }
 
