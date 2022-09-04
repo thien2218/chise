@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Head from "next/head";
 import EntryForm from "../high/EntryForm";
+import { generateHash, compareHash } from "../../utils/password";
 
 const EntryLayout = ({ pageName }) => {
 	const title = `ChiSe | ${pageName}`;
@@ -79,6 +80,9 @@ const EntryLayout = ({ pageName }) => {
 		}
 
 		setMessage({ ...message, ...msgCurrentState });
+      if (invalid) return;
+
+      
 	};
 
 	return (
