@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useState } from "react";
+import Image from "next/image";
 
 const Pin = () => {
-   return (
-      <div className='pin'>
-         <div className='pin-img'>
-            <img className='object-cover w-full' src='/assets/cat.jpg' />
-         </div>
+	const [paddingBot, setPaddingBot] = useState(150);
 
-         <div className="pin-info"></div>
-      </div>
-   )
-}
+	return (
+		<div className="pin">
+			<div className="pin-img-container">
+				<div
+					className="pin-img"
+					style={{ paddingBottom: `max(100px, ${paddingBot}%)` }}
+				>
+					<Image
+						layout="fill"
+						objectFit="cover"
+                  src="/assets/cat.jpg"
+						onLoadingComplete={e => {
+							setPaddingBot(
+								Math.floor((e.naturalHeight / e.naturalWidth) * 100)
+							);
+						}}
+					/>
+				</div>
+			</div>
 
-export default Pin
+			<div className="pin-info"></div>
+		</div>
+	);
+};
+
+export default Pin;

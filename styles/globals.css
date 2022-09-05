@@ -48,7 +48,11 @@
 	}
 
 	.pin-img {
-		@apply w-full min-h-[100px] max-h-[500px] rounded-2xl overflow-hidden relative;
+		@apply w-full rounded-2xl overflow-hidden relative;
+	}
+
+	.pin-img-container {
+		@apply max-h-[500px] flex justify-center overflow-hidden;
 	}
 
 	.pin-info {
