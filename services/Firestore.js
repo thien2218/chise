@@ -1,4 +1,4 @@
-import app from "./firebase";
+import app from "./firebaseConfig";
 import { getFirestore } from "firebase/firestore";
 
 class Firestore {
@@ -7,4 +7,4 @@ class Firestore {
    }
 }
 
-export default Firestore(app);
+export default new Firestore(app);

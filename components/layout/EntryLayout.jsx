@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Head from "next/head";
 import EntryForm from "../high/EntryForm";
-import { generateHash, compareHash } from "../../utils/password";
 
 const EntryLayout = ({ pageName }) => {
 	const title = `ChiSe | ${pageName}`;
@@ -108,9 +107,9 @@ const EntryLayout = ({ pageName }) => {
 					className="w-full h-full object-cover"
 				/>
 
-				<div className="absolute top-0 right-0 left-0 bottom-0 grid laptop:grid-cols-2 bg-black-overlay">
+				<div className="absolute top-0 right-0 left-0 bottom-0 grid lg:grid-cols-2 bg-black-overlay">
 					<div className="flex justify-center items-center">
-						<h1 className="text-[4rem] leading-[5rem] font-semibold text-white max-w-[26rem] laptop:text-left text-center">
+						<h1 className="text-[4rem] leading-[5rem] font-semibold text-white max-w-[26rem] lg:text-left text-center">
 							New ideas made to be shared
 						</h1>
 					</div>

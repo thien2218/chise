@@ -18,10 +18,6 @@ module.exports = {
             'dimmed-400': 'rgb(var(--clr-dimmed-400) / 1)',
             'black-overlay': 'rgb(0 0 0 / .5)'
          },
-
-         screens: {
-            'laptop': '1024px',
-         }
       },
 	},
 	plugins: [],

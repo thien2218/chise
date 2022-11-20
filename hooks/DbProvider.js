@@ -5,7 +5,7 @@ export const useDb = () => useContext(DbContext);
 
 const DbProvider = ({ children }) => {
    return (
-      <DbContext.Provider>
+      <DbContext.Provider value={{}}>
          {children}
       </DbContext.Provider>
    )

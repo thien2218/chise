@@ -1,4 +1,4 @@
-import app from "./firebase";
+import app from "./firebaseConfig";
 import { getStorage } from "firebase/storage";
 
 class Storage {
@@ -7,4 +7,4 @@ class Storage {
    }
 }
 
-export default Storage(app);
+export default new Storage(app);

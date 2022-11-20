@@ -8,8 +8,8 @@ import PinCommentSection from '../low/PinCommentSection';
 const PinDetail = () => {
    return (
       <article>
-         <div className="py-6 mx-auto w-full laptop:max-w-[64rem] max-w-[32rem]">
-            <div className="rounded-[2rem] bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid laptop:grid-cols-2">
+         <div className="py-6 mx-auto w-full lg:max-w-[64rem] max-w-[32rem]">
+            <div className="rounded-[2rem] bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid lg:grid-cols-2">
                <PinImg img='/assets/cat.jpg' />
 
                <div className="p-5 flex flex-col">
