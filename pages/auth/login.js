@@ -1,18 +1,18 @@
-import { AuthLayout } from "../components";
-import { useAuth } from "../hooks"
+import { AuthLayout } from "../../components";
+import { useAuth } from "../../hooks"
 
 const Login = () => {
    const fields = [
       {
-         name: "username",
-         lable: "Username",
+         name: "email",
+         label: "Email",
          type: "text",
-         placeholder: "Enter your username",
+         placeholder: "Enter your email",
       },
       {
          name: "password",
-         lable: "Password",
-         type: "text",
+         label: "Password",
+         type: "password",
          placeholder: "Enter your password",
       },
    ];
@@ -24,4 +24,4 @@ const Login = () => {
    )
 }
 
-export default Login
+export default Login;

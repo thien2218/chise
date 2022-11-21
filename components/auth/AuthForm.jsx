@@ -2,19 +2,26 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import AuthField from "./AuthField";
+import { useValidation } from "../../hooks";
 
 const AuthForm = ({ fields, submit }) => {
    const [values, setValues] = useState({});
-
-   useEffect(() => {
-      console.log(values);
-   }, [values])
+   const { setError } = useValidation();
    
    const handleBlur = (name, e) => {
       setValues({
          ...values,
          [name]: e.target.value,
       })
+   }
+
+   const handleFocus = (e) => setError({
+      [e.target.name]: ""
+   })
+
+   const handleSubmit = async (e) => {
+      e.preventDefault();
+      await submit(values.email, values.password);
    }
 
 	return (
@@ -29,7 +36,7 @@ const AuthForm = ({ fields, submit }) => {
 					// message={message}
 					{...field}
 					handleBlur={handleBlur}
-					// handleFocus={handleFocus}
+					handleFocus={handleFocus}
 				/>
 			))}
 
@@ -44,7 +51,7 @@ const AuthForm = ({ fields, submit }) => {
 			</div>
 
 			<button
-				onClick={submit}
+				onClick={handleSubmit}
 				className="primary-btn w-full py-2 px-4 rounded-2xl mt-2"
 			>
 				Continue

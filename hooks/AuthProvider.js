@@ -1,38 +1,29 @@
-import { useContext, useState, createContext } from "react";
-import Auth from "../services/Auth";
+import { useContext, createContext } from "react";
+import { Auth } from "../services";
 import { useValidation } from "./ValidationProvider";
 
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
-   const [authUser, setAuthUser] = useState(null);
-   const { error, setError } = useValidation();
-
-   const setUserOrError = (user, error) => {
-      if (user) setAuthUser(user);
-      else setError(error);
-   }
+   const { setError } = useValidation();
 
    const login = async (email, password) => {
-      const { user, error } = await Auth.login(email, password);
-      setUserOrError(user, error);
+      const { error } = await Auth.login(email, password);
+      setError(error ?? null);
    }
 
    const signup = async (email, password) => {
-      const { user, error } = await Auth.signup(email, password);
-      setUserOrError(user, error);
+      const { error } = await Auth.signup(email, password);
+      setError(error ?? null);
    }
 
    const logout = async () => {
       setAuthUser({});
-      return await Auth.logout();
+      await Auth.logout();
    }
 
    const value = {
-      authUser,
-      error,
-      setError,
       login,
       signup,
       logout,

@@ -1,4 +1,11 @@
-const AuthField = ({ name, label, type, placeholder, handleBlur }) => {
+const AuthField = ({
+	name,
+	label,
+	type,
+	placeholder,
+	handleBlur,
+	handleFocus,
+}) => {
 	return (
 		<div className="form-field mb-2">
 			<label className="form-label pointer-events-none" htmlFor={name}>
@@ -12,7 +19,7 @@ const AuthField = ({ name, label, type, placeholder, handleBlur }) => {
 				type={type}
 				placeholder={placeholder}
 				onBlur={(e) => handleBlur(name, e)}
-				// onFocus={handleFocus}
+				onFocus={handleFocus}
 			/>
 			{/* <span className="form-message">{message[name]}</span> */}
 		</div>

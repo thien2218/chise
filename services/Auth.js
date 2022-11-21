@@ -16,7 +16,7 @@ class Auth {
 
 	extractUserData(user) {
 		return {
-         id: user.uid,
+			id: user.uid,
 			username: user.displayName,
 			emailShort: user.email,
 			emailVerified: user.emailVerified,
@@ -24,17 +24,17 @@ class Auth {
 		};
 	}
 
-   waitForUser(cb) {
-      onAuthStateChanged(this.auth, (user) => cb(user))
-   }
+	waitForUser(cb) {
+		return onAuthStateChanged(this.auth, (user) => cb(user));
+	}
 
 	async login(email, password) {
 		return signInWithEmailAndPassword(this.auth, email, password)
 			.then((cred) => {
-				return this.extractUserData(cred.user);
+				return { user: this.extractUserData(cred.user) };
 			})
 			.catch((err) => {
-				return err.message;
+				return { error: err.message };
 			});
 	}
 
@@ -49,19 +49,19 @@ class Auth {
 	}
 
 	async loginWithGoogle() {
-      const provider = new GoogleAuthProvider();
+		const provider = new GoogleAuthProvider();
 
-      return signInWithPopup(this.auth, provider)
-         .then((cred) => {
-            return this.extractUserData(cred.user);
-         })
-         .catch((err) => {
-            return err.message;
-         });
-   }
+		return signInWithPopup(this.auth, provider)
+			.then((cred) => {
+				return this.extractUserData(cred.user);
+			})
+			.catch((err) => {
+				return err.message;
+			});
+	}
 
 	async logout() {
-		return signOut(this.auth);
+		await signOut(this.auth);
 	}
 }
 
