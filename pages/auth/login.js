@@ -1,5 +1,5 @@
 import { AuthLayout } from "../../components";
-import { useAuth } from "../../hooks"
+import { useAuth, withoutAuth } from "../../hooks";
 
 const Login = () => {
    const fields = [
@@ -24,4 +24,4 @@ const Login = () => {
    )
 }
 
-export default Login;
+export default withoutAuth(Login);

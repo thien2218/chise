@@ -1,4 +1,4 @@
-import app from "./firebaseConfig";
+import app from "./firebase-config";
 import { getFirestore } from "firebase/firestore";
 
 class Firestore {

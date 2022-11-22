@@ -1,4 +1,4 @@
-import app from "./firebaseConfig";
+import app from "./firebase-config";
 import { getStorage } from "firebase/storage";
 
 class Storage {

@@ -1,8 +1,6 @@
-export { default as AuthProvider } from "./AuthProvider";
-export { default as DbProvider } from "./DbProvider";
-export { default as ValidationProvider } from "./ValidationProvider";
-export { default as AuthObserver } from "./AuthObserver";
+export { default as AuthProvider, useAuth } from "./AuthProvider";
+export { default as DbProvider, useDb } from "./DbProvider";
+export { default as ValidationProvider, useValidation } from "./ValidationProvider";
+export { default as UserProvider, useUser } from "./UserProvider";
 
-export { useAuth } from "./AuthProvider";
-export { useValidation } from "./ValidationProvider";
-export { useDb } from "./DbProvider";
+export { withoutAuth, withoutProfile, withAuth } from "./ProtectedRoute";
