@@ -1,35 +1,41 @@
-import React from 'react'
-import Sidebar from '../high/Sidebar';
-import Header from '../high/Header';
-import Head from 'next/head';
+import React from "react";
+import Sidebar from "../high/Sidebar";
+import Header from "../high/Header";
+import Head from "next/head";
 
-const Layout = ({ children, home, title }) => {
-   return (
-      <>
-         <Head>
-            <meta charset="UTF-8" />
-            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>{title}</title>
-         </Head>
+const Layout = ({ children, home, pageName }) => {
+   const title = `Chise ${pageName ? " | " + pageName : pageName}`;
 
-         <Header />
+	return (
+		<>
+			<Head>
+				<meta charset="UTF-8" />
+				<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1.0"
+				/>
+				<title>{title}</title>
+			</Head>
 
-         {home ? (
-            <>
-               <Sidebar />
-               <main className='pt-[5rem] pl-[17.5rem]'>
-                  {children}
-               </main>
-            </>
-         ) : (
-            <main className='pt-[5rem]'>
-               {children}
-            </main>
-         )}
-         
-      </>
-   )
-}
+			{pageName != "Login" && pageName != "Signup" ? (
+				<>
+					<Header />
 
-export default Layout
+					{home ? (
+						<>
+							<Sidebar />
+							<main className="pt-[5rem] pl-[17.5rem]">{children}</main>
+						</>
+					) : (
+						<main className="pt-[5rem]">{children}</main>
+					)}
+				</>
+			) : (
+				children
+			)}
+		</>
+	);
+};
+
+export default Layout;

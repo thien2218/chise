@@ -1,9 +1,11 @@
-import Head from "next/head";
+import { withAuth } from "../hooks";
 
-export default function Home() {
+function Home() {
 	return (
 		<div>
 			hello world
 		</div>
 	)
 }
+
+export default withAuth(Home);

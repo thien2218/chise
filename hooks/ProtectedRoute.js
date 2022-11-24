@@ -18,7 +18,7 @@ export function withoutAuth(Components) {
    }
 }
 
-export function withoutProfile() {
+export function withoutProfile(Components) {
    return function WithoutProfile(props) {
       const { authUser } = useUser();
       const router = useRouter();
@@ -35,7 +35,7 @@ export function withoutProfile() {
    }
 }
 
-export function withAuth() {
+export function withAuth(Components) {
    return function WithAuth(props) {
       const { authUser } = useUser();
       const router = useRouter();

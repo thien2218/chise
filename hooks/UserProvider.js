@@ -10,7 +10,7 @@ const UserProvider = ({ children }) => {
 
 	useEffect(() => {
 		const unsubscribe = Auth.waitForUser((user) => {
-			setAuthUser(Auth.extractUserData(user));
+			setAuthUser(user ? Auth.extractUserData(user) : null);
 			setLoading(false);
 		});
 

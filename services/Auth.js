@@ -34,17 +34,22 @@ class Auth {
 				return { user: this.extractUserData(cred.user) };
 			})
 			.catch((err) => {
-				return { error: err.message };
+				return { error: { invalid: "Incorrect email or password" } };
 			});
 	}
 
 	async signup(email, password) {
 		return createUserWithEmailAndPassword(this.auth, email, password)
 			.then((cred) => {
-				return this.extractUserData(cred.user);
+				return { user: this.extractUserData(cred.user) };
 			})
 			.catch((err) => {
-				return err.message;
+				return {
+					error: {
+						invalid:
+							"This email has already been assigned with an existing account",
+					},
+				};
 			});
 	}
 
@@ -53,10 +58,10 @@ class Auth {
 
 		return signInWithPopup(this.auth, provider)
 			.then((cred) => {
-				return this.extractUserData(cred.user);
+				return { user: this.extractUserData(cred.user) };
 			})
 			.catch((err) => {
-				return err.message;
+				return { error: err.message };
 			});
 	}
 

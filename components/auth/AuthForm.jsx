@@ -1,28 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import AuthField from "./AuthField";
 import { useValidation } from "../../hooks";
 
 const AuthForm = ({ fields, submit }) => {
-   const [values, setValues] = useState({});
-   const { setError } = useValidation();
-   
-   const handleBlur = (name, e) => {
-      setValues({
-         ...values,
-         [name]: e.target.value,
-      })
-   }
+	const required = fields
+		.filter((field) => !field.optional)
+		.map((field) => field.name);
+	const initState = required.reduce((acc, cur) => ({ ...acc, [cur]: "" }), {});
 
-   const handleFocus = (e) => setError({
-      [e.target.name]: ""
-   })
+	const [values, setValues] = useState(initState);
+	const { error, setError, handleSubmit } = useValidation();
 
-   const handleSubmit = async (e) => {
-      e.preventDefault();
-      await submit(values.email, values.password);
-   }
+	const handleBlur = (label, name, e) => {
+		const value = e.target.value;
+
+		setValues({
+			...values,
+			[name]: value,
+		});
+	};
+
+	const handleFocus = (e) => {
+		setError({
+			...error,
+			[e.target.name]: "",
+		});
+	};
 
 	return (
 		<form className="form">
@@ -33,7 +38,6 @@ const AuthForm = ({ fields, submit }) => {
 			{fields.map((field, id) => (
 				<AuthField
 					key={id}
-					// message={message}
 					{...field}
 					handleBlur={handleBlur}
 					handleFocus={handleFocus}
@@ -41,17 +45,11 @@ const AuthForm = ({ fields, submit }) => {
 			))}
 
 			<div className="mt-2 text-center text-primary text-sm">
-				<span>
-					{/* {message.invalidData && isSignupPage
-						? "The username has already existed"
-						: message.invalidData && !isSignupPage
-						? "Username or password provided is incorrect"
-						: ""} */}
-				</span>
+				<span>{error.invalid}</span>
 			</div>
 
 			<button
-				onClick={handleSubmit}
+				onClick={(e) => handleSubmit(e, required, values, submit)}
 				className="primary-btn w-full py-2 px-4 rounded-2xl mt-2"
 			>
 				Continue
@@ -74,9 +72,9 @@ const AuthForm = ({ fields, submit }) => {
 						<a>Already a member? Log in</a>
 					</Link>
 				) : ( */}
-					<Link href="/signup">
-						<a>New to ChiSe? Sign up</a>
-					</Link>
+				<Link href="/signup">
+					<a>New to ChiSe? Sign up</a>
+				</Link>
 				{/* )} */}
 			</div>
 		</form>

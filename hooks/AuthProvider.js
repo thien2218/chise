@@ -8,18 +8,17 @@ export const useAuth = () => useContext(AuthContext);
 const AuthProvider = ({ children }) => {
    const { setError } = useValidation();
 
-   const login = async (email, password) => {
+   const login = async ({ email, password }) => {
       const { error } = await Auth.login(email, password);
       setError(error ?? null);
    }
 
-   const signup = async (email, password) => {
+   const signup = async ({ email, password }) => {
       const { error } = await Auth.signup(email, password);
       setError(error ?? null);
    }
 
    const logout = async () => {
-      setAuthUser({});
       await Auth.logout();
    }
 
