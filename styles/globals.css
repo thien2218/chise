@@ -10,14 +10,13 @@
 
 	:root {
 		/* Colors */
-		--clr-primary: 230 0 35;
-		--clr-secondary: 17 18 28;
-		--clr-accent: 255 255 255;
-		--clr-primary-hover: 173 8 27;
-		--clr-dark-gray: 118 118 118;
-		--clr-dimmed-600: 208 208 208;
-		--clr-dimmed-500: 231 231 231;
-		--clr-dimmed-400: 239 239 239;
+		--clr-primary: rgb(230 0 35 / 1);
+		--clr-secondary: rgb(17 18 28 / 1);
+		--clr-primary-hover: rgb(173 8 27 / 1);
+		--clr-dark-gray: rgb(118 118 118 / 1);
+		--clr-dimmed-600: rgb(208 208 208 / 1);
+		--clr-dimmed-500: rgb(231 231 231 / 1);
+		--clr-dimmed-400: rgb(239 239 239 / 1);
 	}
 
 	/* Input fields */

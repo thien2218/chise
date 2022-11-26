@@ -10,12 +10,12 @@ const AuthProvider = ({ children }) => {
 
    const login = async ({ email, password }) => {
       const { error } = await Auth.login(email, password);
-      setError(error ?? null);
+      setError(error);
    }
 
    const signup = async ({ email, password }) => {
       const { error } = await Auth.signup(email, password);
-      setError(error ?? null);
+      setError(error);
    }
 
    const logout = async () => {

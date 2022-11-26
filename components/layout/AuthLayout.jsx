@@ -13,7 +13,7 @@ const AuthLayout = ({ fields, submit }) => {
 				className="w-full h-full object-cover"
 			/>
 
-			<div className="absolute top-0 right-0 left-0 bottom-0 grid lg:grid-cols-2 bg-black-overlay">
+			<div className="absolute top-0 right-0 left-0 bottom-0 grid lg:grid-cols-2 bg-black/50">
 				<div className="flex justify-center items-center">
 					<h1 className="text-[3.5rem] leading-[4rem] font-semibold text-white max-w-[20rem] lg:text-left text-center">
 						New ideas made to be shared

@@ -11,7 +11,7 @@ const AuthForm = ({ fields, submit }) => {
 	const initState = required.reduce((acc, cur) => ({ ...acc, [cur]: "" }), {});
 
 	const [values, setValues] = useState(initState);
-	const { error, setError, handleSubmit } = useValidation();
+	const { error, setError, handleSubmit, checkLength } = useValidation();
 
 	const handleBlur = (label, name, e) => {
 		const value = e.target.value;

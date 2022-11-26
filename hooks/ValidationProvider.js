@@ -9,6 +9,15 @@ const ValidationProvider = ({ children }) => {
    const requiredMsg = "This field is required!";
    const emailRegex =
 		/[a-z0-9]+(?:\.[a-z0-9]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+      
+   const checkLength = (input, name, label, lower, upper) => {
+      if (input.length > upper || input.length < lower) {
+         setError({
+            ...error,
+            [name]: `${label} must contains between ${lower} - ${upper} characters`,
+         });
+      }
+   }
 
    const checkRequired = (input, name) => {
       if (!input) {
@@ -18,16 +27,7 @@ const ValidationProvider = ({ children }) => {
          });
       }
    }
-
-   const checkLength = (input, name, label, upper, lower) => {
-      if (input.length > upper || input.length < lower) {
-         setError({
-            ...error,
-            [name]: `${label} must contains between ${lower} - ${upper} characters`,
-         });
-      }
-   }
-
+      
    const checkEmail = (input) => {
       if(input.match(emailRegex) == null || input.match(emailRegex)[0] != input) {
          setError({

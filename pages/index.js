@@ -1,10 +1,9 @@
 import { withAuth } from "../hooks";
+import { MasonryLayout } from "../components";
 
 function Home() {
 	return (
-		<div>
-			hello world
-		</div>
+		<MasonryLayout />
 	)
 }
 

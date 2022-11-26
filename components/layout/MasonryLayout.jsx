@@ -1,7 +1,8 @@
 import React, { useLayoutEffect, useState, useRef } from "react";
 import Masonry from "react-masonry-css";
+import Pin from "../common/Pin";
 
-const MasonryLayout = ({ children }) => {
+const MasonryLayout = () => {
    const masonryRef = useRef(null);
    const [width, setWidth] = useState(0);
 
@@ -12,16 +13,19 @@ const MasonryLayout = ({ children }) => {
       return () => window.removeEventListener('resize', updateWidth);
    }, [])
 
-   const cols = Math.floor(width / 266);
+   const cols = Math.floor(width / 260);
+   const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
    return (
       <div ref={masonryRef}>
          <Masonry
-            breakpointCols={cols > 2 ? cols : 2}
+            breakpointCols={cols > 0 ? cols : 1}
             className="flex justify-center"
-            columnClassName="max-w-[266px] bg-clip-padding"
+            columnClassName="max-w-[260px] bg-clip-padding"
          >
-            {children}
+            {arr.map((num) => (
+               <Pin key={num} />
+            ))}
          </Masonry>
       </div>
    )

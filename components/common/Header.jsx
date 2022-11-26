@@ -1,17 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "../../hooks";
+import { IoSearch } from "react-icons/io5";
+import { HiPlus } from "react-icons/hi";
 
 const Header = () => {
    const { logout } = useAuth();
 
 	return (
 		<header className="fixed w-full top-0 left-0">
-			<nav className="flex h-[5rem] items-center px-4 gap-4 bg-white">
+			<nav className="flex h-16 items-center px-4 gap-3 bg-white">
 				<Link href="/">
 					<a className="flex items-center">
 						<Image
 							src="/assets/cat.jpg"
+                     
 							height={30}
 							width={30}
 							className="rounded-2xl"
@@ -21,23 +24,29 @@ const Header = () => {
 				</Link>
 
 				<form className="flex-1 relative">
+               <div className="absolute aspect-square h-11 flex justify-center items-center">
+                  <IoSearch className="text-lg text-dark-gray" />
+               </div>
+
 					<input
-						className="w-full px-10 py-3 rounded-2xl input-bg"
+						className="w-full px-11 py-2.5 rounded-lg input-bg"
 						type="text"
 						placeholder="Search..."
 					/>
 				</form>
 
-            <Link href="/create-pin">
-               <a className="p-0.5 rounded-2xl bg-black"></a>
+            <Link href="/create">
+               <a className="h-9 flex justify-center items-center aspect-square rounded-lg bg-black">
+                  <HiPlus className="text-white text-lg" />
+               </a>
             </Link>
 
-            <button className="h-[30px]" onClick={logout}>
+            <button className="h-9" onClick={logout}>
                <Image
                   src="/assets/cat1.jpg"
-                  height={30}
-                  width={30}
-                  className="rounded-2xl"
+                  height={36}
+                  width={36}
+                  className="rounded-lg"
                />
             </button>
 			</nav>
