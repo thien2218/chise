@@ -27,7 +27,7 @@ const Pin = () => {
                <div className="flex justify-between p-3 pt-4 gap-2.5">
                   <Link href="https://www.facebook.com">
                      <a className="relative h-full flex bg-white/70 hover:bg-white/[.85] rounded-full z-[9] cursor-pointer transition max-w-max px-3 items-center gap-1.5 min-w-0">
-                        <IoLink className="text-lg" />
+                        <IoLink className="text-xl" />
                         <div className="text-sm truncate">facebook.commm</div>
                      </a>
                   </Link>
@@ -46,9 +46,14 @@ const Pin = () => {
          </AdjustedImg>
 
          <div className="py-2 px-1.5">
-            <h1 className="font-semibold mb-1 text-sm">Hello World</h1>
             <Link href="/">
-               <a className="flex items-center">
+               <a>
+                  <h1 className="font-semibold mb-1 text-sm">Hello World</h1>
+               </a>
+            </Link>
+
+            <Link href="/">
+               <a className="flex items-center hover:last:underline">
                   <div className="relative h-8 w-8 rounded-full overflow-hidden">
                      <Image layout="fill" objectFit="cover" src="/assets/cat1.jpg" />
                   </div>

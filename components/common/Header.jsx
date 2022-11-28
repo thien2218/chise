@@ -8,7 +8,7 @@ const Header = () => {
    const { logout } = useAuth();
 
 	return (
-		<header className="fixed w-full top-0 left-0">
+		<header className="fixed w-full top-0 left-0 z-10">
 			<nav className="flex h-16 items-center px-4 gap-3 bg-white">
 				<Link href="/">
 					<a className="flex items-center">
@@ -24,12 +24,12 @@ const Header = () => {
 				</Link>
 
 				<form className="flex-1 relative">
-               <div className="absolute aspect-square h-11 flex justify-center items-center">
+               <div className="absolute h-full px-4 flex items-center">
                   <IoSearch className="text-lg text-dark-gray" />
                </div>
 
 					<input
-						className="w-full px-11 py-2.5 rounded-lg input-bg"
+						className="w-full px-10 py-2 rounded-lg input-bg"
 						type="text"
 						placeholder="Search..."
 					/>

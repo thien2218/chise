@@ -3,7 +3,7 @@ import Sidebar from "../high/Sidebar";
 import Header from "../common/Header";
 import Head from "next/head";
 
-const Layout = ({ children, home, pageName }) => {
+const Layout = ({ children, pageName }) => {
    const title = `Chise ${pageName ? " | " + pageName : pageName}`;
 
 	return (
@@ -21,14 +21,13 @@ const Layout = ({ children, home, pageName }) => {
 			{pageName != "Login" && pageName != "Signup" ? (
 				<>
 					<Header />
-
-					{home ? (
+					{pageName == "Home" ? (
 						<>
 							<Sidebar />
-							<main className="pt-[5rem] pl-[17.5rem]">{children}</main>
+							<main className="pt-16 pl-[17.5rem]">{children}</main>
 						</>
 					) : (
-						<main className="pt-[5rem]">{children}</main>
+						<main className="pt-16">{children}</main>
 					)}
 				</>
 			) : (

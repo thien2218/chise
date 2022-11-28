@@ -11,15 +11,26 @@ const AuthForm = ({ fields, submit }) => {
 	const initState = required.reduce((acc, cur) => ({ ...acc, [cur]: "" }), {});
 
 	const [values, setValues] = useState(initState);
-	const { error, setError, handleSubmit, checkLength } = useValidation();
+	const {
+		error,
+		setError,
+		checkRequired,
+		checkLength,
+		checkEmail,
+		checkConfirmPw,
+      isValid,
+		handleSubmit,
+	} = useValidation();
 
-	const handleBlur = (label, name, e) => {
+	const handleBlur = (e) => {
 		const value = e.target.value;
+      const name = e.target.name;
 
-		setValues({
-			...values,
-			[name]: value,
-		});
+      isValid(name, "username", checkLength(value, 3, 20));
+      isValid(name, "password", checkLength(value, 6, 20));
+      isValid(name, "confirm_password", checkConfirmPw(values.password, value));
+      isValid(name, "email", checkEmail(value));
+      isValid(name, "", checkRequired(name, required, value));
 	};
 
 	const handleFocus = (e) => {
@@ -28,6 +39,13 @@ const AuthForm = ({ fields, submit }) => {
 			[e.target.name]: "",
 		});
 	};
+
+   const handleChange = (e) => {
+      setValues({
+         ...values,
+         [e.target.name]: e.target.value,
+      })
+   }
 
 	return (
 		<form className="form">
@@ -41,6 +59,7 @@ const AuthForm = ({ fields, submit }) => {
 					{...field}
 					handleBlur={handleBlur}
 					handleFocus={handleFocus}
+               handleChange={handleChange}
 				/>
 			))}
 

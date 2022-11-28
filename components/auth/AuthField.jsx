@@ -7,6 +7,7 @@ const AuthField = ({
 	placeholder,
 	handleBlur,
 	handleFocus,
+   handleChange
 }) => {
    const { error } = useValidation();
 
@@ -22,7 +23,8 @@ const AuthField = ({
 				name={name}
 				type={type}
 				placeholder={placeholder}
-				onBlur={(e) => handleBlur(label, name, e)}
+				onBlur={handleBlur}
+            onChange={handleChange}
 				onFocus={handleFocus}
 			/>
          
