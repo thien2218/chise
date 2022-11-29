@@ -8,7 +8,7 @@ import { IoLink } from "react-icons/io5";
 const Pin = () => {
 	return (
 		<div className="w-full px-1.5 pb-4">
-			<AdjustedImg ratio={150}>
+			<AdjustedImg ratio={150} src="/assets/cat.jpg" >
             <div className="relative w-full h-full opacity-0 hover:opacity-100 transition duration-100 flex flex-col justify-between">
                <Link href="/">
                   <a className="absolute w-full h-full bg-black/30"></a>

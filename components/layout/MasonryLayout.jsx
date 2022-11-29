@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState, useRef } from "react";
+import { useLayoutEffect, useState, useRef } from "react";
 import Masonry from "react-masonry-css";
 import Pin from "../common/Pin";
 

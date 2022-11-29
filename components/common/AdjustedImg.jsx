@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const AdjustedImg = ({ children, ratio }) => {
+const AdjustedImg = ({ children, ratio, src }) => {
 	return (
 		<div
 			className="relative w-full overflow-hidden rounded-lg"
@@ -14,9 +14,8 @@ const AdjustedImg = ({ children, ratio }) => {
 						layout="fill"
 						objectFit="cover"
                   className="absolute"
-						src="/assets/cat.jpg"
+						src={src}
 					/>
-
                {children}
 				</div>
 			</div>

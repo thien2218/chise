@@ -16,6 +16,9 @@ module.exports = {
             'dimmed-500': 'var(--clr-dimmed-500)',
             'dimmed-400': 'var(--clr-dimmed-400)',
          },
+         screens: {
+            "mlg": "960px",
+         }
       },
 	},
 	plugins: [],

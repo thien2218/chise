@@ -1,5 +1,3 @@
-import React from 'react'
-
 const FormField = ({ label, name, type, placeholder, message, handleBlur, handleFocus }) => {
    return (
       <div className='form-field mb-2'>
@@ -10,4 +8,4 @@ const FormField = ({ label, name, type, placeholder, message, handleBlur, handle
    )
 }
 
-export default FormField
+export default FormField;

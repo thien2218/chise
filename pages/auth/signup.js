@@ -1,5 +1,5 @@
 import { AuthLayout } from "../../components";
-import { useAuth, withoutAuth } from "../../hooks"
+import { useAuth, withoutAuth } from "../../hooks";
 
 const Signup = () => {
    const fields = [

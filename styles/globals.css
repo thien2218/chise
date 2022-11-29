@@ -56,7 +56,7 @@
 
    /* Heading */
    .heading {
-      @apply text-[2.25rem] leading-[3rem] font-semibold;
+      @apply text-[2.25rem] leading-[2.75rem] font-semibold;
    }
 
    /* Register and login form */

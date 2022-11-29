@@ -1,4 +1,3 @@
-import React from 'react';
 import UserInfo from '../low/UserInfo';
 import MasonryLayout from './MasonryLayout';
 
@@ -23,4 +22,4 @@ const UserLayout = ({ children }) => {
    )
 }
 
-export default UserLayout
+export default UserLayout;

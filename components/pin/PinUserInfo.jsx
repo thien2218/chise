@@ -1,6 +1,6 @@
-import React from "react";
 import Image from 'next/image';
 import Link from 'next/link';
+import ActionBtn from "../common/ActionBtn";
 
 const PinUserInfo = ({ img, username }) => {
 	return (
@@ -23,9 +23,7 @@ const PinUserInfo = ({ img, username }) => {
 				</Link>
 			</div>
 
-			<button className="secondary-btn rounded-2xl py-3 px-4 font-semibold">
-				Follow
-			</button>
+			<ActionBtn action="Follow" classes="secondary-btn rounded-full" />
 		</div>
 	);
 };

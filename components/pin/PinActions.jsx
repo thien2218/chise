@@ -1,4 +1,4 @@
-import React from "react";
+import ActionBtn from "../common/ActionBtn";
 
 const PinActions = () => {
 	return (
@@ -6,9 +6,7 @@ const PinActions = () => {
 			<div className="flex items-center">
 			</div>
 
-			<button className="primary-btn rounded-2xl py-3 px-4 font-semibold">
-				Save
-			</button>
+			<ActionBtn action="Save" classes="primary-btn rounded-full" />
 		</div>
 	);
 };

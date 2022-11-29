@@ -1,7 +1,8 @@
+import { PinBuilder } from "../components";
 
 const Create = () => {
    return (
-      <div>Create</div>
+      <PinBuilder />
    )
 }
 
