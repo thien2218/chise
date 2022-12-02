@@ -3,7 +3,7 @@ import Image from "next/image";
 const AdjustedImg = ({ children, ratio, src }) => {
 	return (
 		<div
-			className="relative w-full overflow-hidden rounded-lg"
+			className="relative w-full overflow-hidden rounded-lg h-0"
 			style={{
 				paddingBottom: `max(120px, ${ratio}%)`,
 			}}

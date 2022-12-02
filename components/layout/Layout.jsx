@@ -1,4 +1,4 @@
-import Sidebar from "../high/Sidebar";
+// import Sidebar from "../high/Sidebar";
 import Header from "../common/Header";
 import Head from "next/head";
 
@@ -17,7 +17,7 @@ const Layout = ({ children, pageName }) => {
 				<title>{title}</title>
 			</Head>
 
-			{pageName != "Login" && pageName != "Signup" ? (
+			{/* {pageName != "Login" && pageName != "Signup" ? (
 				<>
 					<Header />
 					{pageName == "Home" ? (
@@ -31,7 +31,10 @@ const Layout = ({ children, pageName }) => {
 				</>
 			) : (
 				children
-			)}
+			)} */}
+
+         <Header />
+         <main className="pt-16">{children}</main>
 		</>
 	);
 };

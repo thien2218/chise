@@ -6,7 +6,7 @@ const Signup = () => {
       {
          name: "email",
          label: "Email",
-         type: "text",
+         type: "email",
          placeholder: "example@domain.com",
       },
       {

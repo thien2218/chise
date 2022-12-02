@@ -6,7 +6,7 @@ const Login = () => {
       {
          name: "email",
          label: "Email",
-         type: "text",
+         type: "email",
          placeholder: "Enter your email",
       },
       {

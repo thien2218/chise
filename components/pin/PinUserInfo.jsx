@@ -4,24 +4,20 @@ import ActionBtn from "../common/ActionBtn";
 
 const PinUserInfo = ({ img, username }) => {
 	return (
-		<div className="mt-4 flex items-center pr-3">
-			<div className="mx-1 rounded-full overflow-hidden h-12 w-12 relative">
-				<Link href="/" className="">
-					<a>
-						<Image
-							src={img}
-							objectFit="cover"
-							layout="fill"
-						/>
-					</a>
-				</Link>
-			</div>
+		<div className="mt-4 flex items-center pr-3 gap-1">
+         <Link href="/">
+            <a className="mx-1 rounded-full overflow-hidden h-11 w-11 relative">
+               <Image
+                  src={img}
+                  objectFit="cover"
+                  layout="fill"
+               />
+            </a>
+         </Link>
 
-			<div className="flex-1 pl-1 font-semibold">
-				<Link href="/">
-					<a>{username}</a>
-				</Link>
-			</div>
+         <Link href="/">
+            <a className="font-semibold text-sm flex-1">{username}</a>
+         </Link>
 
 			<ActionBtn action="Follow" classes="secondary-btn rounded-full" />
 		</div>

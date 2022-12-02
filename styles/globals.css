@@ -14,7 +14,9 @@
 		--clr-secondary: rgb(17 18 28 / 1);
 		--clr-primary-hover: rgb(173 8 27 / 1);
 		--clr-dark-gray: rgb(118 118 118 / 1);
-		--clr-dimmed-600: rgb(208 208 208 / 1);
+      --clr-blueish: rgb(19 119 229 / 1);
+		--clr-dimmed-700: rgb(208 208 208 / 1);
+		--clr-dimmed-600: rgb(218 218 218 / 1);
 		--clr-dimmed-500: rgb(231 231 231 / 1);
 		--clr-dimmed-400: rgb(239 239 239 / 1);
 	}
