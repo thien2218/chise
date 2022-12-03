@@ -5,10 +5,9 @@ import TextFields from "./TextFields";
 
 const PinBuilder = () => {
 	const [imgFile, setImgFile] = useState(null);
-	const [imgRatio, setImgRatio] = useState(0);
 	const [values, setValues] = useState({
 		imgUrl: "",
-		tags: [],
+      imgRatio: 0,
 		savedBy: [],
 		cmtDisabled: false,
 	});
@@ -19,8 +18,8 @@ const PinBuilder = () => {
 				<div className="rounded-2xl bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid mlg:grid-cols-[1fr_1.5fr] p-10">
 					<ImgField
 						setImgFile={setImgFile}
-						setImgRatio={setImgRatio}
-						imgRatio={imgRatio}
+						setValues={setValues}
+						imgRatio={values.imgRatio}
 					/>
 
 					<TextFields setValues={setValues}>

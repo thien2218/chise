@@ -19,11 +19,10 @@ const SelectedImg = ({ imgSrc, imgRatio, setImgSrc, setImgFile }) => {
 	);
 };
 
-const UploadField = ({ setImgSrc, setImgFile, setImgRatio }) => {
+const UploadField = ({ setImgSrc, setImgFile, setValues }) => {
 	const handlePreview = (e) => {
 		if (!e.target.files[0]) return;
 
-		console.log(e.target.files[0]);
 		const reader = new FileReader();
 		reader.readAsDataURL(e.target.files[0]);
 
@@ -32,18 +31,20 @@ const UploadField = ({ setImgSrc, setImgFile, setImgRatio }) => {
 			const imgSrc = event.target.result;
 			imgEle.src = imgSrc;
 
-			setImgSrc(imgSrc);
-
 			imgEle.onload = function (ev) {
 				const canvas = document.createElement("canvas");
-				const W = 600;
+				const W = ev.target.width >= 500 ? 500 : ev.target.width;
 				const H = (ev.target.height * W) / ev.target.width;
 
 				const imgRatio = Math.floor((H / W) * 100);
 				canvas.height = H;
 				canvas.width = W;
 
-				setImgRatio(imgRatio);
+				setValues((prev) => ({
+               ...prev,
+               imgRatio,
+            }));
+				setImgSrc(imgSrc);
 
 				const ctx = canvas.getContext("2d");
 				ctx.drawImage(imgEle, 0, 0, W, H);
@@ -57,9 +58,8 @@ const UploadField = ({ setImgSrc, setImgFile, setImgRatio }) => {
 						setImgFile(imgFile);
 					},
 					"image/webp",
-					0.75
+					0.85
 				);
-
 				canvas.remove();
 			};
 			imgEle.remove();
@@ -88,26 +88,24 @@ const UploadField = ({ setImgSrc, setImgFile, setImgRatio }) => {
 	);
 };
 
-const ImgField = ({ setImgFile, setImgRatio, imgRatio }) => {
+const ImgField = ({ setImgFile, setValues, imgRatio }) => {
 	const [imgSrc, setImgSrc] = useState(null);
 
 	if (imgSrc)
 		return (
-			<div className="flex">
-				<SelectedImg
-					imgSrc={imgSrc}
-					imgRatio={imgRatio}
-					setImgFile={setImgFile}
-					setImgSrc={setImgSrc}
-				/>
-			</div>
+			<SelectedImg
+				imgSrc={imgSrc}
+				imgRatio={imgRatio}
+				setImgFile={setImgFile}
+				setImgSrc={setImgSrc}
+			/>
 		);
 
 	return (
 		<UploadField
 			setImgSrc={setImgSrc}
 			setImgFile={setImgFile}
-			setImgRatio={setImgRatio}
+			setValues={setValues}
 		/>
 	);
 };

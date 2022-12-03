@@ -10,7 +10,8 @@ class Firestore {
 
 	// Read
 	async usernameExists(username) {
-		return (await getDoc(doc(this.db, "users", username))).exists();
+      const user = await getDoc(doc(this.db, "users", username))
+		return user.exists();
 	}
 
 	// Write

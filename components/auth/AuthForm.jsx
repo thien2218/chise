@@ -2,9 +2,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import AuthField from "./AuthField";
-import { useValidation } from "../../hooks";
+import { useAuth, useValidation } from "../../hooks";
+import { useRouter } from "next/router";
 
 const AuthForm = ({ fields, submit }) => {
+	const { pathname } = useRouter();
 	const required = fields
 		.filter((field) => !field.optional)
 		.map((field) => field.name);
@@ -14,23 +16,35 @@ const AuthForm = ({ fields, submit }) => {
 	const {
 		error,
 		setError,
-		checkRequired,
 		checkLength,
 		checkEmail,
 		checkConfirmPw,
-      isValid,
+		isValid,
 		handleSubmit,
 	} = useValidation();
+	const { logout } = useAuth();
 
 	const handleBlur = (e) => {
 		const value = e.target.value;
-      const name = e.target.name;
+		const name = e.target.name;
 
-      isValid(name, "username", checkLength(value, 3, 20));
-      isValid(name, "password", checkLength(value, 6, 20));
-      isValid(name, "confirm_password", checkConfirmPw(values.password, value));
-      isValid(name, "email", checkEmail(value));
-      isValid(name, "", checkRequired(name, required, value));
+      if (!value && required.includes(name)) {
+         setError({
+            ...error,
+            [name]: "This field is required",
+         });
+         return;
+      }
+
+      if (name == "username") {
+         isValid(name, checkLength(value, 3, 20));
+      } else if (name == "password") {
+         isValid(name, checkLength(value, 6, 20));
+      } else if (name == "confirm_password") {
+         isValid(name, checkConfirmPw(values.password, value));
+      } else if (name == "email") {
+         isValid(name, checkEmail(value));
+      }
 	};
 
 	const handleFocus = (e) => {
@@ -40,12 +54,12 @@ const AuthForm = ({ fields, submit }) => {
 		});
 	};
 
-   const handleChange = (e) => {
-      setValues({
-         ...values,
-         [e.target.name]: e.target.value,
-      })
-   }
+	const handleChange = (e) => {
+		setValues({
+			...values,
+			[e.target.name]: e.target.value,
+		});
+	};
 
 	return (
 		<form className="form">
@@ -57,9 +71,10 @@ const AuthForm = ({ fields, submit }) => {
 				<AuthField
 					key={id}
 					{...field}
+               error={error[field.name]}
 					handleBlur={handleBlur}
 					handleFocus={handleFocus}
-               handleChange={handleChange}
+					handleChange={handleChange}
 				/>
 			))}
 
@@ -86,15 +101,17 @@ const AuthForm = ({ fields, submit }) => {
 			</button>
 
 			<div className="font-semibold mt-4 text-center text-sm">
-				{/* {isSignupPage ? (
-					<Link href="/login">
+				{pathname == "/auth/signup" ? (
+					<Link href="/auth/login">
 						<a>Already a member? Log in</a>
 					</Link>
-				) : ( */}
-				<Link href="/signup">
-					<a>New to ChiSe? Sign up</a>
-				</Link>
-				{/* )} */}
+				) : pathname == "/auth/profile" ? (
+					<div className="cursor-pointer" onClick={logout}>Log in with another account</div>
+				) : (
+					<Link href="/auth/signup">
+						<a>New to ChiSe? Sign up</a>
+					</Link>
+				)}
 			</div>
 		</form>
 	);

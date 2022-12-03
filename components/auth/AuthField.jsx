@@ -5,12 +5,11 @@ const AuthField = ({
 	label,
 	type,
 	placeholder,
+   error,
 	handleBlur,
 	handleFocus,
    handleChange
 }) => {
-   const { error } = useValidation();
-
 	return (
 		<div className="form-field mb-2">
 			<label className="form-label pointer-events-none" htmlFor={name}>
@@ -18,7 +17,7 @@ const AuthField = ({
 			</label>
 
 			<input
-				className={`form-input ${error[name] && "invalid"}`}
+				className={`form-input ${error && "invalid"}`}
 				autoComplete="off"
 				name={name}
 				type={type}
@@ -28,7 +27,7 @@ const AuthField = ({
 				onFocus={handleFocus}
 			/>
          
-			<span className="form-message">{error[name]}</span>
+			<span className="form-message">{error}</span>
 		</div>
 	);
 };

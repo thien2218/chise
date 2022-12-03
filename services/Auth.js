@@ -7,6 +7,7 @@ import {
 	signInWithEmailAndPassword,
 	signInWithPopup,
 	signOut,
+   updateProfile,
 } from "firebase/auth";
 
 class Auth {
@@ -28,11 +29,16 @@ class Auth {
 		return onAuthStateChanged(this.auth, (user) => cb(user));
 	}
 
+   async updateUsername(username) {
+      return updateProfile(this.auth.currentUser, {
+         displayName: username,
+      }).then(() => {
+         return this.extractUserData(this.auth.currentUser);
+      })
+   }
+
 	async login(email, password) {
 		return signInWithEmailAndPassword(this.auth, email, password)
-			.then((cred) => {
-				return { user: this.extractUserData(cred.user) };
-			})
 			.catch((err) => {
 				return { error: { invalid: "Incorrect email or password" } };
 			});
@@ -40,9 +46,6 @@ class Auth {
 
 	async signup(email, password) {
 		return createUserWithEmailAndPassword(this.auth, email, password)
-			.then((cred) => {
-				return { user: this.extractUserData(cred.user) };
-			})
 			.catch((err) => {
 				return {
 					error: {

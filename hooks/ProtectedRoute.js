@@ -1,9 +1,9 @@
-import { useUser } from "./UserProvider";
 import { useRouter } from "next/router";
+import { useAuth } from "./AuthProvider";
 
 export function withoutAuth(Components) {
    return function WithoutAuth(props) {
-      const { authUser } = useUser();
+      const { authUser } = useAuth();
       const router = useRouter();
 
       if (authUser && authUser.username) {
@@ -20,7 +20,7 @@ export function withoutAuth(Components) {
 
 export function withoutProfile(Components) {
    return function WithoutProfile(props) {
-      const { authUser } = useUser();
+      const { authUser } = useAuth();
       const router = useRouter();
 
       if (authUser && authUser.username) {
@@ -37,7 +37,7 @@ export function withoutProfile(Components) {
 
 export function withAuth(Components) {
    return function WithAuth(props) {
-      const { authUser } = useUser();
+      const { authUser } = useAuth();
       const router = useRouter();
 
       if (authUser && !authUser.username) {

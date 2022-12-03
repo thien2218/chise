@@ -5,7 +5,7 @@ import {
 	AuthProvider,
 	ValidationProvider,
 	DbProvider,
-	UserProvider,
+	AuthObserver,
 } from "../hooks";
 
 function MyApp({ Component, pageProps }) {
@@ -23,13 +23,13 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<ValidationProvider>
 			<AuthProvider>
-				<UserProvider>
+				<AuthObserver>
                <DbProvider>
                   <Layout pageName={pageName}>
                      <Component {...pageProps} />
                   </Layout>
                </DbProvider>
-            </UserProvider>
+            </AuthObserver>
 			</AuthProvider>
 		</ValidationProvider>
 	);

@@ -1,4 +1,5 @@
 import { PinBuilder } from "../components";
+import { withAuth } from "../hooks";
 
 const Create = () => {
    return (
@@ -6,4 +7,4 @@ const Create = () => {
    )
 }
 
-export default Create;
+export default withAuth(Create);

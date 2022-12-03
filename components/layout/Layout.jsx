@@ -3,7 +3,7 @@ import Header from "../common/Header";
 import Head from "next/head";
 
 const Layout = ({ children, pageName }) => {
-   const title = `Chise ${pageName ? " | " + pageName : pageName}`;
+	const title = `Chise ${pageName ? " | " + pageName : pageName}`;
 
 	return (
 		<>
@@ -17,24 +17,16 @@ const Layout = ({ children, pageName }) => {
 				<title>{title}</title>
 			</Head>
 
-			{/* {pageName != "Login" && pageName != "Signup" ? (
+			{pageName != "Login" &&
+			pageName != "Signup" &&
+			pageName != "Add Profile" ? (
 				<>
 					<Header />
-					{pageName == "Home" ? (
-						<>
-							<Sidebar />
-							<main className="pt-16 pl-[17.5rem]">{children}</main>
-						</>
-					) : (
-						<main className="pt-16">{children}</main>
-					)}
+					<main className="pt-16">{children}</main>
 				</>
 			) : (
 				children
-			)} */}
-
-         <Header />
-         <main className="pt-16">{children}</main>
+			)}
 		</>
 	);
 };

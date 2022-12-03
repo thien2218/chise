@@ -9,7 +9,6 @@ const ValidationProvider = ({ children }) => {
 	const emailRegex =
 		/[a-z0-9]+(?:\.[a-z0-9]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
    const msgs = {
-      required: "This field is required",
       email: "Invalid email pattern",
       password: "Password must contains between 6 to 20 characters",
       confirm_password: "Password confirmation does not match",
@@ -20,13 +19,12 @@ const ValidationProvider = ({ children }) => {
 		input.length > upper || input.length < lower;
 	const checkEmail = (input) =>
 		input.match(emailRegex) == null || input.match(emailRegex)[0] != input;
-   const checkRequired = (name, required, input) => required.includes(name) && !input;
-   const checkConfirmPw = (pw, confirmPw) => confirmPw == pw;
+   const checkConfirmPw = (pw, confirmPw) => confirmPw != pw;
    const checkUsername = async (username) =>
       await Firestore.usernameExists(username);
 
-	const isValid = async (name, field, cond) => {
-		if ((!field || name == field) && cond) {
+   const isValid = async (name, cond) => {
+		if (cond) {
 			setError({
 				...error,
 				[name]: msgs[name],
@@ -55,7 +53,6 @@ const ValidationProvider = ({ children }) => {
 	const value = {
 		error,
 		setError,
-		checkRequired,
 		checkLength,
 		checkEmail,
 		checkConfirmPw,

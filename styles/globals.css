@@ -63,7 +63,7 @@
 
    /* Register and login form */
    .form {
-      @apply w-full max-w-sm py-8 px-12 bg-white rounded-2xl shadow-lg;
+      @apply w-full max-w-sm py-8 px-10 bg-white rounded-2xl shadow-lg;
    }
 
    .form-field {
@@ -83,7 +83,7 @@
    }
 
    .form-message {
-      @apply mt-2 text-primary;
+      @apply mt-2 text-primary text-sm;
    }
 }
 
