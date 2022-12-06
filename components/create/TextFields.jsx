@@ -12,10 +12,10 @@ const Field = ({ styles, desc, maxChar, placeholder, name, setValues }) => {
 				className={`${styles} relative w-full focus:outline-none empty:before:content-[attr(placeholder)] empty:before:text-dark-gray cursor-text peer after:absolute after:w-full after:h-[1px] after:bg-black/30 after:bottom-0 after:left-0 pb-2.5 focus:after:h-[2px] focus:after:bg-blueish`}
 				placeholder={placeholder}
 				onInput={(e) => {
-					setCharCount(maxChar - e.target.outerText.length);
+					setCharCount(maxChar - e.target.outerText.trim().length);
 					setValues((prev) => ({
 						...prev,
-						[name]: e.target.outerText,
+						[name]: e.target.outerText.trim(),
 					}));
 				}}
 			></div>

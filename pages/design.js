@@ -1,8 +1,8 @@
-import { PinLayout } from "../components";
+import { UserLayout } from "../components";
 
 const ComponentDesign = () => {
 	return (
-      <PinLayout />
+      <UserLayout />
 	);
 };
 

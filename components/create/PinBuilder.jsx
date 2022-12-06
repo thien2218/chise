@@ -1,4 +1,6 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { useDb } from "../../hooks/DbProvider";
 import ActionBtn from "../common/ActionBtn";
 import ImgField from "./ImgField";
 import TextFields from "./TextFields";
@@ -6,11 +8,18 @@ import TextFields from "./TextFields";
 const PinBuilder = () => {
 	const [imgFile, setImgFile] = useState(null);
 	const [values, setValues] = useState({
-		imgUrl: "",
-      imgRatio: 0,
+		imgRatio: 0,
 		savedBy: [],
 		cmtDisabled: false,
 	});
+   const { createPin } = useDb();
+   const router = useRouter();
+
+   const handleCreate = async (e) => {
+      e.preventDefault();
+      await createPin(imgFile, values);
+      router.push("/");
+   }
 
 	return (
 		<form>
@@ -24,10 +33,13 @@ const PinBuilder = () => {
 
 					<TextFields setValues={setValues}>
 						<div className="flex gap-3">
-							<ActionBtn
-								action="Upload"
-								classes="rounded-full secondary-btn"
-							/>
+							<button
+								className="py-3 px-4 font-semibold rounded-full secondary-btn"
+								onClick={handleCreate}
+							>
+								Upload
+							</button>
+
 							<ActionBtn
 								action="Save"
 								classes="rounded-full primary-btn"

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useAuth } from "./AuthProvider";
+import { Loader } from "../components";
 
 export function withoutAuth(Components) {
    return function WithoutAuth(props) {
@@ -8,10 +9,10 @@ export function withoutAuth(Components) {
 
       if (authUser && authUser.username) {
          router.replace("/");
-         return <div>Loading...</div>;
+         return <Loader />;
       } else if (authUser && !authUser.username) {
          router.replace("/auth/profile");
-         return <div>Loading...</div>;
+         return <Loader />;
       }
 
       return <Components {...props} />
@@ -25,10 +26,10 @@ export function withoutProfile(Components) {
 
       if (authUser && authUser.username) {
          router.replace("/");
-         return <div>Loading...</div>;
+         return <Loader />;
       } else if (!authUser) {
          router.replace("/auth/login");
-         return <div>Loading...</div>;
+         return <Loader />;
       }
 
       return <Components {...props} />
@@ -42,10 +43,10 @@ export function withAuth(Components) {
 
       if (authUser && !authUser.username) {
          router.replace("/auth/profile");
-         return <div>Loading...</div>;
+         return <Loader />;
       } else if (!authUser) {
          router.replace("/auth/login");
-         return <div>Loading...</div>;
+         return <Loader />;
       }
 
       return <Components {...props} />

@@ -1,9 +1,12 @@
 import Image from "next/image";
+import { useAuth } from "../../hooks";
 
-const UserInfo = ({ username, emailShort, description, follows, viewOthers }) => {
+const UserInfo = ({ username, emailShort, description, follows }) => {
+   const { authUser } = useAuth();
+
 	return (
 		<div className="w-full flex flex-col items-center text-center mb-8 min-w-[375px]">
-			<div className="rounded-full overflow-hidden h-[7.5rem] w-[7.5rem] my-1">
+			<div className="rounded-full overflow-hidden h-[7rem] w-[7rem] my-1">
 				<Image
 					src="/assets/cat.jpg"
 					objectFit="cover"
@@ -23,19 +26,19 @@ const UserInfo = ({ username, emailShort, description, follows, viewOthers }) =>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt minima alias eaque qui cum labore optio officia, fugit veniam tenetur.
          </p>
 
-			<div className="my-1 font-semibold">0 following</div>
+			<div className="my-1 font-semibold">0 following - 0 followers</div>
 
-         {!viewOthers ? (
+         {/* {!viewOthers ? (
             <div className="my-1 pt-2">
                <button className="secondary-btn rounded-2xl py-3 px-4">Edit Profile</button>
             </div>
-         ) : (
-            <div className="my-1 pt-2 grid grid-cols-3 gap-4">
-               <button className="secondary-btn rounded-2xl py-3 px-4">Block</button>
-               <button className="primary-btn py-3 px-4 rounded-2xl">Follow</button>
-               <button className="secondary-btn rounded-2xl py-3 px-4">Report</button>
-            </div>
-         )}
+         ) : ( */}
+         <div className="my-1 pt-2 grid grid-cols-3 gap-3">
+            <button className="secondary-btn rounded-full py-3 px-4">Block</button>
+            <button className="primary-btn py-3 px-4 rounded-full">Follow</button>
+            <button className="secondary-btn rounded-full py-3 px-4">Report</button>
+         </div>
+         {/* )} */}
 		</div>
 	);
 };

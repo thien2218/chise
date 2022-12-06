@@ -1,5 +1,12 @@
 import app from "./firebase-config";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import {
+	addDoc,
+	collection,
+	doc,
+	getDoc,
+	getFirestore,
+	setDoc,
+} from "firebase/firestore";
 
 class Firestore {
 	constructor(app) {
@@ -10,7 +17,7 @@ class Firestore {
 
 	// Read
 	async usernameExists(username) {
-      const user = await getDoc(doc(this.db, "users", username))
+		const user = await getDoc(doc(this.db, "users", username));
 		return user.exists();
 	}
 
@@ -19,6 +26,19 @@ class Firestore {
 	// Create
 	async createUser(username, values) {
 		return await setDoc(doc(this.db, "users", username), values);
+	}
+
+	// Delete
+
+	// ------------ PIN ------------
+
+	// Read
+
+	// Write
+
+	// Create
+	async createPin(values) {
+		return await addDoc(collection(this.db, "pins"), values);
 	}
 
 	// Delete

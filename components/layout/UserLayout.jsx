@@ -1,7 +1,7 @@
-import UserInfo from '../low/UserInfo';
+import UserInfo from '../user/UserInfo';
 import MasonryLayout from './MasonryLayout';
 
-const UserLayout = ({ children }) => {
+const UserLayout = () => {
    return (
       <>
          <UserInfo viewOthers />
@@ -15,9 +15,7 @@ const UserLayout = ({ children }) => {
             </div>
          </div>
 
-         <MasonryLayout>
-            {children}
-         </MasonryLayout>
+         <MasonryLayout />
       </>
    )
 }

@@ -37,12 +37,14 @@ const UploadField = ({ setImgSrc, setImgFile, setValues }) => {
 				const H = (ev.target.height * W) / ev.target.width;
 
 				const imgRatio = Math.floor((H / W) * 100);
+            const createdAt = (new Date()).getTime();
 				canvas.height = H;
 				canvas.width = W;
 
 				setValues((prev) => ({
                ...prev,
                imgRatio,
+               createdAt,
             }));
 				setImgSrc(imgSrc);
 
@@ -53,7 +55,8 @@ const UploadField = ({ setImgSrc, setImgFile, setValues }) => {
 					(blob) => {
 						const imgFile = new File(
 							[blob],
-							`pin-image${(new Date() / 1000) | 0}.webp`
+							`pin-image${createdAt}.webp`,
+                     { type: "image/webp" }
 						);
 						setImgFile(imgFile);
 					},
