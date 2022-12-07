@@ -20,8 +20,6 @@ const ValidationProvider = ({ children }) => {
 	const checkEmail = (input) =>
 		input.match(emailRegex) == null || input.match(emailRegex)[0] != input;
    const checkConfirmPw = (pw, confirmPw) => confirmPw != pw;
-   const checkUsername = async (username) =>
-      await Firestore.usernameExists(username);
 
    const isValid = async (name, cond) => {
 		if (cond) {
@@ -44,9 +42,12 @@ const ValidationProvider = ({ children }) => {
 			} else if (error[field]) invalid = true;
 		}
 
-		setError({ ...error, ...curError });
-		if (invalid) return;
+		if (invalid) {
+         setError({ ...error, ...curError });
+         return;
+      }
 
+      setError({});
 		await submit(values);
 	};
 
@@ -56,7 +57,6 @@ const ValidationProvider = ({ children }) => {
 		checkLength,
 		checkEmail,
 		checkConfirmPw,
-		checkUsername,
       isValid,
 		handleSubmit,
 	};

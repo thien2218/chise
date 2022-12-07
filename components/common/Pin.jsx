@@ -1,9 +1,9 @@
 import AdjustedImg from "./AdjustedImg";
-import Image from "next/image";
 import Link from "next/link";
 import { HiPencil, HiFlag } from "react-icons/hi";
 import { MdCloudDownload } from "react-icons/md";
 import { IoLink } from "react-icons/io5";
+import Avatar from "./Avatar";
 
 const Pin = () => {
 	return (
@@ -54,10 +54,7 @@ const Pin = () => {
 
             <Link href="/">
                <a className="flex items-center hover:last:underline">
-                  <div className="relative h-8 w-8 rounded-full overflow-hidden">
-                     <Image layout="fill" objectFit="cover" src="/assets/cat1.jpg" />
-                  </div>
-               
+                  <Avatar size={8} src="/assets/cat1.jpg" />
                   <div className="text-sm ml-1.5">Thien Huynh</div>
                </a>
             </Link>

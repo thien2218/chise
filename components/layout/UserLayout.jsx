@@ -4,7 +4,7 @@ import MasonryLayout from './MasonryLayout';
 const UserLayout = () => {
    return (
       <>
-         <UserInfo viewOthers />
+         <UserInfo />
 
          <div className='flex justify-center'>
             <div className='py-3 mx-2'>

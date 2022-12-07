@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Avatar from "../common/Avatar";
 
 const Field = ({ styles, desc, maxChar, placeholder, name, setValues }) => {
 	const [charCount, setCharCount] = useState(maxChar);
@@ -18,7 +18,7 @@ const Field = ({ styles, desc, maxChar, placeholder, name, setValues }) => {
 						[name]: e.target.outerText.trim(),
 					}));
 				}}
-			></div>
+			/>
 
 			<div className="flex justify-between text-xs opacity-0 peer-focus:opacity-100 mt-[2px] text-dark-gray">
 				<span>{desc}</span>
@@ -57,11 +57,7 @@ const TextFields = ({ children, setValues }) => {
 			<div className="mt-4 flex items-center pr-3 gap-1">
 				<Link href="/">
 					<a className="mx-1 rounded-full overflow-hidden h-11 w-11 relative">
-						<Image
-							src="/assets/cat.jpg"
-							objectFit="cover"
-							layout="fill"
-						/>
+						<Avatar size={11} src="/assets/cat.jpg" />
 					</a>
 				</Link>
 

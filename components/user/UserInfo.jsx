@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useAuth } from "../../hooks";
 
-const UserInfo = ({ username, emailShort, description, follows }) => {
+const UserInfo = ({ username, emailShort, bio, follows }) => {
    const { authUser } = useAuth();
 
 	return (

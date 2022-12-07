@@ -1,5 +1,5 @@
 import { useState, useContext, createContext } from "react";
-import { Auth, Firestore } from "../services";
+import { Auth } from "../services";
 import { useValidation } from "./ValidationProvider";
 
 const AuthContext = createContext();
@@ -19,19 +19,6 @@ const AuthProvider = ({ children }) => {
 		setError(error ?? {});
 	};
 
-	const createUser = async ({ username, ...optionals }, userData) => {
-		if (!(await Firestore.usernameExists(username))) {
-         setError({});
-         const updatedUser = await Auth.updateUsername(username);
-         setAuthUser(updatedUser);
-			await Firestore.createUser(username, { ...optionals, ...userData });
-		} else {
-         setError({
-            invalid: "This username has already existed",
-         })
-      }
-	};
-
 	const logout = async () => {
 		await Auth.logout();
 	};
@@ -41,7 +28,6 @@ const AuthProvider = ({ children }) => {
       setAuthUser,
 		login,
 		signup,
-		createUser,
 		logout,
 	};
 

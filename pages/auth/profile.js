@@ -1,4 +1,4 @@
-import { useAuth, withoutProfile } from "../../hooks";
+import { useDb, withoutProfile } from "../../hooks";
 import { AuthLayout } from "../../components";
 
 const Profile = () => {
@@ -24,10 +24,10 @@ const Profile = () => {
          optional: true,
       },
    ];
-   const { createUser, authUser: { username, ...userData } } = useAuth();
+   const { createUser } = useDb();
 
    return (
-      <AuthLayout fields={fields} submit={(values) => createUser(values, userData)} />
+      <AuthLayout fields={fields} submit={createUser} />
    )
 }
 

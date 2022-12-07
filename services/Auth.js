@@ -16,10 +16,12 @@ class Auth {
 	}
 
 	extractUserData(user) {
+      const regex = /^.*?(?=@)/g;
+
 		return {
 			id: user.uid,
 			username: user.displayName,
-			emailShort: user.email,
+			emailShort: user.email.match(regex)[0],
 			emailVerified: user.emailVerified,
 			profileImg: user.photoURL,
 		};
