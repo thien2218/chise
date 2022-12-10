@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import { Firestore } from "../services";
 
 const ValidationContext = createContext();
 export const useValidation = () => useContext(ValidationContext);
@@ -30,14 +29,13 @@ const ValidationProvider = ({ children }) => {
 		}
 	};
 
-	const handleSubmit = async (e, required, values, submit) => {
-		e.preventDefault();
+	const handleSubmit = async (required, values, submit) => {
 		const curError = {};
 		let invalid = false;
 
 		for (const field of required) {
 			if (!values[field]) {
-				curError = { ...curError, [field]: msgs["required"] };
+				curError = { ...curError, [field]: "This field is required" };
 				invalid = true;
 			} else if (error[field]) invalid = true;
 		}

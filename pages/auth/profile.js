@@ -24,10 +24,10 @@ const Profile = () => {
          optional: true,
       },
    ];
-   const { createUser } = useDb();
+   const { addUser } = useDb();
 
    return (
-      <AuthLayout fields={fields} submit={createUser} />
+      <AuthLayout fields={fields} submit={addUser} />
    )
 }
 

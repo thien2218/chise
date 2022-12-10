@@ -1,6 +1,7 @@
 import app from "./firebase-config";
 import {
 	createUserWithEmailAndPassword,
+	getAdditionalUserInfo,
 	getAuth,
 	GoogleAuthProvider,
 	onAuthStateChanged,
@@ -63,10 +64,17 @@ class Auth {
 
 		return signInWithPopup(this.auth, provider)
 			.then((cred) => {
-				return { user: this.extractUserData(cred.user) };
+            const user = this.extractUserData(cred.user);
+            const { isNewUser } = getAdditionalUserInfo(cred);
+				return { user, isNewUser };
 			})
 			.catch((err) => {
-				return { error: err.message };
+				return {
+					error: {
+						invalid:
+							"This email has already been assigned with an existing account",
+					},
+            };
 			});
 	}
 

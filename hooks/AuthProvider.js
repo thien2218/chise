@@ -11,13 +11,21 @@ const AuthProvider = ({ children }) => {
 
 	const login = async ({ email, password }) => {
 		const { error } = await Auth.login(email, password);
-		setError(error ?? {});
+		if (error) setError(error);
 	};
 
 	const signup = async ({ email, password }) => {
 		const { error } = await Auth.signup(email, password);
-		setError(error ?? {});
+		if (error) setError(error);
 	};
+
+   const loginWithGoogle = async (addGoogleUser) => {
+      const { user: { username, ...otherData }, isNewUser, error } = await Auth.loginWithGoogle();
+		if (error) { setError(error) }
+      else if (isNewUser) {
+         addGoogleUser(username, otherData);
+      }
+   }
 
 	const logout = async () => {
 		await Auth.logout();
@@ -28,6 +36,7 @@ const AuthProvider = ({ children }) => {
       setAuthUser,
 		login,
 		signup,
+      loginWithGoogle,
 		logout,
 	};
 

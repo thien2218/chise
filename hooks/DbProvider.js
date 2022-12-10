@@ -11,13 +11,13 @@ const DbProvider = ({ children }) => {
    const { authUser, setAuthUser } = useAuth();
    const { setError } = useValidation();
 
-   const createPin = async (imgFile, values) => {
+   const addPin = async (imgFile, values) => {
       const { id, emailVerified, ...author } = authUser;
       const imgUrl = await Storage.uploadImage(imgFile, "pin");
       return await Firestore.createPin({ author, imgUrl, ...values });
    }
 
-   const createUser = async ({ username, ...optionals }) => {
+   const addUser = async ({ username, ...optionals }) => {
       const { username: _, ...userData } = authUser;
 
 		if (!(await Firestore.usernameExists(username))) {
@@ -31,9 +31,19 @@ const DbProvider = ({ children }) => {
       }
 	};
 
+   const addGoogleUser = async (username, otherData) => {
+      if (!(await Firestore.usernameExists(username))) {
+         const updatedUser = await Auth.updateUsername("");
+         setAuthUser(updatedUser);
+		} else {
+         await Firestore.createUser(username, otherData);
+      }
+   }
+
    const value = {
-      createUser,
-      createPin,
+      addPin,
+      addUser,
+      addGoogleUser,
    }
 
    return (

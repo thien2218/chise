@@ -3,8 +3,10 @@ import Link from "next/link";
 
 const PinComment = () => {
 	return (
-		<div className="grid grid-cols-[40px_1fr]">
-			<Avatar size={8} src="/assets/cat1.jpg" />
+		<div className="grid grid-cols-[auto_1fr] gap-2">
+			<Link href="/">
+            <a><Avatar size={8} src="/assets/cat1.jpg" /></a>
+         </Link>
 
 			<div>
 				<div>
@@ -19,8 +21,8 @@ const PinComment = () => {
 
             <div className="flex gap-4 text-sm">
                <span className="text-black/40">1d</span>
-               <span className="font-semibold text-dark-gray">Like</span>
-               <span className="font-semibold text-dark-gray">Report</span>
+               <button className="font-semibold text-dark-gray">Like</button>
+               <button className="font-semibold text-dark-gray">Report</button>
             </div>
 			</div>
 		</div>

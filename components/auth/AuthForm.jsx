@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import AuthField from "./AuthField";
-import { useAuth, useValidation } from "../../hooks";
+import { useAuth, useDb, useValidation } from "../../hooks";
 import { useRouter } from "next/router";
 
 const AuthForm = ({ fields, submit }) => {
@@ -22,29 +22,30 @@ const AuthForm = ({ fields, submit }) => {
 		isValid,
 		handleSubmit,
 	} = useValidation();
-	const { logout } = useAuth();
+	const { logout, loginWithGoogle } = useAuth();
+	const { addGoogleUser } = useDb();
 
 	const handleBlur = (e) => {
 		const value = e.target.value;
 		const name = e.target.name;
 
-      if (!value && required.includes(name)) {
-         setError({
-            ...error,
-            [name]: "This field is required",
-         });
-         return;
-      }
+		if (!value && required.includes(name)) {
+			setError({
+				...error,
+				[name]: "This field is required",
+			});
+			return;
+		}
 
-      if (name == "username") {
-         isValid(name, checkLength(value, 3, 20));
-      } else if (name == "password") {
-         isValid(name, checkLength(value, 6, 20));
-      } else if (name == "confirm_password") {
-         isValid(name, checkConfirmPw(values.password, value));
-      } else if (name == "email") {
-         isValid(name, checkEmail(value));
-      }
+		if (name == "username") {
+			isValid(name, checkLength(value, 3, 20));
+		} else if (name == "password") {
+			isValid(name, checkLength(value, 6, 20));
+		} else if (name == "confirm_password") {
+			isValid(name, checkConfirmPw(values.password, value));
+		} else if (name == "email") {
+			isValid(name, checkEmail(value));
+		}
 	};
 
 	const handleFocus = (e) => {
@@ -71,7 +72,7 @@ const AuthForm = ({ fields, submit }) => {
 				<AuthField
 					key={id}
 					{...field}
-               error={error[field.name]}
+					error={error[field.name]}
 					handleBlur={handleBlur}
 					handleFocus={handleFocus}
 					handleChange={handleChange}
@@ -83,7 +84,10 @@ const AuthForm = ({ fields, submit }) => {
 			</div>
 
 			<button
-				onClick={(e) => handleSubmit(e, required, values, submit)}
+				onClick={(e) => {
+					e.preventDefault();
+					handleSubmit(required, values, submit);
+				}}
 				className="primary-btn w-full py-2 px-4 rounded-2xl mt-2"
 			>
 				Continue
@@ -91,7 +95,13 @@ const AuthForm = ({ fields, submit }) => {
 
 			<p className="my-2 font-semibold text-sm text-center">OR</p>
 
-			<button className="google-auth-btn w-full py-2 px-4 rounded-2xl">
+			<button
+				className="google-auth-btn w-full py-2 px-4 rounded-2xl"
+				onClick={(e) => {
+					e.preventDefault();
+					loginWithGoogle(addGoogleUser);
+				}}
+			>
 				<div className="flex gap-3 items-center">
 					<div>Continue with Google</div>
 					<div className="bg-white w-6 h-6 rounded-full flex justify-center items-center">
@@ -106,7 +116,9 @@ const AuthForm = ({ fields, submit }) => {
 						<a>Already a member? Log in</a>
 					</Link>
 				) : pathname == "/auth/profile" ? (
-					<div className="cursor-pointer" onClick={logout}>Log in with another account</div>
+					<div className="cursor-pointer" onClick={logout}>
+						Log in with another account
+					</div>
 				) : (
 					<Link href="/auth/signup">
 						<a>New to ChiSe? Sign up</a>

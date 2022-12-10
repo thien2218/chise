@@ -12,12 +12,12 @@ const PinBuilder = () => {
 		savedBy: [],
 		cmtDisabled: false,
 	});
-   const { createPin } = useDb();
+   const { addPin } = useDb();
    const router = useRouter();
 
    const handleCreate = async (e) => {
       e.preventDefault();
-      await createPin(imgFile, values);
+      await addPin(imgFile, values);
       router.push("/");
    }
 
