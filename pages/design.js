@@ -1,9 +1,9 @@
-import { UserLayout } from "../components";
+import { ReportForm } from "../components";
 
-const ComponentDesign = () => {
+const Design = () => {
 	return (
-      <UserLayout />
+      <ReportForm />
 	);
 };
 
-export default ComponentDesign;
+export default Design;

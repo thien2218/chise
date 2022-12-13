@@ -17,13 +17,13 @@ const DbProvider = ({ children }) => {
       return await Firestore.createPin({ author, imgUrl, ...values });
    }
 
-   const addUser = async ({ username, ...optionals }) => {
+   const addUser = async ({ username, about }) => {
       const { username: _, ...userData } = authUser;
 
 		if (!(await Firestore.usernameExists(username))) {
          const updatedUser = await Auth.updateUsername(username);
          setAuthUser(updatedUser);
-			await Firestore.createUser(username, { ...optionals, ...userData });
+			await Firestore.createUser(username, { about, ...userData });
 		} else {
          setError({
             invalid: "This username has already existed",

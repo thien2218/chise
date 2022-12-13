@@ -15,7 +15,7 @@ const PinUserInfo = ({ img, username }) => {
             <a className="font-semibold text-sm flex-1">{username}</a>
          </Link>
 
-			<ActionBtn action="Follow" classes="secondary-btn rounded-full" />
+			<ActionBtn classes="secondary-btn" >Follow</ActionBtn>
 		</div>
 	);
 };

@@ -1,7 +1,6 @@
 import AdjustedImg from "./AdjustedImg";
 import Link from "next/link";
-import { HiPencil, HiFlag } from "react-icons/hi";
-import { MdCloudDownload } from "react-icons/md";
+import { HiPencil, HiFlag, HiDownload } from "react-icons/hi";
 import { IoLink } from "react-icons/io5";
 import Avatar from "./Avatar";
 
@@ -34,7 +33,7 @@ const Pin = () => {
 
                   <div className="flex h-8 gap-2.5">
                      <button className="aspect-square flex justify-center items-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition">
-                        <MdCloudDownload className="text-lg" />
+                        <HiDownload className="text-lg" />
                      </button>
 
                      <button className="aspect-square flex justify-center items-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition">

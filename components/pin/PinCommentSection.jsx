@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoArrowForwardCircle } from "react-icons/io5";
 import Avatar from "../common/Avatar";
 import PinComment from "./PinComment";
 
@@ -18,19 +19,24 @@ const PinCommentSection = ({ comments }) => {
 				</button>
 
 				<div className="py-4">
-					<div className="flex gap-2">
+					<div className="relative flex gap-2">
 						<Avatar size={10} src="/assets/cat.jpg" />
 
 						<div
 							contentEditable
-							className="relative flex-1 max-w-[calc(100%_-_3rem)] empty:before:content-[attr(placeholder)] empty:before:text-dark-gray cursor-text py-2 px-3.5 rounded-full shadow-[0_0_0_1.5px_inset] shadow-dimmed-700 focus:outline-none focus:shadow-blueish
-                     focus:rounded-2xl"
+							className="relative flex-1 max-w-[calc(100%_-_3rem)] pr-10 empty:before:content-[attr(placeholder)] empty:before:text-dark-gray cursor-text py-2 px-3.5 rounded-full shadow-[0_0_0_1.5px_inset] shadow-dimmed-700 focus:outline-none focus:shadow-blueish focus:rounded-2xl"
 							placeholder="Add a comment"
 						/>
+
+                  <div className="absolute h-10 aspect-square flex justify-center items-center right-0">
+                     <button className="text-4xl text-primary hover:text-primary-hover">
+                        <IoArrowForwardCircle />
+                     </button>
+                  </div>
 					</div>
 
 					{showComments && (
-						<div className="mt-6 h-max max-h-96 overflow-y-scroll">
+						<div className="flex flex-col gap-2 mt-6 h-max max-h-96 overflow-y-scroll">
 							<PinComment />
 							<PinComment />
 							<PinComment />

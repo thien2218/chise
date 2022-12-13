@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useDb } from "../../hooks/DbProvider";
+import { useDb } from "../../hooks";
 import ActionBtn from "../common/ActionBtn";
-import ImgField from "./ImgField";
-import TextFields from "./TextFields";
+import ImgField from "../create/ImgField";
+import TextFields from "../create/TextFields";
 
 const PinBuilder = () => {
 	const [imgFile, setImgFile] = useState(null);
@@ -12,14 +12,14 @@ const PinBuilder = () => {
 		savedBy: [],
 		cmtDisabled: false,
 	});
-   const { addPin } = useDb();
-   const router = useRouter();
+	const { addPin } = useDb();
+	const router = useRouter();
 
-   const handleCreate = async (e) => {
-      e.preventDefault();
-      await addPin(imgFile, values);
-      router.push("/");
-   }
+	const handleCreate = async (e) => {
+		e.preventDefault();
+		await addPin(imgFile, values);
+		router.push("/");
+	};
 
 	return (
 		<form>
@@ -40,10 +40,9 @@ const PinBuilder = () => {
 								Upload
 							</button>
 
-							<ActionBtn
-								action="Save"
-								classes="rounded-full primary-btn"
-							/>
+							<ActionBtn classes="primary-btn">
+								Save
+							</ActionBtn>
 						</div>
 					</TextFields>
 				</div>

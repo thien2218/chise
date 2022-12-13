@@ -1,6 +1,6 @@
-const ActionBtn = ({ action, done, classes }) => {
+const ActionBtn = ({ children, done, classes }) => {
 	return (
-		<button className={`py-3 px-4 font-semibold ${classes}`}>{action}</button>
+		<button className={`py-3 px-4 font-semibold rounded-full ${classes}`}>{children}</button>
 	);
 };
 

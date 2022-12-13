@@ -10,17 +10,10 @@ const Profile = () => {
          placeholder: "Create your username",
       },
       {
-         name: "first_name",
-         label: "First name",
+         name: "about",
+         label: "About (optional)",
          type: "text",
-         placeholder: "Ex: Ada",
-         optional: true,
-      },
-      {
-         name: "last_name",
-         label: "Last name",
-         type: "text",
-         placeholder: "Ex: Lovelace",
+         placeholder: "Tell us about you",
          optional: true,
       },
    ];
