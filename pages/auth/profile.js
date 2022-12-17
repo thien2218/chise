@@ -1,13 +1,27 @@
 import { useDb, withoutProfile } from "../../hooks";
-import { AuthLayout } from "../../components";
+import { AuthLayout, ProfileForm } from "../../components";
 
 const Profile = () => {
+   const msgs = {
+      username: {
+         lengthBetween: "Username must contain between 3 to 20 characters",
+         textDigitOnly: "Username can only contain text or digits",
+      },
+      display_name: "Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}"
+   }
+
    const fields = [
       {
          name: "username",
          label: "Username",
          type: "text",
          placeholder: "Create your username",
+      },
+      {
+         name: "display_name",
+         label: "Name",
+         type: "text",
+         placeholder: "Ex: Ada Lovelace",
       },
       {
          name: "about",
@@ -20,7 +34,9 @@ const Profile = () => {
    const { addUser } = useDb();
 
    return (
-      <AuthLayout fields={fields} submit={addUser} />
+      <AuthLayout>
+         <ProfileForm fields={fields} submit={addUser} msgs={msgs} />
+      </AuthLayout>
    )
 }
 

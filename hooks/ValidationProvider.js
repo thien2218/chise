@@ -7,24 +7,22 @@ const ValidationProvider = ({ children }) => {
 	const [error, setError] = useState({});
 	const emailRegex =
 		/[a-z0-9]+(?:\.[a-z0-9]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-   const msgs = {
-      email: "Invalid email pattern",
-      password: "Password must contains between 6 to 20 characters",
-      confirm_password: "Password confirmation does not match",
-      username: "Username must contains between 3 to 20 characters",
-   }
+   const usernameRegex = /^[a-zA-Z0-9]*$/;
+   const nameRegex = /[@#$^*\-+=|"`\\<>[\]{}]/;
 
 	const checkLength = (input, lower, upper) =>
 		input.length > upper || input.length < lower;
 	const checkEmail = (input) =>
-		input.match(emailRegex) == null || input.match(emailRegex)[0] != input;
+		emailRegex.test(input) || input.match(emailRegex)[0] != input;
+   const checkName = (input) => nameRegex.test(input);
+   const checkUsername = (input) => !usernameRegex.test(input);
    const checkConfirmPw = (pw, confirmPw) => confirmPw != pw;
 
-   const isValid = async (name, cond) => {
+   const isValid = async (name, cond, msg) => {
 		if (cond) {
 			setError({
 				...error,
-				[name]: msgs[name],
+				[name]: msg,
 			});
 		}
 	};
@@ -55,6 +53,8 @@ const ValidationProvider = ({ children }) => {
 		checkLength,
 		checkEmail,
 		checkConfirmPw,
+      checkName,
+      checkUsername,
       isValid,
 		handleSubmit,
 	};

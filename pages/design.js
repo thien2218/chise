@@ -1,8 +1,8 @@
-import { ReportForm } from "../components";
+import { SettingsLayout } from "../components";
 
 const Design = () => {
 	return (
-      <ReportForm />
+      <SettingsLayout />
 	);
 };
 

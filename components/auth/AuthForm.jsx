@@ -1,15 +1,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
-import AuthField from "./AuthField";
+import TextField from "../common/TextField";
 import { useAuth, useDb, useValidation } from "../../hooks";
 import { useRouter } from "next/router";
 
-const AuthForm = ({ fields, submit }) => {
+const AuthForm = ({ fields, submit, msgs }) => {
 	const { pathname } = useRouter();
-	const required = fields
-		.filter((field) => !field.optional)
-		.map((field) => field.name);
+	const required = fields.map((field) => field.name);
 	const initState = required.reduce((acc, cur) => ({ ...acc, [cur]: "" }), {});
 
 	const [values, setValues] = useState(initState);
@@ -22,11 +20,11 @@ const AuthForm = ({ fields, submit }) => {
 		isValid,
 		handleSubmit,
 	} = useValidation();
-	const { logout, loginWithGoogle } = useAuth();
+	const { loginWithGoogle } = useAuth();
 	const { addGoogleUser } = useDb();
 
 	const handleBlur = (e) => {
-		const value = e.target.value;
+		const value = e.target.value.trim();
 		const name = e.target.name;
 
 		if (!value && required.includes(name)) {
@@ -36,15 +34,13 @@ const AuthForm = ({ fields, submit }) => {
 			});
 			return;
 		}
-
-		if (name == "username") {
-			isValid(name, checkLength(value, 3, 20));
-		} else if (name == "password") {
-			isValid(name, checkLength(value, 6, 20));
+      
+      if (name == "password") {
+			isValid(name, checkLength(value, 6, 20), msgs[name]);
 		} else if (name == "confirm_password") {
-			isValid(name, checkConfirmPw(values.password, value));
+			isValid(name, checkConfirmPw(values.password, value), msgs[name]);
 		} else if (name == "email") {
-			isValid(name, checkEmail(value));
+			isValid(name, checkEmail(value), msgs[name]);
 		}
 	};
 
@@ -58,18 +54,18 @@ const AuthForm = ({ fields, submit }) => {
 	const handleChange = (e) => {
 		setValues({
 			...values,
-			[e.target.name]: e.target.value,
+			[e.target.name]: e.target.value.trim(),
 		});
 	};
 
 	return (
-		<form className="form">
+		<form className="w-full max-w-sm py-8 px-10 bg-white rounded-2xl shadow-lg">
 			<h1 className="text-[2rem] heading text-center mb-4">
 				Welcome to ChiSe
 			</h1>
 
 			{fields.map((field, id) => (
-				<AuthField
+				<TextField
 					key={id}
 					{...field}
 					error={error[field.name]}
@@ -115,10 +111,6 @@ const AuthForm = ({ fields, submit }) => {
 					<Link href="/auth/login">
 						<a>Already a member? Log in</a>
 					</Link>
-				) : pathname == "/auth/profile" ? (
-					<div className="cursor-pointer" onClick={logout}>
-						Log in with another account
-					</div>
 				) : (
 					<Link href="/auth/signup">
 						<a>New to ChiSe? Sign up</a>
