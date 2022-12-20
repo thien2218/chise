@@ -3,7 +3,7 @@ const TextField = ({
 	label,
 	type,
 	placeholder,
-   displayValue,
+   defaultValue,
    error,
 	handleBlur,
 	handleFocus,
@@ -16,12 +16,12 @@ const TextField = ({
 			</label>
 
 			<input
-				className={`py-2 px-4 w-full rounded-2xl border-2 outline-none border-[#cdcdcd] leading-7 hover:border-[#888888] focus:border-[#257ef2] ${error && "invalid"}`}
+				className={`py-2 px-4 w-full rounded-2xl border-2 outline-none border-[#cdcdcd] leading-7 hover:border-[#888888] focus:border-[#257ef2] ${error && "border-primary hover:border-primary hover:bg-white bg-red-50"}`}
 				autoComplete="off"
 				name={name}
 				type={type}
 				placeholder={placeholder}
-            value={displayValue}
+            value={defaultValue}
 				onBlur={handleBlur}
             onChange={handleChange}
 				onFocus={handleFocus}

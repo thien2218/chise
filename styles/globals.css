@@ -46,10 +46,6 @@
    .heading {
       @apply text-[2.25rem] leading-[2.75rem] font-semibold;
    }
-
-   .invalid {
-      @apply border-primary hover:bg-white bg-red-50;
-   }
 }
 
 /* .tags::-webkit-scrollbar {

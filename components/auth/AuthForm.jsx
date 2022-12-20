@@ -21,7 +21,6 @@ const AuthForm = ({ fields, submit, msgs }) => {
 		handleSubmit,
 	} = useValidation();
 	const { loginWithGoogle } = useAuth();
-	const { addGoogleUser } = useDb();
 
 	const handleBlur = (e) => {
 		const value = e.target.value.trim();
@@ -54,7 +53,7 @@ const AuthForm = ({ fields, submit, msgs }) => {
 	const handleChange = (e) => {
 		setValues({
 			...values,
-			[e.target.name]: e.target.value.trim(),
+			[e.target.name]: e.target.value,
 		});
 	};
 
@@ -95,7 +94,7 @@ const AuthForm = ({ fields, submit, msgs }) => {
 				className="google-auth-btn w-full py-2 px-4 rounded-2xl"
 				onClick={(e) => {
 					e.preventDefault();
-					loginWithGoogle(addGoogleUser);
+					loginWithGoogle();
 				}}
 			>
 				<div className="flex gap-3 items-center">

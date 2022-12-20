@@ -17,15 +17,15 @@ class Auth {
 	}
 
 	extractUserData(user) {
-      const nameAndUsername = user.displayName.split("@");
+      const strName = user.displayName || "";
+      const nameAndUsername = strName.split("@");
 
 		return {
 			id: user.uid,
-         displayName: nameAndUsername[0],
+         name: nameAndUsername[0],
 			username: nameAndUsername[1],
-			email: user.email,
 			emailVerified: user.emailVerified,
-			profileImg: user.photoURL,
+			profileUrl: user.photoURL,
 		};
 	}
 
@@ -33,9 +33,10 @@ class Auth {
 		return onAuthStateChanged(this.auth, (user) => cb(user));
 	}
 
-   async updateUsername(username) {
+   async updateUser(displayName, photoURL) {
       return updateProfile(this.auth.currentUser, {
-         displayName: username,
+         displayName,
+         photoURL,
       }).then(() => {
          return this.extractUserData(this.auth.currentUser);
       })

@@ -7,7 +7,7 @@ const Profile = () => {
          lengthBetween: "Username must contain between 3 to 20 characters",
          textDigitOnly: "Username can only contain text or digits",
       },
-      display_name: "Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}"
+      name: "Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}"
    }
 
    const fields = [
@@ -18,7 +18,7 @@ const Profile = () => {
          placeholder: "Create your username",
       },
       {
-         name: "display_name",
+         name: "name",
          label: "Name",
          type: "text",
          placeholder: "Ex: Ada Lovelace",
