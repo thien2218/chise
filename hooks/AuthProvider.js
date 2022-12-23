@@ -7,6 +7,7 @@ export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
 	const [authUser, setAuthUser] = useState(null);
+	const [loading, setLoading] = useState(true);
 	const { setError, shortenEmailRegex } = useValidation();
 
 	const login = async ({ email, password }) => {
@@ -16,38 +17,36 @@ const AuthProvider = ({ children }) => {
 
 	const signup = async ({ email, password }) => {
 		const { error } = await Auth.signup(email, password);
-		if (error) { setError(error)}
-      else {
-         const username = "@" + email.match(shortenEmailRegex)[0];
-         const updatedUser = await Auth.updateUser(username, "");
-         setAuthUser(updatedUser);
-      }
+		if (error) {
+			setError(error);
+		} else {
+			const username = "@" + email.match(shortenEmailRegex)[0];
+			const updatedUser = await Auth.updateUser(username, "");
+			setAuthUser(updatedUser);
+		}
 	};
 
 	const loginWithGoogle = async () => {
-      // 2 cases:
-      //    Username already exists:
-      //       TODO
-      //    Username doesn't exist:
-      //       Concat the current display name with shorten email
-      //       Create the user
-
 		const {
-			user: { username, ...otherData },
+			user,
 			isNewUser,
 			error,
 		} = await Auth.loginWithGoogle();
 
+      setLoading(true);
+		const curUsername = user?.email.match(shortenEmailRegex)[0];
+
 		if (error) {
 			setError(error);
-		} else if (isNewUser) {
-			if (!(await Firestore.usernameExists(username))) {
-				const updatedUser = await Auth.updateUsername("");
-				setAuthUser(updatedUser);
-			} else {
-				await Firestore.createUser(username, otherData);
-			}
-		}
+		} else if (isNewUser && !(await Firestore.usernameExists(curUsername))) {
+			const combinedName = user?.displayName + "@" + curUsername;
+			const { username, ...otherData } = await Auth.updateUser(combinedName);
+			setAuthUser({ username, ...otherData });
+         setLoading(false);
+         await Firestore.createUser(username, otherData);
+		} else {
+         setLoading(false);
+      }
 	};
 
 	const logout = async () => {
@@ -56,7 +55,9 @@ const AuthProvider = ({ children }) => {
 
 	const value = {
 		authUser,
+      loading,
 		setAuthUser,
+      setLoading,
 		login,
 		signup,
 		loginWithGoogle,

@@ -8,7 +8,7 @@ export const useDb = () => useContext(DbContext);
 
 const DbProvider = ({ children }) => {
 	const { authUser, setAuthUser } = useAuth();
-	const { setError, shortenEmailRegex } = useValidation();
+	const { setError } = useValidation();
 
 	const addPin = async (imgFile, values) => {
 		const { id, emailVerified, ...author } = authUser;
@@ -27,10 +27,10 @@ const DbProvider = ({ children }) => {
 			const updatedUser = await Auth.updateUser(displayName, profileUrl);
 			setAuthUser(updatedUser);
 			await Firestore.createUser(username, {
+				profileUrl,
 				...userData,
 				name,
 				about,
-				profileUrl,
 			});
 		} else {
 			setError({

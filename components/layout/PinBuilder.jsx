@@ -17,6 +17,7 @@ const PinBuilder = () => {
 
 	const handleCreate = async (e) => {
 		e.preventDefault();
+      if (!imgFile) return;
 		await addPin(imgFile, values);
 		router.push("/");
 	};
@@ -24,7 +25,7 @@ const PinBuilder = () => {
 	return (
 		<form>
 			<div className="py-6 mx-auto w-full mlg:max-w-[56rem] max-w-[28rem]">
-				<div className="rounded-2xl bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid mlg:grid-cols-[1fr_1.5fr] p-10">
+				<div className="rounded-2xl bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid mlg:grid-cols-[1fr_1.4fr] p-10">
 					<ImgField
 						setImgFile={setImgFile}
 						setValues={setValues}

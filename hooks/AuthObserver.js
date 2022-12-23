@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Auth from "../services/Auth";
 import { useAuth } from "./AuthProvider";
 import { Loader } from "../components";
 
 const AuthObserver = ({ children }) => {
-	const { setAuthUser } = useAuth();
-	const [loading, setLoading] = useState(true);
+	const { setAuthUser, loading, setLoading } = useAuth();
 
 	useEffect(() => {
 		const unsubscribe = Auth.waitForUser((user) => {

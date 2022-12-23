@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextField from "../common/TextField";
 import { useAuth, useDb, useValidation } from "../../hooks";
 import ProfileCopy from "./ProfileCopy";
@@ -17,7 +17,11 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 
 	const [imgFile, setImgFile] = useState(null);
 	const [imgSrc, setImgSrc] = useState(profileUrl);
-	const [values, setValues] = useState({ username, name });
+	const [values, setValues] = useState({});
+
+   useEffect(() => {
+      setValues({ username, name, profileUrl, about: "" });
+   }, [username, name, profileUrl])
 
 	const handlePreview = (e) => {
 		const file = e.target.files[0];

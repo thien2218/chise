@@ -5,7 +5,7 @@ const AdjustedImg = ({ children, ratio, src }) => {
 		<div
 			className="relative w-full overflow-hidden rounded-lg h-0"
 			style={{
-				paddingBottom: `max(120px, ${ratio}%)`,
+				paddingBottom: `clamp(120px, ${ratio}%, 500px)`,
 			}}
 		>
 			<div className="absolute w-full h-full">

@@ -16,6 +16,10 @@ class Auth {
 		this.auth = getAuth(app);
 	}
 
+	waitForUser(cb) {
+		return onAuthStateChanged(this.auth, (user) => cb(user));
+	}
+
 	extractUserData(user) {
       const strName = user.displayName || "";
       const nameAndUsername = strName.split("@");
@@ -27,10 +31,6 @@ class Auth {
 			emailVerified: user.emailVerified,
 			profileUrl: user.photoURL,
 		};
-	}
-
-	waitForUser(cb) {
-		return onAuthStateChanged(this.auth, (user) => cb(user));
 	}
 
    async updateUser(displayName, photoURL) {
@@ -66,9 +66,8 @@ class Auth {
 
 		return signInWithPopup(this.auth, provider)
 			.then((cred) => {
-            const user = this.extractUserData(cred.user);
             const { isNewUser } = getAdditionalUserInfo(cred);
-				return { user, isNewUser };
+				return { user: cred.user, isNewUser };
 			})
 			.catch((err) => {
 				return {

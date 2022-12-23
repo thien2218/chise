@@ -63,8 +63,8 @@ const ReportForm = () => {
 	];
 
 	return (
-		<form className="z-20">
-			<div className="py-6 mx-auto w-full max-w-lg">
+		<form className="fixed w-full h-full flex items-center top-0 z-20">
+			<div className="px-4 mx-auto w-full max-w-lg">
 				<div className="rounded-2xl bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] px-8 py-6">
 					<h1 className="text-center text-3xl mb-6 font-medium">Report activity</h1>
 
