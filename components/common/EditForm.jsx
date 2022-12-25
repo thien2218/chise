@@ -1,10 +1,11 @@
 import ActionBtn from "./ActionBtn";
 import AdjustedImg from "./AdjustedImg";
+import { IoIosArrowDown } from "react-icons/io";
 
 const EditField = ({ children, label, htmlFor }) => {
 	return (
 		<div className="py-3 px-4 grid md:grid-cols-[1fr_3fr] grid-cols-1 md:gap-4 gap-2">
-			<label className="text-sm" htmlFor={htmlFor}>
+			<label className="text-sm h-min" htmlFor={htmlFor}>
 				{label}
 			</label>
 			{children}
@@ -21,8 +22,8 @@ const EditForm = () => {
 						Edit this pin
 					</h1>
 
-					<div className="px-4 grid grid-cols-[1fr_17.5rem]">
-						<div>
+					<div className="px-4 grid xs:grid-cols-[1fr_17.5rem] grid-cols-1">
+						<div className="row-start-2 xs:row-start-1">
 							<EditField label="Title" htmlFor="title">
 								<input
 									type="text"
@@ -30,15 +31,6 @@ const EditForm = () => {
 									id="title"
 									className="border-b-[1.5px] outline-none pb-1 text-xl font-medium focus:border-blueish"
 								/>
-							</EditField>
-
-							<EditField label="Description" htmlFor="description">
-								<textarea
-									name="description"
-									id="description"
-									cols="30"
-									rows="10"
-								></textarea>
 							</EditField>
 
 							<EditField label="Destination link" htmlFor="link">
@@ -50,19 +42,32 @@ const EditForm = () => {
 								/>
 							</EditField>
 
-							<EditField>
-								<select>
-									<option value="true">
-										Disable comment
-									</option>
-									<option value="false">
-										Enable comment
-									</option>
-								</select>
+							<EditField label="Description" htmlFor="description">
+								<textarea
+									name="description"
+									id="description"
+									className="h-80 resize-none outline-none border-[1.5px] rounded-lg py-1 px-2 focus:border-blueish"
+								></textarea>
+							</EditField>
+
+							<EditField label="Comment" htmlFor="comment">
+								<div className="w-full relative">
+									<select
+										id="comment"
+										className="p-3 bg-dimmed-400 hover:bg-dimmed-500 rounded-lg cursor-pointer outline-none font-medium w-full peer"
+									>
+										<option value="true">Disabled</option>
+										<option value="false">Enabled</option>
+									</select>
+
+									<div className="absolute right-0 bottom-0 h-full aspect-square flex justify-center items-center rounded-lg bg-dimmed-400 peer-hover:bg-dimmed-500 pointer-events-none">
+										<IoIosArrowDown className="text-xl" />
+									</div>
+								</div>
 							</EditField>
 						</div>
 
-						<div className="py-3 px-4">
+						<div className="py-3 px-4 row-start-1">
 							<AdjustedImg
 								ratio={150}
 								src="/assets/cat.jpg"
@@ -70,13 +75,13 @@ const EditForm = () => {
 						</div>
 					</div>
 
-               <div className="flex justify-between p-6">
-                  <ActionBtn classes="secondary-btn">Delete</ActionBtn>
-                  <div className="flex gap-3">
-                     <ActionBtn classes="secondary-btn">Cancel</ActionBtn>
-                     <ActionBtn classes="primary-btn">Save</ActionBtn>
-                  </div>
-               </div>
+					<div className="flex justify-between p-6">
+						<ActionBtn classes="secondary-btn">Delete</ActionBtn>
+						<div className="flex gap-3">
+							<ActionBtn classes="secondary-btn">Cancel</ActionBtn>
+							<ActionBtn classes="primary-btn">Save</ActionBtn>
+						</div>
+					</div>
 				</div>
 			</div>
 		</form>

@@ -28,7 +28,7 @@ const Field = ({ styles, desc, maxChar, placeholder, name, setValues }) => {
 	);
 };
 
-const TextFields = ({ children, setValues }) => {
+const ContentBuilder = ({ children, setValues }) => {
 	const fields = {
 		title: {
 			styles: "heading",
@@ -42,6 +42,9 @@ const TextFields = ({ children, setValues }) => {
 			placeholder: "Tell everyone about your pin",
 		},
 	};
+
+   const protoRegex = /(?:(https|http):\/\/)?(?:www\.)?/;
+   const uriRegex = /\/(.*)/;
 
 	const handleCheck = (e) => {
 		setValues((prev) => ({
@@ -96,4 +99,4 @@ const TextFields = ({ children, setValues }) => {
 	);
 };
 
-export default TextFields;
+export default ContentBuilder;

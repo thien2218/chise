@@ -4,7 +4,11 @@ import {
 	collection,
 	doc,
 	getDoc,
+	getDocs,
 	getFirestore,
+	limit,
+	orderBy,
+	query,
 	setDoc,
 } from "firebase/firestore";
 
@@ -21,6 +25,18 @@ class Firestore {
 		return user.exists();
 	}
 
+	async getUser(username) {
+		const docRef = doc(this.db, "users", username);
+		const docSnap = await getDoc(docRef);
+
+		if (docSnap.exists()) {
+			const userData = docSnap.data();
+			userData.username = docSnap.id;
+
+			return userData;
+		}
+	}
+
 	// Write
 
 	// Create
@@ -33,6 +49,20 @@ class Firestore {
 	// ------------ PIN ------------
 
 	// Read
+	async getPins() {
+		const q = query(
+			collection(this.db, "pins"),
+			limit(60),
+			orderBy("createdAt", "desc")
+		);
+		const pinsSnap = await getDocs(q);
+
+		return pinsSnap.docs.map((doc) => {
+			const data = doc.data();
+			data.id = doc.id;
+			return data;
+		});
+	}
 
 	// Write
 

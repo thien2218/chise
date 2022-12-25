@@ -51,7 +51,7 @@ const UploadField = ({ setImgSrc, setImgFile, setValues }) => {
 	);
 };
 
-const ImgField = ({ setImgFile, setValues, imgRatio }) => {
+const ImgBuilder = ({ setImgFile, setValues, imgRatio }) => {
 	const [imgSrc, setImgSrc] = useState(null);
 
 	if (imgSrc)
@@ -73,4 +73,4 @@ const ImgField = ({ setImgFile, setValues, imgRatio }) => {
 	);
 };
 
-export default ImgField;
+export default ImgBuilder;
