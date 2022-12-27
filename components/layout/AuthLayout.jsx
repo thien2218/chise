@@ -22,14 +22,14 @@ const AuthLayout = ({ children }) => {
 				} bg-black/50`}
 			>
 				{!isProfilePage && (
-					<div className="flex justify-center items-center">
+					<div className="flex-center">
 						<h1 className="text-[3.5rem] leading-[4rem] font-semibold text-white max-w-[20rem] lg:text-left text-center">
 							New ideas made to be shared
 						</h1>
 					</div>
 				)}
 
-				<div className="flex justify-center items-center">{children}</div>
+				<div className="flex-center">{children}</div>
 			</div>
 		</div>
 	);

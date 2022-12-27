@@ -20,7 +20,7 @@ export async function getStaticProps({ params }) {
 
 	return {
 		props: { pinData },
-		revalidate: 600,
+		revalidate: 300,
 	};
 }
 

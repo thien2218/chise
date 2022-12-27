@@ -1,4 +1,4 @@
-import ActionBtn from "../common/ActionBtn";
+import Button from "../common/Button";
 
 const ReportField = ({ id, label, description }) => {
 	return (
@@ -74,8 +74,8 @@ const ReportForm = () => {
                   ))}
 
                   <div className="flex gap-3 mt-2 justify-end">
-                     <ActionBtn classes="secondary-btn">Cancel</ActionBtn>
-                     <ActionBtn classes="primary-btn">Report</ActionBtn>
+                     <Button btnType="secondary-btn">Cancel</Button>
+                     <Button btnType="primary-btn">Report</Button>
                   </div>
                </div>
 				</div>

@@ -4,7 +4,7 @@ import Avatar from "../common/Avatar";
 import { useAuth } from "../../hooks";
 import Avvvatars from "avvvatars-react";
 
-const PinUserInfo = ({ profileUrl, username, name }) => {
+const PinUserInfo = ({ profileUrl, username, name, followers }) => {
 	const {
 		authUser: { username: authUsername },
 	} = useAuth();
@@ -26,7 +26,14 @@ const PinUserInfo = ({ profileUrl, username, name }) => {
 			</Link>
 
 			{username != authUsername && (
-				<ActionBtn classes="secondary-btn">Follow</ActionBtn>
+				<ActionBtn
+					btnType="secondary-btn"
+					list={followers}
+					altText="Followed"
+					req="follow"
+				>
+					Follow
+				</ActionBtn>
 			)}
 		</div>
 	);

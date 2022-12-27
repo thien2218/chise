@@ -5,6 +5,7 @@ import { IoLink } from "react-icons/io5";
 import Avatar from "./Avatar";
 import { useAuth } from "../../hooks";
 import Avvvatars from "avvvatars-react";
+import ActionBtn from "./ActionBtn";
 
 const Pin = ({ pin }) => {
 	const {
@@ -24,23 +25,28 @@ const Pin = ({ pin }) => {
 
 	return (
 		<div className="w-full px-1.5 pb-4">
-			<AdjustedImg ratio={imgRatio} src={imgUrl} scale={1} >
+			<AdjustedImg ratio={imgRatio} src={imgUrl} scale={1}>
 				<div className="relative w-full h-full opacity-0 hover:opacity-100 transition duration-100 flex flex-col justify-between">
 					<Link href={`/pin/${id}`}>
-						<a className="absolute w-full h-full bg-black/30"></a>
+						<a className="z-[8] absolute w-full h-full bg-black/30"></a>
 					</Link>
 
 					<div className="flex p-3 pb-0">
 						{username == author.username && (
-							<button className="h-8 w-8 flex justify-center items-center bg-white/[.65] hover:bg-white/80 rounded-full z-[9] cursor-pointer transition m-1">
+							<button className="h-8 w-8 flex-center bg-white/[.65] hover:bg-white/80 rounded-full z-[9] cursor-pointer transition m-1">
 								<HiPencil className="text-lg" />
 							</button>
 						)}
 
 						<div className="flex justify-end flex-1">
-							<button className="primary-btn rounded-full px-4 py-3 z-[9]">
+							<ActionBtn
+								btnType="primary-btn"
+								list={savedBy}
+								altText="Saved"
+                        req="save"
+							>
 								Save
-							</button>
+							</ActionBtn>
 						</div>
 					</div>
 
@@ -57,11 +63,11 @@ const Pin = ({ pin }) => {
 						)}
 
 						<div className="flex h-8 gap-2.5  ml-auto">
-							<button className="aspect-square flex justify-center items-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition">
+							<button className="aspect-square flex-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition">
 								<HiDownload className="text-lg" />
 							</button>
 
-							<button className="aspect-square flex justify-center items-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition">
+							<button className="aspect-square flex-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition">
 								<HiFlag className="text-lg" />
 							</button>
 						</div>

@@ -1,10 +1,14 @@
 import Image from "next/image";
 import { useAuth } from "../../hooks";
 import Avvvatars from "avvvatars-react";
+import Button from "../common/Button";
+import ActionBtn from "../common/ActionBtn";
 
 const UserInfo = ({ user }) => {
-	const { authUser: { username: authUsername } } = useAuth();
-	const { name, username, profileUrl, about } = user;
+	const {
+		authUser: { username: authUsername },
+	} = useAuth();
+	const { name, username, profileUrl, about, followers, following } = user;
 
 	return (
 		<div className="w-full flex flex-col items-center text-center mb-8 min-w-[375px]">
@@ -32,21 +36,22 @@ const UserInfo = ({ user }) => {
 			<div className="my-1 font-semibold">0 following - 0 followers</div>
 
 			{authUsername == username ? (
-            <div className="my-1 pt-2">
-               <button className="secondary-btn rounded-2xl py-3 px-4">Edit Profile</button>
-            </div>
-         ) : (
-            <div className="my-1 pt-2 grid grid-cols-3 gap-3">
-               <button className="secondary-btn rounded-full py-3 px-4">
-                  Block
-               </button>
-               <button className="primary-btn py-3 px-4 rounded-full">
-                  Follow
-               </button>
-               <button className="secondary-btn rounded-full py-3 px-4">
-                  Report
-               </button>
-            </div>
+				<div className="my-1 pt-2">
+					<Button btnType="secondary-btn">Edit Profile</Button>
+				</div>
+			) : (
+				<div className="my-1 pt-2 grid grid-cols-3 gap-3">
+					<Button btnType="secondary-btn">Block</Button>
+					<ActionBtn
+						btnType="primary-btn"
+						list={followers}
+						altText="Followed"
+                  req="follow"
+					>
+						Follow
+					</ActionBtn>
+					<Button btnType="secondary-btn">Report</Button>
+				</div>
 			)}
 		</div>
 	);

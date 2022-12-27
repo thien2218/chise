@@ -6,7 +6,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 import Link from "next/link";
 
 const PinLayout = ({ pinData }) => {
-	const { author, imgRatio, imgUrl } = pinData;
+	const { author, imgRatio, imgUrl, savedBy } = pinData;
 
 	return (
 		<article>
@@ -16,7 +16,7 @@ const PinLayout = ({ pinData }) => {
 						<AdjustedImg ratio={imgRatio} src={imgUrl} scale={2}>
 							<div className="absolute h-full w-full group p-6 flex justify-end">
 								<Link href={imgUrl}>
-									<a className="px-3 py-2 font-semibold h-max opacity-0 group-hover:opacity-100 bg-white rounded-full flex items-center">
+									<a className="px-3 py-2 font-semibold h-max opacity-0 group-hover:opacity-100 bg-white rounded-full flex items-center" target="_blank">
 										<FiArrowUpRight className="text-3xl" />
 										<span>View image</span>
 									</a>
@@ -26,7 +26,7 @@ const PinLayout = ({ pinData }) => {
 					</div>
 
 					<div className="p-5 flex flex-col">
-						<PinActions />
+						<PinActions savedBy={savedBy} />
 						<h1 className="heading mt-4 pr-4">{pinData.title}</h1>
 						<p className="text-sm pr-3">{pinData.description}</p>
 						<PinUserInfo {...author} />

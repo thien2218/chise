@@ -4,7 +4,7 @@ import { BsCameraFill } from "react-icons/bs";
 const ProfileUpload = ({ username, handlePreview }) => {
 	return (
 		<div className="absolute top-0 left-0 w-full -translate-y-[40%] flex justify-center">
-         <div className="relative h-32 aspect-square rounded-full overflow-hidden border-[6px] border-white cursor-pointer flex justify-center items-center group">
+         <div className="relative h-32 aspect-square rounded-full overflow-hidden border-[6px] border-white cursor-pointer flex-center group">
             <Avvvatars size={32 * 4} value={username} />
 
             <div className="absolute w-full h-full opacity-0 flex flex-col justify-center items-center text-center group-hover:opacity-100 bg-black/40 text-white">

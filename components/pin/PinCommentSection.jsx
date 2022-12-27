@@ -28,7 +28,7 @@ const PinCommentSection = ({ comments }) => {
 							placeholder="Add a comment"
 						/>
 
-                  <div className="absolute h-10 aspect-square flex justify-center items-center right-0">
+                  <div className="absolute h-10 aspect-square flex-center right-0">
                      <button className="text-4xl text-primary hover:text-primary-hover">
                         <IoArrowForwardCircle />
                      </button>

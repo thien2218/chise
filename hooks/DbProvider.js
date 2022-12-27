@@ -31,6 +31,8 @@ const DbProvider = ({ children }) => {
 				...userData,
 				name,
 				about,
+            followers: [],
+            following: 0,
 			});
 		} else {
 			setError({
@@ -38,6 +40,10 @@ const DbProvider = ({ children }) => {
 			});
 		}
 	};
+
+   const writeList = async (username, containsUser, req) => {
+      await Firestore.writeList(username, containsUser, req);
+   }
 
 	const compressImg = (file, size, name, setImgSrc, setImgFile, setValues) => {
 		if (!file) return;
@@ -91,6 +97,7 @@ const DbProvider = ({ children }) => {
 	const value = {
 		addPin,
 		addUser,
+      writeList,
 		compressImg,
 	};
 

@@ -35,16 +35,22 @@
 		@apply bg-dimmed-500 font-semibold hover:bg-dimmed-600 transition ease-in-out duration-100;
 	}
    
-   .icon-btn {
-      @apply h-12 w-12 p-3 rounded-full hover:bg-dimmed-500 cursor-pointer;
+   .arbitraty-btn {
+      @apply text-white font-semibold bg-secondary;
    }
 
    .google-auth-btn {
       @apply bg-[#257ef2] font-semibold text-white hover:bg-[#086df2] transition ease-in-out duration-100 flex justify-center;
    }
 
+   /* Heading */
    .heading {
       @apply text-[2.25rem] leading-[2.75rem] font-semibold;
+   }
+
+   /* Flex center */
+   .flex-center {
+      @apply flex items-center justify-center;
    }
 }
 

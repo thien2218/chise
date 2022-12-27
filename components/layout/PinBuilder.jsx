@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDb } from "../../hooks";
-import ActionBtn from "../common/ActionBtn";
+import Button from "../common/Button";
 import ImgBuilder from "../create/ImgBuilder";
 import ContentBuilder from "../create/ContentBuilder";
+import ActionBtn from "../common/ActionBtn";
 
 const PinBuilder = () => {
 	const [imgFile, setImgFile] = useState(null);
@@ -24,6 +25,15 @@ const PinBuilder = () => {
 		router.push("/");
 	};
 
+	const save = (username, containsUser) => {
+		const updatedList = containsUser ? [] : [username];
+
+		setValues({
+			...values,
+			savedBy: updatedList,
+		});
+	};
+
 	return (
 		<form>
 			<div className="py-6 mx-auto w-full mlg:max-w-[56rem] max-w-[28rem]">
@@ -40,14 +50,18 @@ const PinBuilder = () => {
 						setInvalidUrlMsg={setInvalidUrlMsg}
 					>
 						<div className="flex gap-3">
-							<button
-								className="py-3 px-4 font-semibold rounded-full secondary-btn"
-								onClick={handleCreatePin}
-							>
+							<Button btnType="secondary-btn" onClick={handleCreatePin}>
 								Upload
-							</button>
+							</Button>
 
-							<ActionBtn classes="primary-btn">Save</ActionBtn>
+							<ActionBtn
+								btnType="primary-btn"
+								list={values.savedBy}
+                        updateList={save}
+								altText="Saved"
+							>
+								Save
+							</ActionBtn>
 						</div>
 					</ContentBuilder>
 				</div>

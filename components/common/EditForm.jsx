@@ -1,4 +1,4 @@
-import ActionBtn from "./ActionBtn";
+import Button from "./Button";
 import AdjustedImg from "./AdjustedImg";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -60,7 +60,7 @@ const EditForm = () => {
 										<option value="false">Enabled</option>
 									</select>
 
-									<div className="absolute right-0 bottom-0 h-full aspect-square flex justify-center items-center rounded-lg bg-dimmed-400 peer-hover:bg-dimmed-500 pointer-events-none">
+									<div className="absolute right-0 bottom-0 h-full aspect-square flex-center rounded-lg bg-dimmed-400 peer-hover:bg-dimmed-500 pointer-events-none">
 										<IoIosArrowDown className="text-xl" />
 									</div>
 								</div>
@@ -77,10 +77,10 @@ const EditForm = () => {
 					</div>
 
 					<div className="flex justify-between p-6">
-						<ActionBtn classes="secondary-btn">Delete</ActionBtn>
+						<Button btnType="secondary-btn">Delete</Button>
 						<div className="flex gap-3">
-							<ActionBtn classes="secondary-btn">Cancel</ActionBtn>
-							<ActionBtn classes="primary-btn">Save</ActionBtn>
+							<Button btnType="secondary-btn">Cancel</Button>
+							<Button btnType="primary-btn">Save</Button>
 						</div>
 					</div>
 				</div>

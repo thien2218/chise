@@ -7,7 +7,7 @@ const SelectedImg = ({ imgSrc, imgRatio, setImgSrc, setImgFile }) => {
 	return (
 		<AdjustedImg ratio={imgRatio} src={imgSrc} scale={1.5}>
 			<button
-				className="absolute bg-white rounded-full h-12 w-12 p-1 hover:bg-dimmed-500 cursor-pointer right-4 top-4 border-4 border-white flex items-center justify-center"
+				className="absolute bg-white rounded-full h-12 w-12 p-1 hover:bg-dimmed-500 cursor-pointer right-4 top-4 border-4 border-white flex-center"
 				onClick={(e) => {
 					e.preventDefault();
 					setImgSrc(null);

@@ -25,7 +25,6 @@ class Auth {
       const nameAndUsername = strName.split("@");
 
 		return {
-			id: user.uid,
          name: nameAndUsername[0],
 			username: nameAndUsername[1],
 			emailVerified: user.emailVerified,

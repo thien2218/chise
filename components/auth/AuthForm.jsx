@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import TextField from "../common/TextField";
-import { useAuth, useDb, useValidation } from "../../hooks";
+import { useAuth, useValidation } from "../../hooks";
 import { useRouter } from "next/router";
 
 const AuthForm = ({ fields, submit, msgs }) => {
@@ -99,7 +99,7 @@ const AuthForm = ({ fields, submit, msgs }) => {
 			>
 				<div className="flex gap-3 items-center">
 					<div>Continue with Google</div>
-					<div className="bg-white w-6 h-6 rounded-full flex justify-center items-center">
+					<div className="bg-white w-6 h-6 rounded-full flex-center">
 						<FcGoogle className="w-5 h-5" />
 					</div>
 				</div>

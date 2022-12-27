@@ -1,6 +1,8 @@
 import app from "./firebase-config";
 import {
 	addDoc,
+	arrayRemove,
+	arrayUnion,
 	collection,
 	doc,
 	getDoc,
@@ -10,6 +12,7 @@ import {
 	orderBy,
 	query,
 	setDoc,
+	updateDoc,
 } from "firebase/firestore";
 
 class Firestore {
@@ -64,17 +67,17 @@ class Firestore {
 		});
 	}
 
-   async getPin(id) {
-      const pinRef = doc(this.db, "pins", id);
-      const pinSnap = await getDoc(pinRef);
+	async getPin(id) {
+		const pinRef = doc(this.db, "pins", id);
+		const pinSnap = await getDoc(pinRef);
 
-      if (pinSnap.exists()) {
+		if (pinSnap.exists()) {
 			const pinData = pinSnap.data();
 			pinData.id = pinSnap.id;
 
 			return pinData;
-      }
-   }
+		}
+	}
 
 	// Write
 
@@ -84,6 +87,23 @@ class Firestore {
 	}
 
 	// Delete
+
+	// ------------ OTHER ------------
+	async writeList(username, containsUser, req) {
+		const col = req == "save" ? "pins" : "users";
+      const listName = req == "save" ? "savedBy" : "followers";
+		const docRef = doc(this.db, col, username);
+
+		if (containsUser) {
+			await updateDoc(docRef, {
+				[listName]: arrayUnion(username),
+			});
+		} else {
+			await updateDoc(docRef, {
+				[listName]: arrayRemove(username),
+			});
+		}
+	}
 }
 
 export default new Firestore(app);
