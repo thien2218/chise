@@ -4,18 +4,18 @@ import { Firestore } from "../services";
 
 function Home({ pins }) {
 	return (
-		<MasonryLayout />
+		<MasonryLayout pins={pins} />
 	)
 }
 
-// export async function getServerSideProps() {
-//    const pins = await Firestore.getPins();
+export async function getServerSideProps() {
+   const pins = await Firestore.getPins();
 
-//    return {
-//       props: {
-//          pins,
-//       },
-//    };
-// }
+   return {
+      props: {
+         pins,
+      },
+   };
+}
 
 export default withAuth(Home);

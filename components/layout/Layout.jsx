@@ -8,7 +8,7 @@ const Layout = ({ children, pageName }) => {
 	return (
 		<>
 			<Head>
-				<meta charset="UTF-8" />
+				<meta charSet="UTF-8" />
 				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 				<meta
 					name="viewport"

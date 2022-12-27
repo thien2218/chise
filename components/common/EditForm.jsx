@@ -71,6 +71,7 @@ const EditForm = () => {
 							<AdjustedImg
 								ratio={150}
 								src="/assets/cat.jpg"
+                        scale={1}
 							></AdjustedImg>
 						</div>
 					</div>

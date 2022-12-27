@@ -1,10 +1,10 @@
 import UserInfo from '../user/UserInfo';
 import MasonryLayout from './MasonryLayout';
 
-const UserLayout = () => {
+const UserLayout = ({ user }) => {
    return (
       <>
-         <UserInfo />
+         <UserInfo user={user} />
 
          <div className='flex justify-center'>
             <div className='py-3 mx-2'>
@@ -15,7 +15,7 @@ const UserLayout = () => {
             </div>
          </div>
 
-         <MasonryLayout />
+         {/* <MasonryLayout /> */}
       </>
    )
 }

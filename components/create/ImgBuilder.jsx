@@ -5,7 +5,7 @@ import AdjustedImg from "../common/AdjustedImg";
 
 const SelectedImg = ({ imgSrc, imgRatio, setImgSrc, setImgFile }) => {
 	return (
-		<AdjustedImg ratio={imgRatio} src={imgSrc}>
+		<AdjustedImg ratio={imgRatio} src={imgSrc} scale={1.5}>
 			<button
 				className="absolute bg-white rounded-full h-12 w-12 p-1 hover:bg-dimmed-500 cursor-pointer right-4 top-4 border-4 border-white flex items-center justify-center"
 				onClick={(e) => {
@@ -43,7 +43,7 @@ const UploadField = ({ setImgSrc, setImgFile, setValues }) => {
             type="file"
             name="pinImg"
             id="pinImg"
-            className="absolute -top-1/2 h-[150%] w-full cursor-pointer opacity-0"
+            className="absolute left-0 -top-1/2 h-[150%] w-full cursor-pointer opacity-0"
             accept=".jpg,.png,.webp,.jpeg"
             onChange={handlePreview}
          />

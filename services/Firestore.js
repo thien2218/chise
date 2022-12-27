@@ -26,12 +26,12 @@ class Firestore {
 	}
 
 	async getUser(username) {
-		const docRef = doc(this.db, "users", username);
-		const docSnap = await getDoc(docRef);
+		const userRef = doc(this.db, "users", username);
+		const userSnap = await getDoc(userRef);
 
-		if (docSnap.exists()) {
-			const userData = docSnap.data();
-			userData.username = docSnap.id;
+		if (userSnap.exists()) {
+			const userData = userSnap.data();
+			userData.username = userSnap.id;
 
 			return userData;
 		}
@@ -63,6 +63,18 @@ class Firestore {
 			return data;
 		});
 	}
+
+   async getPin(id) {
+      const pinRef = doc(this.db, "pins", id);
+      const pinSnap = await getDoc(pinRef);
+
+      if (pinSnap.exists()) {
+			const pinData = pinSnap.data();
+			pinData.id = pinSnap.id;
+
+			return pinData;
+      }
+   }
 
 	// Write
 

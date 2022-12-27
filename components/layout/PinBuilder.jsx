@@ -7,17 +7,19 @@ import ContentBuilder from "../create/ContentBuilder";
 
 const PinBuilder = () => {
 	const [imgFile, setImgFile] = useState(null);
+	const [invalidUrlMsg, setInvalidUrlMsg] = useState("");
 	const [values, setValues] = useState({
 		imgRatio: 0,
 		savedBy: [],
 		cmtDisabled: false,
 	});
+
 	const { addPin } = useDb();
 	const router = useRouter();
 
-	const handleCreate = async (e) => {
+	const handleCreatePin = async (e) => {
 		e.preventDefault();
-      if (!imgFile) return;
+		if (!imgFile || invalidUrlMsg) return;
 		await addPin(imgFile, values);
 		router.push("/");
 	};
@@ -32,18 +34,20 @@ const PinBuilder = () => {
 						imgRatio={values.imgRatio}
 					/>
 
-					<ContentBuilder setValues={setValues}>
+					<ContentBuilder
+						setValues={setValues}
+						invalidUrlMsg={invalidUrlMsg}
+						setInvalidUrlMsg={setInvalidUrlMsg}
+					>
 						<div className="flex gap-3">
 							<button
 								className="py-3 px-4 font-semibold rounded-full secondary-btn"
-								onClick={handleCreate}
+								onClick={handleCreatePin}
 							>
 								Upload
 							</button>
 
-							<ActionBtn classes="primary-btn">
-								Save
-							</ActionBtn>
+							<ActionBtn classes="primary-btn">Save</ActionBtn>
 						</div>
 					</ContentBuilder>
 				</div>
