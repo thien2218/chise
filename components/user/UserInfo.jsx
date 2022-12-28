@@ -33,7 +33,9 @@ const UserInfo = ({ user }) => {
 
 			{about && <p className="my-1 max-w-[40rem]">{about}</p>}
 
-			<div className="my-1 font-semibold">0 following - 0 followers</div>
+			<div className="my-1 font-semibold">
+				{following} following - {followers.length} followers
+			</div>
 
 			{authUsername == username ? (
 				<div className="my-1 pt-2">
@@ -46,7 +48,7 @@ const UserInfo = ({ user }) => {
 						btnType="primary-btn"
 						list={followers}
 						altText="Followed"
-                  req="follow"
+						req={{ col: "users", id: username }}
 					>
 						Follow
 					</ActionBtn>

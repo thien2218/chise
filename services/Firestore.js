@@ -73,7 +73,7 @@ class Firestore {
 
 		if (pinSnap.exists()) {
 			const pinData = pinSnap.data();
-			pinData.id = pinSnap.id;
+			pinData.id = id;
 
 			return pinData;
 		}
@@ -89,10 +89,9 @@ class Firestore {
 	// Delete
 
 	// ------------ OTHER ------------
-	async writeList(username, containsUser, req) {
-		const col = req == "save" ? "pins" : "users";
-      const listName = req == "save" ? "savedBy" : "followers";
-		const docRef = doc(this.db, col, username);
+	async updateList(username, containsUser, col, id) {
+      const listName = col == "pins" ? "savedBy" : "followers";
+		const docRef = doc(this.db, col, id);
 
 		if (containsUser) {
 			await updateDoc(docRef, {

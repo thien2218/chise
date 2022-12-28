@@ -1,49 +1,53 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth, useDb } from "../../hooks";
 import Button from "./Button";
 
-const ActionBtn = ({ children, btnType, list, updateList, altText, req }) => {
+const ActionBtn = ({ children, btnType, list, altText, req }) => {
 	const {
 		authUser: { username },
 	} = useAuth();
-	const originalState = list.contains(username);
-	const [containsUser, setContainsUser] = useState(false);
-   const { writeList } = useDb();
+	const initState = list.includes(username);
 
-	const handleClick = (e) => {
-		e.preventDefault();
-		setContainsUser(!containsUser);
-	};
+	const [compareState, setCompareState] = useState(initState);
+	const [containsUser, setContainsUser] = useState(initState);
 
-	const debounce = (containsUser) => {
+	const { updateList } = useDb();
+
+	const debounce = (cb, delay) => {
 		let timeout;
 
-		clearTimeout(timeout);
-		timeout = setTimeout(async () => {
-			if (containsUser != originalState) {
-				await writeList(username, containsUser, req);
-			}
-		}, 3000);
+		return (...args) => {
+			clearTimeout(timeout);
+			timeout = setTimeout(() => cb(...args), delay);
+		};
 	};
 
-	useEffect(() => {
-		if (req) {
-			debounce(containsUser);
-		} else {
-			updateList(username, containsUser);
+	const handleUpdate = async (containsUser) => {
+		if (containsUser != compareState) {
+			await updateList(username, containsUser, req);
+			setCompareState(!compareState);
 		}
+	};
+
+	const debounceUpdate = useCallback(debounce(handleUpdate, 2000), [compareState]);
+
+	useEffect(() => {
+		debounceUpdate(containsUser);
 	}, [containsUser]);
 
 	if (containsUser) {
 		return (
-			<Button btnType="arbitrary-btn" onClick={handleClick}>
+			<Button
+				btnType="arbitrary-btn"
+				onClick={() => setContainsUser(!containsUser)}
+			>
 				{altText}
 			</Button>
 		);
 	}
 
 	return (
-		<Button btnType={btnType} onClick={handleClick}>
+		<Button btnType={btnType} onClick={() => setContainsUser(!containsUser)}>
 			{children}
 		</Button>
 	);

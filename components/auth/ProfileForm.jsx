@@ -19,20 +19,20 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 	const [imgSrc, setImgSrc] = useState(profileUrl);
 	const [values, setValues] = useState({});
 
-   useEffect(() => {
-      setValues({ username, name, profileUrl, about: "" });
-   }, [username, name, profileUrl])
+	useEffect(() => {
+		setValues({ username, name, profileUrl, about: "" });
+	}, [username, name, profileUrl]);
 
 	const handlePreview = (e) => {
 		const file = e.target.files[0];
 		compressImg(file, 200, "profile", setImgSrc, setImgFile, setValues);
 	};
 
-   const handleDeleteImg = (e) => {
-      e.preventDefault();
-      setImgFile(null);
-      setImgSrc(null);
-   }
+	const handleDeleteImg = (e) => {
+		e.preventDefault();
+		setImgFile(null);
+		setImgSrc(null);
+	};
 
 	const {
 		error,
@@ -83,14 +83,11 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 			{imgSrc ? (
 				<ProfileCopy
 					handlePreview={handlePreview}
-               handleDeleteImg={handleDeleteImg}
+					handleDeleteImg={handleDeleteImg}
 					imgSrc={imgSrc}
 				/>
 			) : (
-				<ProfileUpload
-					handlePreview={handlePreview}
-					username={username}
-				/>
+				<ProfileUpload handlePreview={handlePreview} username={username} />
 			)}
 
 			{fields.map((field, id) => (

@@ -27,10 +27,7 @@ const Logo = () => {
 };
 
 const Header = () => {
-	const {
-		authUser: { profileUrl, name },
-		logout,
-	} = useAuth();
+	const { authUser, logout } = useAuth();
 
 	return (
 		<header className="fixed w-full top-0 left-0 z-10">
@@ -66,15 +63,16 @@ const Header = () => {
 						className="h-11 cursor-pointer aspect-square rounded-full flex-center hover:bg-dimmed-600"
 						onClick={logout}
 					>
-						{profileUrl ? (
+						{authUser?.profileUrl ? (
 							<Image
-								src={profileUrl}
+								src={authUser.profileUrl}
 								height={32}
 								width={32}
 								className="rounded-full"
+                        priority
 							/>
 						) : (
-							<Avvvatars size={32} value={name} />
+							<Avvvatars size={32} value={authUser?.name} />
 						)}
 					</div>
 				</div>

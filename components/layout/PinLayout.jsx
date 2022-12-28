@@ -6,7 +6,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 import Link from "next/link";
 
 const PinLayout = ({ pinData }) => {
-	const { author, imgRatio, imgUrl, savedBy } = pinData;
+	const { id, author, imgRatio, imgUrl, savedBy } = pinData;
 
 	return (
 		<article>
@@ -26,7 +26,7 @@ const PinLayout = ({ pinData }) => {
 					</div>
 
 					<div className="p-5 flex flex-col">
-						<PinActions savedBy={savedBy} />
+						<PinActions id={id} savedBy={savedBy} />
 						<h1 className="heading mt-4 pr-4">{pinData.title}</h1>
 						<p className="text-sm pr-3">{pinData.description}</p>
 						<PinUserInfo {...author} />

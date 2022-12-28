@@ -44,7 +44,6 @@ const ValidationProvider = ({ children }) => {
          return;
       }
 
-      setError({});
 		await submit(values);
 	};
 

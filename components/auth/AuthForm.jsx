@@ -33,8 +33,8 @@ const AuthForm = ({ fields, submit, msgs }) => {
 			});
 			return;
 		}
-      
-      if (name == "password") {
+
+		if (name == "password") {
 			isValid(name, checkLength(value, 6, 20), msgs[name]);
 		} else if (name == "confirm_password") {
 			isValid(name, checkConfirmPw(values.password, value), msgs[name]);
@@ -105,7 +105,10 @@ const AuthForm = ({ fields, submit, msgs }) => {
 				</div>
 			</button>
 
-			<div className="font-semibold mt-4 text-center text-sm">
+			<div
+				className="font-semibold mt-4 text-center text-sm"
+				onClick={() => setError({})}
+			>
 				{pathname == "/auth/signup" ? (
 					<Link href="/auth/login">
 						<a>Already a member? Log in</a>

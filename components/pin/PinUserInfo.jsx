@@ -30,7 +30,7 @@ const PinUserInfo = ({ profileUrl, username, name, followers }) => {
 					btnType="secondary-btn"
 					list={followers}
 					altText="Followed"
-					req="follow"
+					req={{ col: "users", id: username }}
 				>
 					Follow
 				</ActionBtn>

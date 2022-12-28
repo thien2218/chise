@@ -8,15 +8,19 @@ export const useAuth = () => useContext(AuthContext);
 const AuthProvider = ({ children }) => {
 	const [authUser, setAuthUser] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [formLoading, setFormLoading] = useState(false);
 	const { setError, shortenEmailRegex } = useValidation();
 
 	const login = async ({ email, password }) => {
 		const { error } = await Auth.login(email, password);
+		setFormLoading(true);
 		if (error) setError(error);
 	};
 
 	const signup = async ({ email, password }) => {
 		const { error } = await Auth.signup(email, password);
+		setFormLoading(true);
+
 		if (error) {
 			setError(error);
 		} else {
@@ -27,26 +31,20 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const loginWithGoogle = async () => {
-		const {
-			user,
-			isNewUser,
-			error,
-		} = await Auth.loginWithGoogle();
-
-      setLoading(true);
+		const { user, isNewUser, error } = await Auth.loginWithGoogle();
 		const curUsername = user?.email.match(shortenEmailRegex)[0];
 
 		if (error) {
 			setError(error);
 		} else if (isNewUser && !(await Firestore.usernameExists(curUsername))) {
+			setLoading(true);
 			const combinedName = user?.displayName + "@" + curUsername;
 			const { username, ...otherData } = await Auth.updateUser(combinedName);
+
 			setAuthUser({ username, ...otherData });
-         setLoading(false);
-         await Firestore.createUser(username, otherData);
-		} else {
-         setLoading(false);
-      }
+			setLoading(false);
+			await Firestore.createUser(username, otherData);
+		}
 	};
 
 	const logout = async () => {
@@ -55,9 +53,11 @@ const AuthProvider = ({ children }) => {
 
 	const value = {
 		authUser,
-      loading,
+		formLoading,
+		loading,
 		setAuthUser,
-      setLoading,
+		setFormLoading,
+		setLoading,
 		login,
 		signup,
 		loginWithGoogle,

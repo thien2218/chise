@@ -43,7 +43,7 @@ const Pin = ({ pin }) => {
 								btnType="primary-btn"
 								list={savedBy}
 								altText="Saved"
-                        req="save"
+								req={{ col: "pins", id }}
 							>
 								Save
 							</ActionBtn>

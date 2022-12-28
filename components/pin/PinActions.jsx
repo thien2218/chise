@@ -1,7 +1,7 @@
 import { HiLink, HiFlag, HiDownload } from "react-icons/hi";
 import ActionBtn from "../common/ActionBtn";
 
-const PinActions = ({ savedBy }) => {
+const PinActions = ({ id, savedBy }) => {
 	return (
 		<div className="flex justify-between">
 			<div className="flex items-center">
@@ -20,7 +20,7 @@ const PinActions = ({ savedBy }) => {
 				btnType="primary-btn"
 				list={savedBy}
 				altText="Saved"
-				req="save"
+				req={{ col: "pins", id }}
 			>
 				Save
 			</ActionBtn>

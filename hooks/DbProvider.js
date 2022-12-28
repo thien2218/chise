@@ -16,23 +16,22 @@ const DbProvider = ({ children }) => {
 		return await Firestore.createPin({ author, imgUrl, ...values });
 	};
 
-	const addUser = async ({ username, name, about, imgFile }) => {
-		const { username: prevUsername, ...userData } = authUser;
+	const addUser = async ({ username, name, about, profileUrl, imgFile }) => {
+		const { username: prevUsername } = authUser;
 		const displayName = name + "@" + username;
 		const emailAsUsername = prevUsername == username;
-		const profileUrl = imgFile
-			? await Storage.uploadImage(imgFile, "profile") : "";
+		const newProfileUrl = imgFile
+			? await Storage.uploadImage(imgFile, "profile")
+			: profileUrl || "";
 
 		if (emailAsUsername || !(await Firestore.usernameExists(username))) {
-			const updatedUser = await Auth.updateUser(displayName, profileUrl);
+			const updatedUser = await Auth.updateUser(displayName, newProfileUrl);
 			setAuthUser(updatedUser);
 			await Firestore.createUser(username, {
-				profileUrl,
-				...userData,
-				name,
-				about,
-            followers: [],
-            following: 0,
+            ...updatedUser,
+            about,
+				followers: [],
+				following: 0,
 			});
 		} else {
 			setError({
@@ -41,9 +40,9 @@ const DbProvider = ({ children }) => {
 		}
 	};
 
-   const writeList = async (username, containsUser, req) => {
-      await Firestore.writeList(username, containsUser, req);
-   }
+	const updateList = async (username, containsUser, req) => {
+		await Firestore.updateList(username, containsUser, req.col, req.id);
+	};
 
 	const compressImg = (file, size, name, setImgSrc, setImgFile, setValues) => {
 		if (!file) return;
@@ -97,7 +96,7 @@ const DbProvider = ({ children }) => {
 	const value = {
 		addPin,
 		addUser,
-      writeList,
+		updateList,
 		compressImg,
 	};
 

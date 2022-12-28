@@ -35,7 +35,7 @@
 		@apply bg-dimmed-500 font-semibold hover:bg-dimmed-600 transition ease-in-out duration-100;
 	}
    
-   .arbitraty-btn {
+   .arbitrary-btn {
       @apply text-white font-semibold bg-secondary;
    }
 

@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useDb } from "../../hooks";
+import { useDb, useAuth } from "../../hooks";
 import Button from "../common/Button";
 import ImgBuilder from "../create/ImgBuilder";
 import ContentBuilder from "../create/ContentBuilder";
-import ActionBtn from "../common/ActionBtn";
 
 const PinBuilder = () => {
 	const [imgFile, setImgFile] = useState(null);
@@ -14,18 +13,19 @@ const PinBuilder = () => {
 		savedBy: [],
 		cmtDisabled: false,
 	});
-
+   
 	const { addPin } = useDb();
+   const { authUser: { username } } = useAuth();
 	const router = useRouter();
+   const containsUser = values.savedBy.includes(username);
 
-	const handleCreatePin = async (e) => {
-		e.preventDefault();
+	const handleCreatePin = async () => {
 		if (!imgFile || invalidUrlMsg) return;
 		await addPin(imgFile, values);
 		router.push("/");
 	};
 
-	const save = (username, containsUser) => {
+	const handleSave = () => {
 		const updatedList = containsUser ? [] : [username];
 
 		setValues({
@@ -54,14 +54,12 @@ const PinBuilder = () => {
 								Upload
 							</Button>
 
-							<ActionBtn
-								btnType="primary-btn"
-								list={values.savedBy}
-                        updateList={save}
-								altText="Saved"
+							<Button
+								btnType={containsUser ? "arbitrary-btn" : "primary-btn"}
+                        onClick={handleSave}
 							>
-								Save
-							</ActionBtn>
+								{containsUser ? "Saved" : "Save"}
+							</Button>
 						</div>
 					</ContentBuilder>
 				</div>
