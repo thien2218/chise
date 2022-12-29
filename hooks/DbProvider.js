@@ -10,6 +10,7 @@ const DbProvider = ({ children }) => {
 	const { authUser, setAuthUser } = useAuth();
 	const { setError } = useValidation();
 
+   // USER
 	const addPin = async (imgFile, values) => {
 		const { id, emailVerified, ...author } = authUser;
 		const imgUrl = await Storage.uploadImage(imgFile, "pin");
@@ -40,64 +41,21 @@ const DbProvider = ({ children }) => {
 		}
 	};
 
+   // PIN
+   const updatePin = async (id, values) => {
+      await Firestore.updatePin(id, values);
+   }
+
+   // OTHER
 	const updateList = async (username, containsUser, req) => {
 		await Firestore.updateList(username, containsUser, req.col, req.id);
-	};
-
-	const compressImg = (file, size, name, setImgSrc, setImgFile, setValues) => {
-		if (!file) return;
-
-		const reader = new FileReader();
-		reader.readAsDataURL(file);
-
-		reader.onload = function (e) {
-			const imgEle = document.createElement("img");
-			const imgSrc = e.target.result;
-			imgEle.src = imgSrc;
-
-			imgEle.onload = function (event) {
-				const canvas = document.createElement("canvas");
-				const W = event.target.width >= size ? size : event.target.width;
-				const H = (event.target.height * W) / event.target.width;
-
-				const imgRatio = Math.floor((H / W) * 100);
-				const createdAt = new Date().getTime();
-				canvas.height = H;
-				canvas.width = W;
-
-				setValues((prev) => ({
-					...prev,
-					imgRatio,
-					createdAt,
-				}));
-				setImgSrc(imgSrc);
-
-				const ctx = canvas.getContext("2d");
-				ctx.drawImage(imgEle, 0, 0, W, H);
-
-				canvas.toBlob(
-					(blob) => {
-						const imgFile = new File(
-							[blob],
-							`${name}-image${createdAt}.webp`,
-							{ type: "image/webp" }
-						);
-						setImgFile(imgFile);
-					},
-					"image/webp",
-					0.85
-				);
-				canvas.remove();
-			};
-			imgEle.remove();
-		};
 	};
 
 	const value = {
 		addPin,
 		addUser,
+      updatePin,
 		updateList,
-		compressImg,
 	};
 
 	return <DbContext.Provider value={value}>{children}</DbContext.Provider>;

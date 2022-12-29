@@ -6,12 +6,15 @@ import Avatar from "./Avatar";
 import { useAuth } from "../../hooks";
 import Avvvatars from "avvvatars-react";
 import ActionBtn from "./ActionBtn";
+import { useLayout } from "../layout/Layout";
 
 const Pin = ({ pin }) => {
+	const { setEdit, setReport } = useLayout();
+
 	const {
 		authUser: { username },
 	} = useAuth();
-	const { id, author, link, savedBy, imgRatio, imgUrl } = pin;
+	const { id, author, link, savedBy, imgRatio, imgUrl, cmtDisabled } = pin;
 
 	const shortenLink = (link) => {
 		const protocolRegex = /(?:(https|http):\/\/)(?:www\.)?/;
@@ -33,7 +36,20 @@ const Pin = ({ pin }) => {
 
 					<div className="flex p-3 pb-0">
 						{username == author.username && (
-							<button className="h-8 w-8 flex-center bg-white/[.65] hover:bg-white/80 rounded-full z-[9] cursor-pointer transition m-1">
+							<button
+								onClick={() =>
+									setEdit({
+										id,
+										link,
+										cmtDisabled,
+										imgUrl,
+										imgRatio,
+										title: pin.title,
+										description: pin.description,
+									})
+								}
+								className="h-8 w-8 flex-center bg-white/[.65] hover:bg-white/80 rounded-full z-[9] cursor-pointer transition m-1"
+							>
 								<HiPencil className="text-lg" />
 							</button>
 						)}
@@ -53,7 +69,10 @@ const Pin = ({ pin }) => {
 					<div className="flex p-3 pt-4 gap-2.5">
 						{link && (
 							<Link href={link}>
-								<a className="relative h-full flex bg-white/70 hover:bg-white/[.85] rounded-full z-[9] cursor-pointer transition max-w-max px-3 items-center gap-1.5 min-w-0">
+								<a
+									className="relative h-full flex bg-white/70 hover:bg-white/[.85] rounded-full z-[9] cursor-pointer transition max-w-max px-3 items-center gap-1.5 min-w-0"
+									target="_blank"
+								>
 									<IoLink className="text-xl" />
 									<div className="text-sm truncate">
 										{shortenLink(link)}
@@ -67,7 +86,10 @@ const Pin = ({ pin }) => {
 								<HiDownload className="text-lg" />
 							</button>
 
-							<button className="aspect-square flex-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition">
+							<button
+								onClick={() => setReport({ id, col: "pins" })}
+								className="aspect-square flex-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition"
+							>
 								<HiFlag className="text-lg" />
 							</button>
 						</div>

@@ -1,38 +1,26 @@
 import { useEffect, useState } from "react";
 import TextField from "../common/TextField";
-import { useAuth, useDb, useValidation } from "../../hooks";
+import { useAuth, useValidation } from "../../hooks";
 import ProfileCopy from "./ProfileCopy";
 import ProfileUpload from "./ProfileUpload";
+import UploadImg from "../common/UploadImg";
 
 const ProfileForm = ({ fields, submit, msgs }) => {
 	const {
 		logout,
 		authUser: { username, name, profileUrl },
 	} = useAuth();
-	const { compressImg } = useDb();
 
 	const required = fields
 		.filter((field) => !field.optional)
 		.map((field) => field.name);
 
 	const [imgFile, setImgFile] = useState(null);
-	const [imgSrc, setImgSrc] = useState(profileUrl);
 	const [values, setValues] = useState({});
 
 	useEffect(() => {
 		setValues({ username, name, profileUrl, about: "" });
 	}, [username, name, profileUrl]);
-
-	const handlePreview = (e) => {
-		const file = e.target.files[0];
-		compressImg(file, 200, "profile", setImgSrc, setImgFile, setValues);
-	};
-
-	const handleDeleteImg = (e) => {
-		e.preventDefault();
-		setImgFile(null);
-		setImgSrc(null);
-	};
 
 	const {
 		error,
@@ -46,7 +34,7 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 
 	const handleBlur = (e) => {
 		const value = e.target.value.trim();
-		const name = e.target.name;
+		const { name } = e.target;
 
 		if (!value && required.includes(name)) {
 			setError({
@@ -72,23 +60,24 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 	};
 
 	const handleChange = (e) => {
+		const { value, name } = e.target;
+
 		setValues({
 			...values,
-			[e.target.name]: e.target.value,
+			[name]: value,
 		});
 	};
 
 	return (
 		<form className="relative w-full max-w-sm px-10 pb-8 pt-24 bg-white rounded-2xl shadow-lg">
-			{imgSrc ? (
-				<ProfileCopy
-					handlePreview={handlePreview}
-					handleDeleteImg={handleDeleteImg}
-					imgSrc={imgSrc}
-				/>
-			) : (
-				<ProfileUpload handlePreview={handlePreview} username={username} />
-			)}
+			<UploadImg
+				setValues={setValues}
+				setImgFile={setImgFile}
+				selectedImg={ProfileCopy}
+            defaultSrc={profileUrl}
+			>
+				<ProfileUpload username={username} />
+			</UploadImg>
 
 			{fields.map((field, id) => (
 				<TextField

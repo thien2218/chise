@@ -40,7 +40,7 @@ class Firestore {
 		}
 	}
 
-	// Write
+	// Update
 
 	// Create
 	async createUser(username, values) {
@@ -79,7 +79,11 @@ class Firestore {
 		}
 	}
 
-	// Write
+	// Update
+   async updatePin(id, values) {
+		const pinRef = doc(this.db, "pins", id);
+      await updateDoc(pinRef, values);
+   }
 
 	// Create
 	async createPin(values) {

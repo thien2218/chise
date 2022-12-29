@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import Avatar from "../common/Avatar";
+import { useValidation } from "../../hooks";
 
-const Field = ({ styles, desc, maxChar, placeholder, name, setValues }) => {
-	const [charCount, setCharCount] = useState(maxChar);
+const Field = ({ styles, desc, maxCharCount, placeholder, name, setValues }) => {
+	const [charCount, setCharCount] = useState(maxCharCount);
 	const [allowInput, setAllowInput] = useState(true);
+   const { checkLength } = useValidation();
 
 	const handleKeyDown = (e) => {
 		if (e.keyCode <= 222 && e.keyCode >= 65 && !e.metaKey && !allowInput) {
@@ -14,19 +16,19 @@ const Field = ({ styles, desc, maxChar, placeholder, name, setValues }) => {
 
 	const handleInput = (e) => {
 		const curText = e.target.innerText.trim();
-
-		if (curText.length > maxChar) {
-			e.target.innerText = curText.slice(0, maxChar);
-			curText = e.target.innerText;
-		}
-
-		const len = maxChar - curText.length;
+		const len = maxCharCount - curText.length;
 
 		setAllowInput(len > 0);
+
+		if (checkLength(curText, 0, maxCharCount)) {
+			e.target.innerText = curText.slice(0, maxCharCount);
+			len = 0;
+		}
+
 		setCharCount(len);
 		setValues((prev) => ({
 			...prev,
-			[name]: curText,
+			[name]: e.target.innerText,
 		}));
 	};
 
@@ -54,23 +56,23 @@ const ContentBuilder = ({
 	invalidUrlMsg,
 	setInvalidUrlMsg,
 }) => {
+   const { checkUrl } = useValidation();
+
 	const fields = [
 		{
 			name: "title",
 			styles: "heading",
 			desc: "The first 40 characters that shows up in the pin feeds",
-			maxChar: 100,
+			maxCharCount: 100,
 			placeholder: "Add your title",
 		},
 		{
 			name: "description",
 			desc: "People will see the first 100 characters of description when they click on your pin",
-			maxChar: 750,
+			maxCharCount: 750,
 			placeholder: "Tell everyone about your pin",
 		},
 	];
-
-   const urlRegex = /https?:\/\/(www\.)?[0-9a-zA-Z][-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
 	const handleCheckbox = (e) => {
 		setValues((prev) => ({
@@ -80,9 +82,9 @@ const ContentBuilder = ({
 	};
 
    const handleChange = (e) => {
-		const value = e.target.value;
+		const { value } = e.target;
 
-		if (value && !urlRegex.test(value)) {
+		if (checkUrl(value)) {
 			setInvalidUrlMsg('A valid URL must:\n- Start with "https://" or "http://"\n- Have a valid domain');
 		} else {
          setInvalidUrlMsg("");

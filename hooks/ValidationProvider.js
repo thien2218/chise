@@ -10,6 +10,7 @@ const ValidationProvider = ({ children }) => {
    const usernameRegex = /^[a-zA-Z0-9]*$/;
    const nameRegex = /[@#$^*\-+=|"`\\<>[\]{}]/;
    const shortenEmailRegex = /^.*?(?=@)/;
+   const urlRegex = /https?:\/\/(www\.)?[0-9a-zA-Z][-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
 	const checkLength = (input, lower, upper) =>
 		input.length > upper || input.length < lower;
@@ -18,6 +19,7 @@ const ValidationProvider = ({ children }) => {
    const checkName = (input) => nameRegex.test(input);
    const checkUsername = (input) => !usernameRegex.test(input);
    const checkConfirmPw = (pw, confirmPw) => confirmPw != pw;
+   const checkUrl = (input) => (input && urlRegex.test(input));
 
    const isValid = async (name, cond, msg) => {
 		if (cond) {
@@ -57,6 +59,7 @@ const ValidationProvider = ({ children }) => {
       checkUsername,
       isValid,
 		handleSubmit,
+      checkUrl,
       shortenEmailRegex,
 	};
 

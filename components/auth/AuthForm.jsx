@@ -24,7 +24,7 @@ const AuthForm = ({ fields, submit, msgs }) => {
 
 	const handleBlur = (e) => {
 		const value = e.target.value.trim();
-		const name = e.target.name;
+		const { name } = e.target;
 
 		if (!value && required.includes(name)) {
 			setError({
@@ -51,9 +51,11 @@ const AuthForm = ({ fields, submit, msgs }) => {
 	};
 
 	const handleChange = (e) => {
+      const { value, name } = e.target;
+
 		setValues({
 			...values,
-			[e.target.name]: e.target.value,
+			[name]: value,
 		});
 	};
 

@@ -2,8 +2,7 @@ import Image from "next/image";
 import { BsCameraFill } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 
-const ProfileCopy = ({ imgSrc, handlePreview, handleDeleteImg }) => {
-
+const ProfileCopy = ({ imgSrc, unselectImg }) => {
 	return (
 		<div className="absolute top-0 left-0 w-full -translate-y-[40%] flex justify-center">
          <div className="relative h-32 aspect-square rounded-full overflow-hidden border-[6px] border-white cursor-pointer flex-center group">
@@ -20,7 +19,7 @@ const ProfileCopy = ({ imgSrc, handlePreview, handleDeleteImg }) => {
                id="profile"
                className="absolute opacity-0 -top-1/2 h-[150%] w-full cursor-pointer"
                accept=".jpg,.png,.webp,.jpeg"
-               onChange={handlePreview}
+               onChange={unselectImg}
             />
          </div>
 
