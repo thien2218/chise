@@ -10,10 +10,7 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 		logout,
 		authUser: { username, name, profileUrl },
 	} = useAuth();
-
-	const required = fields
-		.filter((field) => !field.optional)
-		.map((field) => field.name);
+	const required = fields.map((field) => field.name);
 
 	const [imgFile, setImgFile] = useState(null);
 	const [values, setValues] = useState({});
@@ -74,7 +71,7 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 				setValues={setValues}
 				setImgFile={setImgFile}
 				selectedImg={ProfileCopy}
-            defaultSrc={profileUrl}
+				defaultSrc={profileUrl}
 			>
 				<ProfileUpload username={username} />
 			</UploadImg>
@@ -90,6 +87,17 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 					handleChange={handleChange}
 				/>
 			))}
+
+			<div className="w-full mb-2">
+				<textarea
+					name="about"
+					id="about"
+					className="resize-none h-40 outline-none border-[1.5px] rounded-lg py-1 px-2 focus:border-blueish w-full"
+					placeholder="Tell us more about you"
+					value={values.about}
+					onChange={handleChange}
+				/>
+			</div>
 
 			<div className="mt-2 text-center text-primary text-sm">
 				<span>{error.invalid}</span>

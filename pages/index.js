@@ -1,21 +1,26 @@
-import { withAuth } from "../hooks";
-import { MasonryLayout } from "../components";
+import { withAuth, useAuth } from "../hooks";
+import { MasonryLayout, PrivateForm } from "../components";
 import { Firestore } from "../services";
 
 function Home({ pins }) {
+	const { authUser } = useAuth();
+
 	return (
-		<MasonryLayout pins={pins} />
-	)
+		<>
+			{authUser.isNewUser && <PrivateForm />}
+			<MasonryLayout pins={pins} />
+		</>
+	);
 }
 
 export async function getServerSideProps() {
-   const pins = await Firestore.getPins();
+	const pins = await Firestore.getPins();
 
-   return {
-      props: {
-         pins,
-      },
-   };
+	return {
+		props: {
+			pins,
+		},
+	};
 }
 
 export default withAuth(Home);

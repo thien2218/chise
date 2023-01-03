@@ -23,13 +23,6 @@ const Profile = () => {
          type: "text",
          placeholder: "Ex: Ada Lovelace",
       },
-      {
-         name: "about",
-         label: "About (optional)",
-         type: "text",
-         placeholder: "Tell us about you",
-         optional: true,
-      },
    ];
    const { addUser } = useDb();
 

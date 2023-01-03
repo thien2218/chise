@@ -24,7 +24,8 @@ class Firestore {
 
 	// Read
 	async usernameExists(username) {
-		const user = await getDoc(doc(this.db, "users", username));
+		const userRef = doc(this.db, "users", username);
+		const user = await getDoc(userRef, username);
 		return user.exists();
 	}
 
@@ -41,10 +42,15 @@ class Firestore {
 	}
 
 	// Update
+   async updateUser(username, values) {
+		const userRef = doc(this.db, "users", username);
+      await updateDoc(userRef, values);
+   }
 
 	// Create
 	async createUser(username, values) {
-		return await setDoc(doc(this.db, "users", username), values);
+		const userRef = doc(this.db, "users", username);
+		return await setDoc(userRef, values);
 	}
 
 	// Delete
@@ -87,7 +93,8 @@ class Firestore {
 
 	// Create
 	async createPin(values) {
-		return await addDoc(collection(this.db, "pins"), values);
+		const pinRef = doc(this.db, "pins", id);
+		return await addDoc(pinRef, values);
 	}
 
 	// Delete

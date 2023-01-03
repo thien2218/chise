@@ -8,6 +8,7 @@ export { default as PinBuilder } from "./layout/PinBuilder";
 
 export { default as AuthForm } from "./auth/AuthForm";
 export { default as ProfileForm } from "./auth/ProfileForm";
+export { default as PrivateForm } from "./auth/PrivateForm";
 
 export { default as EditForm } from "./common/EditForm";
 export { default as ReportForm } from "./common/ReportForm";

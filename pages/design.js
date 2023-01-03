@@ -1,8 +1,8 @@
-import { EditForm, ReportForm } from "../components";
+import { PrivateForm } from "../components";
 
 const Design = () => {
 	return (
-      <EditForm />
+		<PrivateForm />
 	);
 };
 

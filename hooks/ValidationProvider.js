@@ -19,7 +19,7 @@ const ValidationProvider = ({ children }) => {
    const checkName = (input) => nameRegex.test(input);
    const checkUsername = (input) => !usernameRegex.test(input);
    const checkConfirmPw = (pw, confirmPw) => confirmPw != pw;
-   const checkUrl = (input) => (input && urlRegex.test(input));
+   const checkUrl = (input) => !(input && urlRegex.test(input));
 
    const isValid = async (name, cond, msg) => {
 		if (cond) {

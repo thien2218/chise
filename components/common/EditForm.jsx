@@ -5,6 +5,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { IoArrowUpCircle } from "react-icons/io5";
 import { useValidation, useDb } from "../../hooks";
 import UploadImg from "./UploadImg";
+import { useRouter } from "next/router";
 
 const EditField = ({ children, label, htmlFor }) => {
 	return (
@@ -46,6 +47,7 @@ const EditForm = ({ setEdit, edit }) => {
 	const [error, setError] = useState({});
 	const { checkLength, checkUrl } = useValidation();
 	const { updatePin } = useDb();
+   const { replace, asPath } = useRouter();
 
 	const handleChange = (e) => {
 		const { value, name } = e.target;
@@ -80,8 +82,9 @@ const EditForm = ({ setEdit, edit }) => {
 	};
 
 	const handleSubmit = async () => {
-		await updatePin(id, values);
+		await updatePin(id, values, imgFile);
 		setEdit(null);
+      replace(asPath);
 	};
 
 	return (
@@ -187,8 +190,8 @@ const EditForm = ({ setEdit, edit }) => {
 							<UploadImg
 								setImgFile={setImgFile}
 								setValues={setValues}
-                        imgRatio={edit.imgRatio}
-								defaultSrc={edit.imgUrl}
+                        imgRatio={values.imgRatio}
+								defaultSrc={values.imgUrl}
 								selectedImg={EditImgField}
 							>
 								<EditImgField
