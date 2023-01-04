@@ -1,11 +1,12 @@
 import { useState } from "react";
 import Button from "./Button";
 import AdjustedImg from "./AdjustedImg";
-import { IoIosArrowDown } from "react-icons/io";
 import { IoArrowUpCircle } from "react-icons/io5";
 import { useValidation, useDb } from "../../hooks";
 import UploadImg from "./UploadImg";
 import { useRouter } from "next/router";
+import _ from "lodash";
+import Dropdown from "../headlessui/Dropdown";
 
 const EditField = ({ children, label, htmlFor }) => {
 	return (
@@ -43,11 +44,26 @@ const EditImgField = ({ imgRatio, imgSrc, handlePreview }) => {
 const EditForm = ({ setEdit, edit }) => {
 	const { id, ...otherValues } = edit;
 	const [values, setValues] = useState(otherValues);
-   const [imgFile, setImgFile] = useState(null);
+	const [imgFile, setImgFile] = useState(null);
 	const [error, setError] = useState({});
+
 	const { checkLength, checkUrl } = useValidation();
-	const { updatePin } = useDb();
-   const { replace, asPath } = useRouter();
+	const { updatePin, deletePin } = useDb();
+	const { replace, asPath } = useRouter();
+
+	const options = [
+		{
+			label: "Disabled",
+			value: true,
+		},
+		{
+			label: "Enabled",
+			value: false,
+		},
+	];
+	const defaultVal = options.filter(
+		(option) => option.value === edit.cmtDisabled
+	)[0];
 
 	const handleChange = (e) => {
 		const { value, name } = e.target;
@@ -82,9 +98,14 @@ const EditForm = ({ setEdit, edit }) => {
 	};
 
 	const handleSubmit = async () => {
+		if (Object.keys(error).length === 0 || _.isEqual(otherValues, values)) {
+         setEdit(null);
+         return;
+      }
+
 		await updatePin(id, values, imgFile);
 		setEdit(null);
-      replace(asPath);
+		replace(asPath);
 	};
 
 	return (
@@ -169,19 +190,14 @@ const EditForm = ({ setEdit, edit }) => {
 								</div>
 							</EditField>
 
-							<EditField label="Comment" htmlFor="comment">
+							<EditField label="Comment" htmlFor="cmtDisabled">
 								<div className="w-full relative">
-									<select
-										id="comment"
-										className="p-3 bg-dimmed-400 hover:bg-dimmed-500 rounded-lg cursor-pointer outline-none font-medium w-full peer"
-									>
-										<option value="true">Disabled</option>
-										<option value="false">Enabled</option>
-									</select>
-
-									<div className="absolute right-0 bottom-0 h-full aspect-square flex-center rounded-lg bg-dimmed-400 peer-hover:bg-dimmed-500 pointer-events-none">
-										<IoIosArrowDown className="text-xl" />
-									</div>
+									<Dropdown
+										handleChange={handleChange}
+										options={options}
+										name="cmtDisabled"
+										defaultVal={defaultVal}
+									/>
 								</div>
 							</EditField>
 						</div>
@@ -190,7 +206,7 @@ const EditForm = ({ setEdit, edit }) => {
 							<UploadImg
 								setImgFile={setImgFile}
 								setValues={setValues}
-                        imgRatio={values.imgRatio}
+								imgRatio={values.imgRatio}
 								defaultSrc={values.imgUrl}
 								selectedImg={EditImgField}
 							>
@@ -203,7 +219,10 @@ const EditForm = ({ setEdit, edit }) => {
 					</div>
 
 					<div className="flex justify-between p-6">
-						<Button btnType="secondary-btn">Delete</Button>
+						<Button btnType="secondary-btn" onClick={() => deletePin(id)}>
+							Delete
+						</Button>
+
 						<div className="flex gap-3">
 							<Button
 								btnType="secondary-btn"

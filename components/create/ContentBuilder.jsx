@@ -2,11 +2,19 @@ import { useState } from "react";
 import Link from "next/link";
 import Avatar from "../common/Avatar";
 import { useValidation } from "../../hooks";
+import Checkbox from "../headlessui/Checkbox";
 
-const Field = ({ styles, desc, maxCharCount, placeholder, name, setValues }) => {
+const Field = ({
+	styles,
+	desc,
+	maxCharCount,
+	placeholder,
+	name,
+	setValues,
+}) => {
 	const [charCount, setCharCount] = useState(maxCharCount);
 	const [allowInput, setAllowInput] = useState(true);
-   const { checkLength } = useValidation();
+	const { checkLength } = useValidation();
 
 	const handleKeyDown = (e) => {
 		if (e.keyCode <= 222 && e.keyCode >= 65 && !e.metaKey && !allowInput) {
@@ -56,7 +64,7 @@ const ContentBuilder = ({
 	invalidUrlMsg,
 	setInvalidUrlMsg,
 }) => {
-   const { checkUrl } = useValidation();
+	const { checkUrl } = useValidation();
 
 	const fields = [
 		{
@@ -74,26 +82,30 @@ const ContentBuilder = ({
 		},
 	];
 
-	const handleCheckbox = (e) => {
+	const handleCheck = (e) => {
+		const { name, checked } = e.target;
+
 		setValues((prev) => ({
 			...prev,
-			cmtDisabled: e.target.checked,
+			[name]: checked,
 		}));
 	};
 
-   const handleChange = (e) => {
+	const handleChange = (e) => {
 		const { value } = e.target;
 
 		if (checkUrl(value)) {
-			setInvalidUrlMsg('A valid URL must:\n- Start with "https://" or "http://"\n- Have a valid domain');
+			setInvalidUrlMsg(
+				'A valid URL must:\n- Start with "https://" or "http://"\n- Have a valid domain'
+			);
 		} else {
-         setInvalidUrlMsg("");
-         setValues((prev) => ({
-            ...prev,
-            link: value,
-         }));
-      }
-   }
+			setInvalidUrlMsg("");
+			setValues((prev) => ({
+				...prev,
+				link: value,
+			}));
+		}
+	};
 
 	return (
 		<div className="flex flex-col pl-10 min-w-0">
@@ -115,11 +127,10 @@ const ContentBuilder = ({
 
 			<div className="flex items-center gap-2 mt-2">
 				<span>Disable comment section</span>
-				<input
-					type="checkbox"
-					name="disable_comment"
-					className="relative appearance-none w-7 h-3.5 bg-dimmed-600 rounded-full transition before:absolute before:left-0 before:h-full before:aspect-square before:rounded-full before:bg-white before:transition-all before:border-2 before:border-dimmed-600 before:box-border checked:before:left-[14px] checked:before:border-blueish checked:bg-blueish"
-					onChange={handleCheckbox}
+				<Checkbox
+					name="cmtDisabled"
+					handleCheck={handleCheck}
+					srOnly="Disable comment"
 				/>
 			</div>
 
@@ -130,7 +141,7 @@ const ContentBuilder = ({
 						name="destination"
 						placeholder="Add a destination link"
 						className="w-full outline-none border-b-[1.5px] border-dimmed-700 pb-2 focus:border-blueish"
-                  onChange={handleChange}
+						onChange={handleChange}
 						style={{
 							borderBottom: `${
 								invalidUrlMsg && "1.5px solid var(--clr-primary)"

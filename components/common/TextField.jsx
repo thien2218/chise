@@ -3,7 +3,7 @@ const TextField = ({
 	label,
 	type,
 	placeholder,
-   defaultValue,
+   defaultVal,
    error,
 	handleBlur,
 	handleFocus,
@@ -21,7 +21,7 @@ const TextField = ({
 				name={name}
 				type={type}
 				placeholder={placeholder}
-            value={defaultValue}
+            value={defaultVal}
 				onBlur={handleBlur}
             onChange={handleChange}
 				onFocus={handleFocus}

@@ -4,6 +4,7 @@ import {
 	arrayRemove,
 	arrayUnion,
 	collection,
+	deleteDoc,
 	doc,
 	getDoc,
 	getDocs,
@@ -98,6 +99,10 @@ class Firestore {
 	}
 
 	// Delete
+   async deletePin(id) {
+      const pinRef = doc(this.db, "pins", id);
+      await deleteDoc(pinRef);
+   }
 
 	// ------------ OTHER ------------
 	async updateList(username, containsUser, col, id) {

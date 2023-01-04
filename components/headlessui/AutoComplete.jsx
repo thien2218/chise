@@ -17,9 +17,9 @@ const AutoComplete = ({ options, name, defaultVal, handleChange }) => {
 						.includes(query.toLowerCase().replace(/\s+/g, ""))
          );
 
-   useEffect(() => {
-      handleChange(name, selected);
-   }, [selected]);
+	useEffect(() => {
+		handleChange({ target: name, value: selected });
+	}, [selected]);
 
 	return (
 		<Combobox value={selected} onChange={setSelected}>
@@ -54,7 +54,7 @@ const AutoComplete = ({ options, name, defaultVal, handleChange }) => {
 									key={idx}
 									className={({ active }) =>
 										`relative cursor-default select-none py-2 pl-9 pr-4 ${
-											active ? "bg-dimmed-400" : "text-secondary"
+											active ? "bg-dimmed-400" : ""
 										}`
 									}
 									value={option}
@@ -73,7 +73,7 @@ const AutoComplete = ({ options, name, defaultVal, handleChange }) => {
 													className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
 														active
 															? "bg-dimmed-400"
-															: "text-secondary"
+															: ""
 													}`}
 												>
 													<HiCheck />

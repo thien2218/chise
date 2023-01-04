@@ -80,7 +80,7 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 				<TextField
 					key={id}
 					{...field}
-					defaultValue={values[field.name]}
+					defaultVal={values[field.name]}
 					error={error[field.name]}
 					handleBlur={handleBlur}
 					handleFocus={handleFocus}

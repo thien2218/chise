@@ -29,7 +29,7 @@ const DbProvider = ({ children }) => {
 				followers: [],
 				following: 0,
 				private: {
-					gender: "Male",
+					gender: "male",
 					country: "United States of America",
 					birthday: getCurDate(),
 				},
@@ -51,7 +51,7 @@ const DbProvider = ({ children }) => {
 	const addPin = async (imgFile, values) => {
 		const { id, emailVerified, ...author } = authUser;
 		const imgUrl = await Storage.uploadImage(imgFile, "pin");
-		return await Firestore.createPin({ author, imgUrl, ...values });
+		await Firestore.createPin({ author, imgUrl, ...values });
 	};
 
 	const updatePin = async (id, values, imgFile) => {
@@ -60,6 +60,10 @@ const DbProvider = ({ children }) => {
 		}
 		await Firestore.updatePin(id, values);
 	};
+
+   const deletePin = async (id) => {
+      await Firestore.deletePin(id);
+   }
 
 	// OTHER
 	const updateList = async (username, containsUser, req) => {
@@ -84,6 +88,7 @@ const DbProvider = ({ children }) => {
 		addUser,
       updateUser,
 		updatePin,
+      deletePin,
 		getCurDate,
 		updateList,
 	};

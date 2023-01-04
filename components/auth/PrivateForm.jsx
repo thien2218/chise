@@ -7,24 +7,33 @@ import enLocale from "i18n-iso-countries/langs/en.json";
 import _ from "lodash";
 
 const PrivateForm = () => {
-   const { getCurDate, updateUser } = useDb();
-	const { authUser: { username }, setAuthUser } = useAuth();
+	const { getCurDate, updateUser } = useDb();
+	const {
+		authUser: { username },
+		setAuthUser,
+	} = useAuth();
 
-   const initObj = {
-      gender: "Male",
-      country: "United States of America",
-      birthday: getCurDate(),
-   }
-   const [values, setValues] = useState(initObj);
+	const initObj = {
+		gender: "male",
+		country: "United States of America",
+		birthday: getCurDate(),
+	};
+	const [values, setValues] = useState(initObj);
 
-	const genderList = ["Male", "Female"];
+	const genderList = [
+		{ label: "Male", value: "male" },
+		{ label: "Female", value: "female" },
+	];
+
 	countries.registerLocale(enLocale);
 	const countryObj = countries.getNames("en", { select: "official" });
 	const countryList = Object.entries(countryObj).map(([key, value]) => {
 		return value;
 	});
 
-	const handleChange = (name, value) => {
+	const handleChange = (e) => {
+		const { value, name } = e.target;
+
 		setValues({
 			...values,
 			[name]: value,
@@ -32,10 +41,10 @@ const PrivateForm = () => {
 	};
 
 	const handleSubmit = async (e) => {
-      e.preventDefault();
-      if (_.isEqual(initObj, values)) return;
+		e.preventDefault();
+		if (_.isEqual(initObj, values)) return;
 
-      await updateUser(username, { private: values });
+		await updateUser(username, { private: values });
 		setAuthUser((prev) => ({
 			...prev,
 			isNewUser: false,
@@ -58,6 +67,7 @@ const PrivateForm = () => {
 						<Dropdown
 							handleChange={handleChange}
 							name="gender"
+                     defaultVal={genderList[0]}
 							options={genderList}
 						/>
 					</div>
@@ -66,7 +76,7 @@ const PrivateForm = () => {
 						<label className="text-xs font-semibold">Country</label>
 						<AutoComplete
 							handleChange={handleChange}
-                     defaultVal="United States of America"
+							defaultVal="United States of America"
 							name="country"
 							options={countryList}
 						/>
@@ -82,20 +92,21 @@ const PrivateForm = () => {
 							name="birthday"
 							id="birthday"
 							className="pl-3 pr-2 py-2 rounded-lg border-[1.5px] border-dimmed-600"
-                     value={values.birthday}
-                     max={getCurDate()}
-							onChange={(e) =>
-								handleChange(e.target.name, e.target.value)
-							}
+							value={values.birthday}
+							max={getCurDate()}
+							onChange={handleChange}
 						/>
 					</div>
 
 					<span className="text-sm text-dark-gray block text-center mt-3">
 						These info will be private for you to look at
 					</span>
-               <button onClick={handleSubmit} className="primary-btn w-full py-2 rounded-full relative z-[2] mt-2">
-                  Done
-               </button>
+					<button
+						onClick={handleSubmit}
+						className="primary-btn w-full py-2 rounded-full relative z-[2] mt-2"
+					>
+						Done
+					</button>
 				</div>
 			</div>
 		</form>

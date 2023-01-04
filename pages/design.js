@@ -1,8 +1,8 @@
-import { PrivateForm } from "../components";
+import { ReportForm } from "../components";
 
 const Design = () => {
 	return (
-		<PrivateForm />
+		<ReportForm />
 	);
 };
 
