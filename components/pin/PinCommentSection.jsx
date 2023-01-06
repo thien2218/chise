@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { IoArrowForwardCircle } from "react-icons/io5";
 import Avatar from "../common/Avatar";
 import PinComment from "./PinComment";
 
 const PinCommentSection = ({ comments }) => {
 	const [showComments, setShowComments] = useState(true);
+   const [comment, setComment] = useState("");
+
+   const handleComment = (e) => {
+      const { value } = e.target;
+      setComment(value.trim());
+   }
 
 	return (
 		<div className="pr-3">
@@ -15,22 +20,26 @@ const PinCommentSection = ({ comments }) => {
 					onClick={() => setShowComments(!showComments)}
 				>
 					<span className="text-xl">Comments</span>
-					{showComments ? <IoIosArrowDown /> : <IoIosArrowUp />}
+
+               <div className="h-8 aspect-square rounded-full flex-center hover:bg-dimmed-500">
+                  {showComments ? <IoIosArrowDown /> : <IoIosArrowUp />}
+               </div>
 				</button>
 
 				<div className="py-4">
-					<div className="relative flex gap-2">
+					<div className="relative flex flex-wrap gap-2">
 						<Avatar size={10} src="/assets/cat.jpg" />
 
 						<div
 							contentEditable
-							className="relative flex-1 max-w-[calc(100%_-_3rem)] pr-10 empty:before:content-[attr(placeholder)] empty:before:text-dark-gray cursor-text py-2 px-3.5 rounded-full shadow-[0_0_0_1.5px_inset] shadow-dimmed-700 focus:outline-none focus:shadow-blueish focus:rounded-2xl"
+							className="relative flex-1 max-w-[calc(100%_-_3rem)] empty:before:content-[attr(placeholder)] empty:before:text-dark-gray cursor-text py-2 px-3.5 rounded-full shadow-[0_0_0_1.5px_inset] shadow-dimmed-700 focus:outline-none focus:shadow-blueish focus:rounded-2xl peer"
 							placeholder="Add a comment"
+                     onChange={handleComment}
 						/>
 
-                  <div className="absolute h-10 aspect-square flex-center right-0">
-                     <button className="text-4xl text-primary hover:text-primary-hover">
-                        <IoArrowForwardCircle />
+                  <div className="flex-[0_0_100%] justify-end hidden peer-focus:flex">
+                     <button className={`${comment ? "primary-btn" : "disabled-btn"} py-2 px-3 font-normal rounded-full`}>
+                        Done
                      </button>
                   </div>
 					</div>

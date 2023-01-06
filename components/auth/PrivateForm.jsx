@@ -53,7 +53,7 @@ const PrivateForm = () => {
 
 	return (
 		<form className="fixed overflow-y-scroll w-full h-full flex items-center top-0 z-20">
-			<div className="px-4 mx-auto w-full max-w-md">
+			<div className="px-4 mx-auto w-full max-w-[26rem]">
 				<div className="relative z-40 rounded-2xl bg-white shadow-[rgb(0_0_0_/_50%)_0_0_0_9000px] px-8 py-6">
 					<h1 className="text-center text-3xl font-medium">
 						You're all set!

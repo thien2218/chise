@@ -23,7 +23,7 @@ const EditImgField = ({ imgRatio, imgSrc, handlePreview }) => {
 	return (
 		<AdjustedImg ratio={imgRatio} src={imgSrc} scale={1}>
 			<div className="relative w-full h-full overflow-hidden bg-black/40 opacity-0 hover:opacity-100 p-4">
-				<div className="rounded-lg h-full w-full border-dashed border-white border-[2px] flex flex-col justify-center items-center text-center text-white gap-2 cursor-pointer">
+				<div className="rounded-lg h-full w-full border-dashed border-white border-[2px] flex-center flex-col text-center text-white gap-2 cursor-pointer">
 					<IoArrowUpCircle className="text-3xl" />
 					<span>Change image</span>
 				</div>

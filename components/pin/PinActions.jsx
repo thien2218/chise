@@ -1,11 +1,13 @@
 import { HiLink, HiFlag, HiDownload, HiPencil } from "react-icons/hi";
 import { useAuth } from "../../hooks";
 import ActionBtn from "../common/ActionBtn";
+import { useLayout } from "../layout/Layout";
 
 const PinActions = ({ pinData }) => {
 	const {
 		authUser: { username },
 	} = useAuth();
+   const { setEdit } = useLayout();
 	const { id, author, link, savedBy, imgRatio, imgUrl, cmtDisabled } = pinData;
 	const isAuthor = (author.username = username);
 

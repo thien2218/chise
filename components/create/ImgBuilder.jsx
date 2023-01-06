@@ -18,7 +18,7 @@ const SelectedImg = ({ imgSrc, imgRatio, unselectImg }) => {
 const UploadField = ({ handlePreview }) => {
 	return (
 		<div className="relative w-full aspect-[1/1.4] rounded-lg overflow-hidden bg-dimmed-400 p-4">
-			<div className="rounded-lg h-full w-full border-dashed border-dimmed-600 border-[2px] flex flex-col justify-center items-center text-center text-dark-gray gap-2 cursor-pointer">
+			<div className="rounded-lg h-full w-full border-dashed border-dimmed-600 border-[2px] flex-center flex-col text-center text-dark-gray gap-2 cursor-pointer">
 				<IoArrowUpCircle className="text-3xl" />
 				<span className="text-lg">
 					Drag & drop

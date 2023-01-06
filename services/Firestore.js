@@ -14,6 +14,7 @@ import {
 	query,
 	setDoc,
 	updateDoc,
+   where,
 } from "firebase/firestore";
 
 class Firestore {
@@ -36,17 +37,15 @@ class Firestore {
 
 		if (userSnap.exists()) {
 			const userData = userSnap.data();
-			userData.username = userSnap.id;
-
 			return userData;
 		}
 	}
 
 	// Update
-   async updateUser(username, values) {
+	async updateUser(username, values) {
 		const userRef = doc(this.db, "users", username);
-      await updateDoc(userRef, values);
-   }
+		return await updateDoc(userRef, values);
+	}
 
 	// Create
 	async createUser(username, values) {
@@ -69,9 +68,23 @@ class Firestore {
 
 		return pinsSnap.docs.map((doc) => {
 			const data = doc.data();
-			data.id = doc.id;
 			return data;
 		});
+	}
+
+	async getPinsExclude(id) {
+		const q = query(
+			collection(this.db, "pins"),
+			limit(30),
+         where("id", "!=", id)
+      );
+		const pinsSnap = await getDocs(q);
+
+		return pinsSnap.docs
+			.map((doc) => {
+				const data = doc.data();
+				return data;
+			});
 	}
 
 	async getPin(id) {
@@ -80,44 +93,44 @@ class Firestore {
 
 		if (pinSnap.exists()) {
 			const pinData = pinSnap.data();
-			pinData.id = id;
-
 			return pinData;
 		}
 	}
 
 	// Update
-   async updatePin(id, values) {
+	async updatePin(id, values) {
 		const pinRef = doc(this.db, "pins", id);
-      await updateDoc(pinRef, values);
-   }
+		return await updateDoc(pinRef, values);
+	}
 
 	// Create
 	async createPin(values) {
-		const pinRef = doc(this.db, "pins", id);
-		return await addDoc(pinRef, values);
+      const pinRef = await addDoc(collection(this.db, "pins"), values);
+		return await updateDoc(pinRef, {
+         id: pinRef.id,
+      });
 	}
 
 	// Delete
-   async deletePin(id) {
-      const pinRef = doc(this.db, "pins", id);
-      await deleteDoc(pinRef);
-   }
+	async deletePin(id) {
+		const pinRef = doc(this.db, "pins", id);
+		return await deleteDoc(pinRef);
+	}
 
 	// ------------ OTHER ------------
 	async updateList(username, containsUser, col, id) {
-      const listName = col == "pins" ? "savedBy" : "followers";
+		const listName = col == "pins" ? "savedBy" : "followers";
 		const docRef = doc(this.db, col, id);
 
 		if (containsUser) {
-			await updateDoc(docRef, {
+			return await updateDoc(docRef, {
 				[listName]: arrayUnion(username),
 			});
-		} else {
-			await updateDoc(docRef, {
-				[listName]: arrayRemove(username),
-			});
-		}
+      }
+		
+      return await updateDoc(docRef, {
+         [listName]: arrayRemove(username),
+      });
 	}
 }
 

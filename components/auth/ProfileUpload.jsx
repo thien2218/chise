@@ -7,7 +7,7 @@ const ProfileUpload = ({ username, handlePreview }) => {
          <div className="relative h-32 aspect-square rounded-full overflow-hidden border-[6px] border-white cursor-pointer flex-center group">
             <Avvvatars size={32 * 4} value={username} />
 
-            <div className="absolute w-full h-full opacity-0 flex flex-col justify-center items-center text-center group-hover:opacity-100 bg-black/40 text-white">
+            <div className="absolute w-full h-full opacity-0 flex-center flex-col text-center group-hover:opacity-100 bg-black/40 text-white">
                <BsCameraFill className="text-2xl" />
                <span className="text-sm">Upload profile</span>
             </div>

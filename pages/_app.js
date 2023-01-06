@@ -6,6 +6,7 @@ import {
 	ValidationProvider,
 	DbProvider,
 	AuthObserver,
+   usePreserveScroll
 } from "../hooks";
 
 function MyApp({ Component, pageProps }) {
@@ -19,6 +20,7 @@ function MyApp({ Component, pageProps }) {
       "/setttings": "Setttings",
    }
    const pageName = page[pathname] || "";
+   usePreserveScroll();
 
 	return (
 		<ValidationProvider>

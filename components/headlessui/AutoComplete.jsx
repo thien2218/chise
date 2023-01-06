@@ -18,7 +18,7 @@ const AutoComplete = ({ options, name, defaultVal, handleChange }) => {
          );
 
 	useEffect(() => {
-		handleChange({ target: name, value: selected });
+		handleChange({ target: { name, value: selected } });
 	}, [selected]);
 
 	return (
@@ -71,9 +71,7 @@ const AutoComplete = ({ options, name, defaultVal, handleChange }) => {
 											{selected ? (
 												<span
 													className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-														active
-															? "bg-dimmed-400"
-															: ""
+														active ? "bg-dimmed-400" : ""
 													}`}
 												>
 													<HiCheck />

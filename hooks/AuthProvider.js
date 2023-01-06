@@ -1,6 +1,7 @@
 import { useState, useContext, createContext } from "react";
 import { Firestore, Auth } from "../services";
 import { useValidation } from "./ValidationProvider";
+import { useRouter } from "next/router";
 
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
@@ -10,6 +11,7 @@ const AuthProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 	const [formLoading, setFormLoading] = useState(false);
 	const { setError, shortenEmailRegex } = useValidation();
+   const router = useRouter();
 
 	const login = async ({ email, password }) => {
 		const { error } = await Auth.login(email, password);
@@ -49,6 +51,7 @@ const AuthProvider = ({ children }) => {
 
 	const logout = async () => {
 		await Auth.logout();
+      router.reload();
 	};
 
 	const value = {

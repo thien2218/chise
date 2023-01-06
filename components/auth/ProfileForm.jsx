@@ -89,10 +89,14 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 			))}
 
 			<div className="w-full mb-2">
+            <label className="ml-2 text-sm pointer-events-none" htmlFor="about">
+               About (optional)
+            </label>
+
 				<textarea
 					name="about"
 					id="about"
-					className="resize-none h-40 outline-none border-[1.5px] rounded-lg py-1 px-2 focus:border-blueish w-full"
+					className="resize-none h-32 outline-none border-2 border-[#cdcdcd] rounded-2xl py-1.5 px-2.5 focus:border-blueish w-full hover:border-[#888888] mt-1"
 					placeholder="Tell us more about you"
 					value={values.about}
 					onChange={handleChange}

@@ -28,7 +28,7 @@ const Logo = () => {
 };
 
 const Header = () => {
-	const { authUser, logout } = useAuth();
+	const { authUser } = useAuth();
 
 	return (
 		<header className="fixed w-full top-0 left-0 z-10">
@@ -68,6 +68,7 @@ const Header = () => {
 									height={32}
 									width={32}
 									className="rounded-full"
+                           objectFit="cover"
 									priority
 								/>
 							) : (

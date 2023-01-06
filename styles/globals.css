@@ -28,15 +28,19 @@
 
 	/* Buttons */
 	.primary-btn {
-		@apply text-white font-semibold bg-primary hover:bg-primary-hover transition ease-in-out duration-100;
+		@apply text-white font-semibold bg-primary hover:bg-primary-hover transition ease-in-out duration-100 rounded-full;
 	}
    
 	.secondary-btn {
-		@apply bg-dimmed-500 font-semibold hover:bg-dimmed-600 transition ease-in-out duration-100;
+		@apply bg-dimmed-500 font-semibold hover:bg-dimmed-600 transition ease-in-out duration-100 rounded-full;
 	}
    
    .arbitrary-btn {
-      @apply text-white font-semibold bg-secondary;
+      @apply text-white font-semibold bg-secondary rounded-full;
+   }
+
+   .disabled-btn {
+      @apply text-dark-gray bg-dimmed-600 rounded-full cursor-default;
    }
 
    .google-auth-btn {

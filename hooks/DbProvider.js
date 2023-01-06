@@ -12,10 +12,10 @@ const DbProvider = ({ children }) => {
 
 	// USER
 	const addUser = async ({ username, name, about, profileUrl, imgFile }) => {
-		const { username: prevUsername } = authUser;
 		const displayName = name + "@" + username;
-		const emailAsUsername = prevUsername == username;
-		const newProfileUrl = imgFile
+		const emailAsUsername = authUser.username == username;
+
+      const newProfileUrl = imgFile
 			? await Storage.uploadImage(imgFile, "profile")
 			: profileUrl || "";
 

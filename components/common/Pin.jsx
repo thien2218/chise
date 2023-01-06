@@ -7,9 +7,11 @@ import { useAuth } from "../../hooks";
 import Avvvatars from "avvvatars-react";
 import ActionBtn from "./ActionBtn";
 import { useLayout } from "../layout/Layout";
+import { useRouter } from "next/router";
 
 const Pin = ({ pin }) => {
 	const { setEdit, setReport } = useLayout();
+	const router = useRouter();
 
 	const {
 		authUser: { username },
@@ -31,9 +33,12 @@ const Pin = ({ pin }) => {
 		<div className="w-full px-1.5 pb-4">
 			<AdjustedImg ratio={imgRatio} src={imgUrl} scale={1}>
 				<div className="relative w-full h-full opacity-0 hover:opacity-100 transition duration-100 flex flex-col justify-between">
-					<Link href={`/pin/${id}`}>
-						<a className="z-[8] absolute w-full h-full bg-black/30"></a>
-					</Link>
+					<div
+						className="z-[8] absolute w-full h-full bg-black/30 cursor-pointer"
+						onClick={() =>
+							router.push(`/pin/${id}`, undefined, { shallow: true })
+						}
+					/>
 
 					<div className="flex p-3 pb-0">
 						{isAuthor && (
@@ -69,16 +74,16 @@ const Pin = ({ pin }) => {
 
 					<div className="flex p-3 pt-4 gap-2.5">
 						{link && (
-                     <a
-                        href={link}
-                        className="relative h-full flex bg-white/70 hover:bg-white/[.85] rounded-full z-[9] cursor-pointer transition max-w-max px-3 items-center gap-1.5 min-w-0"
-                        target="_blank"
-                     >
-                        <IoLink className="text-xl" />
-                        <div className="text-sm truncate">
-                           {shortenLink(link)}
-                        </div>
-                     </a>
+							<a
+								href={link}
+								className="relative h-full flex bg-white/70 hover:bg-white/[.85] rounded-full z-[9] cursor-pointer transition max-w-max px-3 items-center gap-1.5 min-w-0"
+								target="_blank"
+							>
+								<IoLink className="text-xl" />
+								<div className="text-sm truncate">
+									{shortenLink(link)}
+								</div>
+							</a>
 						)}
 
 						<div className="flex h-8 gap-2.5  ml-auto">

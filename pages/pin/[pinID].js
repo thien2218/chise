@@ -1,8 +1,9 @@
 import { PinLayout } from "../../components";
 import { Firestore } from "../../services";
+import { withAuth } from "../../hooks";
 
-const PinContent = ({ pinData }) => {
-	return <PinLayout pinData={pinData} />;
+const PinContent = ({ pinData, pins }) => {
+	return <PinLayout pinData={pinData} pins={pins} />;
 };
 
 export async function getStaticPaths() {
@@ -12,16 +13,17 @@ export async function getStaticPaths() {
 		params: { pinID: pin.id },
 	}));
 
-	return { paths, fallback: "blocking" };
+	return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
 	const pinData = await Firestore.getPin(params.pinID);
+	const pins = await Firestore.getPinsExclude(params.pinID);
 
 	return {
-		props: { pinData },
-		revalidate: 300,
+		props: { pinData, pins },
+		revalidate: 180,
 	};
 }
 
-export default PinContent;
+export default withAuth(PinContent);
