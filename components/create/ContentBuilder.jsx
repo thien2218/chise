@@ -91,7 +91,7 @@ const ContentBuilder = ({
 		}));
 	};
 
-	const handleChange = (e) => {
+	const handleChangeLink = (e) => {
 		const { value } = e.target;
 
 		if (checkUrl(value)) {
@@ -141,7 +141,7 @@ const ContentBuilder = ({
 						name="destination"
 						placeholder="Add a destination link"
 						className="w-full outline-none border-b-[1.5px] border-dimmed-700 pb-2 focus:border-blueish"
-						onChange={handleChange}
+						onChange={handleChangeLink}
 						style={{
 							borderBottom: `${
 								invalidUrlMsg && "1.5px solid var(--clr-primary)"

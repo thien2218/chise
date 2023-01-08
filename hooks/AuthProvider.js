@@ -41,11 +41,21 @@ const AuthProvider = ({ children }) => {
 		} else if (isNewUser && !(await Firestore.usernameExists(curUsername))) {
 			setLoading(true);
 			const combinedName = user?.displayName + "@" + curUsername;
-			const { username, ...otherData } = await Auth.updateUser(combinedName);
+			const updatedUser = await Auth.updateUser(combinedName);
 
-			setAuthUser({ username, ...otherData });
+			setAuthUser(updatedUser);
 			setLoading(false);
-			await Firestore.createUser(username, otherData);
+         const values = {
+				...updatedUser,
+				followers: [],
+				following: 0,
+				private: {
+					gender: "male",
+					country: "United States of America",
+					birthday: getCurDate(),
+				},
+			};
+			await Firestore.createUser(updatedUser.username, values);
 		}
 	};
 

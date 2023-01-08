@@ -2,17 +2,28 @@ import { UserLayout } from "../../components";
 import { withAuth } from "../../hooks";
 import { Firestore } from "../../services";
 
-const Saved = ({ user }) => {
-   return (
-      <UserLayout user={user} />
-   );
+const Saved = ({ user, pins }) => {
+	return <UserLayout user={user} pins={pins} />;
+};
+
+export async function getStaticPaths() {
+	const users = await Firestore.getUsers();
+
+	const paths = users.map((user) => ({
+		params: { username: user.username },
+	}));
+
+	return { paths, fallback: false };
 }
 
-export async function getServerSideProps({ params }) {
-	const user = await Firestore.getUser(params.username);
+export async function getStaticProps({ params: { username } }) {
+	const user = await Firestore.getUser(username);
+   const q = Firestore.queryPinsSavedBy(username);
+   const pins = await Firestore.getPinsByQuery(q);
 
 	return {
-		props: { user },
+		props: { user, pins },
+		revalidate: 10,
 	};
 }
 

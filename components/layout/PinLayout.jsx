@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import MasonryLayout from "./MasonryLayout";
 
 const PinLayout = ({ pinData, pins }) => {
-	const { author, imgRatio, imgUrl, cmtDisabled } = pinData;
+	const { creator, imgRatio, imgUrl, cmtDisabled } = pinData;
 	const { back } = useRouter();
 
 	return (
@@ -43,7 +43,7 @@ const PinLayout = ({ pinData, pins }) => {
                      <PinActions pinData={pinData} />
                      <h1 className="heading mt-4 pr-4">{pinData.title}</h1>
                      <p className="text-sm pr-3">{pinData.description}</p>
-                     <PinUserInfo {...author} />
+                     <PinUserInfo {...creator} />
                      {/* {!cmtDisabled && <PinCommentSection />} */}
                   </div>
                </div>

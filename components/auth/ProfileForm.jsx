@@ -16,7 +16,7 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 	const [values, setValues] = useState({});
 
 	useEffect(() => {
-		setValues({ username, name, profileUrl, about: "" });
+		setValues({ username, name, profileUrl });
 	}, [username, name, profileUrl]);
 
 	const {
@@ -98,7 +98,6 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 					id="about"
 					className="resize-none h-32 outline-none border-2 border-[#cdcdcd] rounded-2xl py-1.5 px-2.5 focus:border-blueish w-full hover:border-[#888888] mt-1"
 					placeholder="Tell us more about you"
-					value={values.about}
 					onChange={handleChange}
 				/>
 			</div>

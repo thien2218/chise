@@ -7,7 +7,8 @@ const PinContent = ({ pinData, pins }) => {
 };
 
 export async function getStaticPaths() {
-	const pins = await Firestore.getPins();
+   const q = Firestore.queryPins();
+	const pins = await Firestore.getPinsByQuery(q);
 
 	const paths = pins.map((pin) => ({
 		params: { pinID: pin.id },
@@ -16,9 +17,10 @@ export async function getStaticPaths() {
 	return { paths, fallback: false };
 }
 
-export async function getStaticProps({ params }) {
-	const pinData = await Firestore.getPin(params.pinID);
-	const pins = await Firestore.getPinsExclude(params.pinID);
+export async function getStaticProps({ params: { pinID } }) {
+   const q = Firestore.queryPinsExcept(pinID);
+	const pins = await Firestore.getPinsByQuery(q);
+	const pinData = await Firestore.getPin(pinID);
 
 	return {
 		props: { pinData, pins },

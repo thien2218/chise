@@ -14,7 +14,7 @@ import {
 	query,
 	setDoc,
 	updateDoc,
-   where,
+	where,
 } from "firebase/firestore";
 
 class Firestore {
@@ -41,6 +41,14 @@ class Firestore {
 		}
 	}
 
+	async getUsers() {
+		const usersSnap = await getDocs(collection(this.db, "users"));
+
+		return usersSnap.docs.map((doc) => {
+			return doc.data();
+		});
+	}
+
 	// Update
 	async updateUser(username, values) {
 		const userRef = doc(this.db, "users", username);
@@ -58,35 +66,6 @@ class Firestore {
 	// ------------ PIN ------------
 
 	// Read
-	async getPins() {
-		const q = query(
-			collection(this.db, "pins"),
-			limit(60),
-			orderBy("createdAt", "desc")
-		);
-		const pinsSnap = await getDocs(q);
-
-		return pinsSnap.docs.map((doc) => {
-			const data = doc.data();
-			return data;
-		});
-	}
-
-	async getPinsExclude(id) {
-		const q = query(
-			collection(this.db, "pins"),
-			limit(30),
-         where("id", "!=", id)
-      );
-		const pinsSnap = await getDocs(q);
-
-		return pinsSnap.docs
-			.map((doc) => {
-				const data = doc.data();
-				return data;
-			});
-	}
-
 	async getPin(id) {
 		const pinRef = doc(this.db, "pins", id);
 		const pinSnap = await getDoc(pinRef);
@@ -97,6 +76,54 @@ class Firestore {
 		}
 	}
 
+	async getPinsByQuery(q) {
+		const pinsSnap = await getDocs(q);
+
+		return pinsSnap.docs.map((doc) => {
+			return doc.data();
+		});
+	}
+
+	queryPins() {
+		const q = query(
+			collection(this.db, "pins"),
+			// limit(60),
+			orderBy("createdAt", "desc")
+		);
+
+		return q;
+	}
+
+	queryPinsCreatedBy(username) {
+		const q = query(
+			collection(this.db, "pins"),
+			// limit(30),
+			where("creator.username", "==", username)
+		);
+
+		return q;
+	}
+
+	queryPinsSavedBy(username) {
+		const q = query(
+			collection(this.db, "pins"),
+			// limit(30),
+			where("savedBy", "array-contains", username)
+		);
+
+		return q;
+	}
+
+	queryPinsExcept(id) {
+		const q = query(
+			collection(this.db, "pins"),
+			// limit(30),
+			where("id", "!=", id)
+		);
+
+		return q;
+	}
+
 	// Update
 	async updatePin(id, values) {
 		const pinRef = doc(this.db, "pins", id);
@@ -105,10 +132,10 @@ class Firestore {
 
 	// Create
 	async createPin(values) {
-      const pinRef = await addDoc(collection(this.db, "pins"), values);
+		const pinRef = await addDoc(collection(this.db, "pins"), values);
 		return await updateDoc(pinRef, {
-         id: pinRef.id,
-      });
+			id: pinRef.id,
+		});
 	}
 
 	// Delete
@@ -126,11 +153,11 @@ class Firestore {
 			return await updateDoc(docRef, {
 				[listName]: arrayUnion(username),
 			});
-      }
-		
-      return await updateDoc(docRef, {
-         [listName]: arrayRemove(username),
-      });
+		}
+
+		return await updateDoc(docRef, {
+			[listName]: arrayRemove(username),
+		});
 	}
 }
 

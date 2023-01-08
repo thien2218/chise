@@ -29,6 +29,7 @@ class Auth {
 			username: nameAndUsername[1],
 			emailVerified: user.emailVerified,
 			profileUrl: user.photoURL,
+         email: user.email,
 		};
 	}
 

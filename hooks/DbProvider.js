@@ -11,7 +11,7 @@ const DbProvider = ({ children }) => {
 	const { setError } = useValidation();
 
 	// USER
-	const addUser = async ({ username, name, about, profileUrl, imgFile }) => {
+	const addUser = async ({ username, name, profileUrl, imgFile, ...about }) => {
 		const displayName = name + "@" + username;
 		const emailAsUsername = authUser.username == username;
 
@@ -25,7 +25,7 @@ const DbProvider = ({ children }) => {
 
 			const values = {
 				...updatedUser,
-				about,
+				...about,
 				followers: [],
 				following: 0,
 				private: {
@@ -49,9 +49,9 @@ const DbProvider = ({ children }) => {
 
 	// PIN
 	const addPin = async (imgFile, values) => {
-		const { id, emailVerified, ...author } = authUser;
+		const { emailVerified, email, ...creator } = authUser;
 		const imgUrl = await Storage.uploadImage(imgFile, "pin");
-		await Firestore.createPin({ author, imgUrl, ...values });
+		await Firestore.createPin({ creator, imgUrl, ...values });
 	};
 
 	const updatePin = async (id, values, imgFile) => {

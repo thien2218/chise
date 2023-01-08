@@ -7,9 +7,10 @@ const PinActions = ({ pinData }) => {
 	const {
 		authUser: { username },
 	} = useAuth();
-   const { setEdit } = useLayout();
-	const { id, author, link, savedBy, imgRatio, imgUrl, cmtDisabled } = pinData;
-	const isAuthor = (author.username = username);
+	const { setEdit, setReport } = useLayout();
+	const { id, creator, link, savedBy, imgRatio, imgUrl, cmtDisabled } =
+		pinData;
+	const isCreator = (creator.username = username);
 
 	return (
 		<div className="flex justify-between">
@@ -22,13 +23,13 @@ const PinActions = ({ pinData }) => {
 					<a
 						href={link}
 						className="p-3 hover:bg-dimmed-500 rounded-full text-2xl"
-                  target="_blank"
-               >
+						target="_blank"
+					>
 						<HiLink />
 					</a>
 				)}
 
-				{isAuthor ? (
+				{isCreator ? (
 					<button
 						onClick={() =>
 							setEdit({
@@ -46,7 +47,10 @@ const PinActions = ({ pinData }) => {
 						<HiPencil />
 					</button>
 				) : (
-					<button className="p-3 hover:bg-dimmed-500 rounded-full text-2xl">
+					<button
+						onClick={() => setReport(id)}
+						className="p-3 hover:bg-dimmed-500 rounded-full text-2xl"
+					>
 						<HiFlag />
 					</button>
 				)}
