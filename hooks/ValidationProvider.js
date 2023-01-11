@@ -4,7 +4,7 @@ const ValidationContext = createContext();
 export const useValidation = () => useContext(ValidationContext);
 
 const ValidationProvider = ({ children }) => {
-	const [error, setError] = useState({});
+	const [authError, setAuthError] = useState({});
 	const emailRegex =
 		/[a-z0-9]+(?:\.[a-z0-9]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
    const usernameRegex = /^[a-zA-Z0-9]*$/;
@@ -23,8 +23,8 @@ const ValidationProvider = ({ children }) => {
 
    const isValid = async (name, cond, msg) => {
 		if (cond) {
-			setError({
-				...error,
+			setAuthError({
+				...authError,
 				[name]: msg,
 			});
 		}
@@ -38,11 +38,11 @@ const ValidationProvider = ({ children }) => {
 			if (!values[field]) {
 				curError = { ...curError, [field]: "This field is required" };
 				invalid = true;
-			} else if (error[field]) invalid = true;
+			} else if (authError[field]) invalid = true;
 		}
 
 		if (invalid) {
-         setError({ ...error, ...curError });
+         setAuthError({ ...authError, ...curError });
          return;
       }
 
@@ -50,8 +50,8 @@ const ValidationProvider = ({ children }) => {
 	};
 
 	const value = {
-		error,
-		setError,
+		authError,
+		setAuthError,
 		checkLength,
 		checkEmail,
 		checkConfirmPw,

@@ -20,8 +20,8 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 	}, [username, name, profileUrl]);
 
 	const {
-		error,
-		setError,
+		authError,
+		setAuthError,
 		checkLength,
 		checkUsername,
 		checkName,
@@ -34,8 +34,8 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 		const { name } = e.target;
 
 		if (!value && required.includes(name)) {
-			setError({
-				...error,
+			setAuthError({
+				...authError,
 				[name]: "This field is required",
 			});
 			return;
@@ -50,8 +50,8 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 	};
 
 	const handleFocus = (e) => {
-		setError({
-			...error,
+		setAuthError({
+			...authError,
 			[e.target.name]: "",
 		});
 	};
@@ -81,7 +81,7 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 					key={id}
 					{...field}
 					defaultVal={values[field.name]}
-					error={error[field.name]}
+					error={authError[field.name]}
 					handleBlur={handleBlur}
 					handleFocus={handleFocus}
 					handleChange={handleChange}
@@ -96,14 +96,14 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 				<textarea
 					name="about"
 					id="about"
-					className="resize-none h-32 outline-none border-2 border-[#cdcdcd] rounded-2xl py-1.5 px-2.5 focus:border-blueish w-full hover:border-[#888888] mt-1"
+					className="resize-none h-32 outline-none border-2 border-[#cdcdcd] rounded-2xl py-2 px-4 focus:border-blueish w-full hover:border-[#888888] mt-1"
 					placeholder="Tell us more about you"
 					onChange={handleChange}
 				/>
 			</div>
 
 			<div className="mt-2 text-center text-primary text-sm">
-				<span>{error.invalid}</span>
+				<span>{authError.invalid}</span>
 			</div>
 
 			<button

@@ -1,10 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "../../hooks";
 import { IoSearch } from "react-icons/io5";
 import { HiPlus } from "react-icons/hi";
-import Avvvatars from "avvvatars-react";
 import HeaderMenu from "../headlessui/HeaderMenu";
+import ProfileImg from "../common/ProfileImg";
 
 const Logo = () => {
 	return (
@@ -62,18 +61,11 @@ const Header = () => {
 
 					<HeaderMenu>
 						<div className="h-11 cursor-pointer aspect-square rounded-full flex-center hover:bg-dimmed-600">
-							{authUser?.profileUrl ? (
-								<Image
-									src={authUser.profileUrl}
-									height={32}
-									width={32}
-									className="rounded-full"
-                           objectFit="cover"
-									priority
-								/>
-							) : (
-								<Avvvatars size={32} value={authUser?.name} />
-							)}
+							<ProfileImg
+								profileUrl={authUser?.profileUrl}
+								name={authUser?.name}
+								size={8}
+							/>
 						</div>
 					</HeaderMenu>
 				</div>

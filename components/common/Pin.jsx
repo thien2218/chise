@@ -2,12 +2,11 @@ import AdjustedImg from "./AdjustedImg";
 import Link from "next/link";
 import { HiPencil, HiFlag, HiDownload } from "react-icons/hi";
 import { IoLink } from "react-icons/io5";
-import Avatar from "./Avatar";
 import { useAuth } from "../../hooks";
-import Avvvatars from "avvvatars-react";
 import ActionBtn from "./ActionBtn";
 import { useLayout } from "../layout/Layout";
 import { useRouter } from "next/router";
+import ProfileImg from "./ProfileImg";
 
 const Pin = ({ pin }) => {
 	const { setEdit, setReport } = useLayout();
@@ -33,9 +32,9 @@ const Pin = ({ pin }) => {
 		<div className="w-full px-1.5 pb-4">
 			<AdjustedImg ratio={imgRatio} src={imgUrl} scale={1}>
 				<div className="relative w-full h-full opacity-0 hover:opacity-100 transition duration-100 flex flex-col justify-between">
-               <Link href={`/pin/${id}`}>
-                  <a className="z-[8] absolute w-full h-full bg-black/30" />
-               </Link>
+					<Link href={`/pin/${id}`}>
+						<a className="z-[8] absolute w-full h-full bg-black/30" />
+					</Link>
 
 					<div className="flex p-3 pb-0">
 						{isCreator && (
@@ -110,11 +109,11 @@ const Pin = ({ pin }) => {
 
 				<Link href={`/${creator.username}/created`}>
 					<a className="flex items-center hover:last:underline">
-						{creator.profileUrl ? (
-							<Avatar size={8} src={creator.profileUrl} />
-						) : (
-							<Avvvatars size={8 * 4} value={creator.name} />
-						)}
+						<ProfileImg
+							profileUrl={creator.profileUrl}
+							name={creator.name}
+							size={8}
+						/>
 						<div className="text-sm ml-1.5">{creator.name}</div>
 					</a>
 				</Link>

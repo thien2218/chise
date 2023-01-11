@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import Avatar from "../common/Avatar";
+import ProfileImg from "../common/ProfileImg";
 import PinComment from "./PinComment";
 
 const PinCommentSection = ({ comments }) => {
@@ -28,7 +28,7 @@ const PinCommentSection = ({ comments }) => {
 
 				<div className="py-4">
 					<div className="relative flex flex-wrap gap-2">
-						<Avatar size={10} src="/assets/cat.jpg" />
+						<ProfileImg size={10} profileUrl="/assets/cat.jpg" />
 
 						<div
 							contentEditable

@@ -1,11 +1,11 @@
-import Avatar from "../common/Avatar";
+import ProfileImg from "../common/ProfileImg";
 import Link from "next/link";
 
 const PinComment = () => {
 	return (
 		<div className="grid grid-cols-[auto_1fr] gap-2">
 			<Link href="/">
-            <a><Avatar size={8} src="/assets/cat1.jpg" /></a>
+            <a><ProfileImg size={8} profileUrl="/assets/cat1.jpg" /></a>
          </Link>
 
 			<div>

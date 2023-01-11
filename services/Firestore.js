@@ -62,6 +62,10 @@ class Firestore {
 	}
 
 	// Delete
+	async deleteUser(username) {
+		const userRef = doc(this.db, "users", username);
+		return await deleteDoc(userRef);
+	}
 
 	// ------------ PIN ------------
 

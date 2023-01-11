@@ -6,13 +6,13 @@ import { Loader } from "../components";
 
 const AuthObserver = ({ children }) => {
 	const { setAuthUser, loading, setLoading } = useAuth();
-   const { setError } = useValidation();
+   const { setAuthError } = useValidation();
 
 	useEffect(() => {
 		const unsubscribe = Auth.waitForUser((user) => {
          if (user) {
             setAuthUser(Auth.extractUserData(user));
-            setError({});
+            setAuthError({});
          }
 
 			setLoading(false);

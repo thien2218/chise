@@ -12,8 +12,8 @@ const AuthForm = ({ fields, submit, msgs }) => {
 
 	const [values, setValues] = useState(initState);
 	const {
-		error,
-		setError,
+		authError,
+		setAuthError,
 		checkLength,
 		checkEmail,
 		checkConfirmPw,
@@ -27,8 +27,8 @@ const AuthForm = ({ fields, submit, msgs }) => {
 		const { name } = e.target;
 
 		if (!value && required.includes(name)) {
-			setError({
-				...error,
+			setAuthError({
+				...authError,
 				[name]: "This field is required",
 			});
 			return;
@@ -44,8 +44,8 @@ const AuthForm = ({ fields, submit, msgs }) => {
 	};
 
 	const handleFocus = (e) => {
-		setError({
-			...error,
+		setAuthError({
+			...authError,
 			[e.target.name]: "",
 		});
 	};
@@ -69,7 +69,7 @@ const AuthForm = ({ fields, submit, msgs }) => {
 				<TextField
 					key={id}
 					{...field}
-					error={error[field.name]}
+					error={authError[field.name]}
 					handleBlur={handleBlur}
 					handleFocus={handleFocus}
 					handleChange={handleChange}
@@ -77,7 +77,7 @@ const AuthForm = ({ fields, submit, msgs }) => {
 			))}
 
 			<div className="mt-2 text-center text-primary text-sm">
-				<span>{error.invalid}</span>
+				<span>{authError.invalid}</span>
 			</div>
 
 			<button
@@ -109,7 +109,7 @@ const AuthForm = ({ fields, submit, msgs }) => {
 
 			<div
 				className="font-semibold mt-4 text-center text-sm"
-				onClick={() => setError({})}
+				onClick={() => setAuthError({})}
 			>
 				{pathname == "/auth/signup" ? (
 					<Link href="/auth/login">

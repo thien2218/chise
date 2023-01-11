@@ -1,8 +1,7 @@
 import Link from "next/link";
 import ActionBtn from "../common/ActionBtn";
-import Avatar from "../common/Avatar";
+import ProfileImg from "../common/ProfileImg";
 import { useAuth } from "../../hooks";
-import Avvvatars from "avvvatars-react";
 
 const PinUserInfo = ({ profileUrl, username, name, followers }) => {
 	const {
@@ -11,15 +10,11 @@ const PinUserInfo = ({ profileUrl, username, name, followers }) => {
 
 	return (
 		<div className="mt-4 flex items-center pr-3 gap-1">
-			{profileUrl ? (
-				<Link href="/">
-					<a className="mx-1">
-						<Avatar size={12} src={profileUrl} />
-					</a>
-				</Link>
-			) : (
-				<Avvvatars size={12 * 4} value={name} />
-			)}
+         <Link href={`/${username}/created`}>
+            <a className="mx-1">
+               <ProfileImg profileUrl={profileUrl} name={name} size={12} />
+            </a>
+         </Link>
 
 			<Link href={`/${username}/created`}>
 				<a className="font-semibold text-sm flex-1">{name}</a>

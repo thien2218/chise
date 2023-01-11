@@ -1,8 +1,7 @@
-import Image from "next/image";
 import { useAuth } from "../../hooks";
-import Avvvatars from "avvvatars-react";
 import Button from "../common/Button";
 import ActionBtn from "../common/ActionBtn";
+import ProfileImg from "../common/ProfileImg";
 
 const UserInfo = ({ user }) => {
 	const {
@@ -13,17 +12,7 @@ const UserInfo = ({ user }) => {
 	return (
 		<div className="w-full flex flex-col items-center text-center mb-8 min-w-[375px]">
 			<div className="rounded-full overflow-hidden h-[7rem] w-[7rem] my-1">
-				{profileUrl ? (
-					<Image
-						src={profileUrl}
-						objectFit="cover"
-						layout="responsive"
-						height={1}
-						width={1}
-					/>
-				) : (
-					<Avvvatars size={28 * 4} value={name} />
-				)}
+				<ProfileImg profileUrl={profileUrl} name={name} size={28} />
 			</div>
 
 			<div className="my-1 max-w-[40rem]">

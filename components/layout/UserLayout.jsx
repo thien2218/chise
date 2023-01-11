@@ -1,6 +1,6 @@
 import UserInfo from "../user/UserInfo";
 import MasonryLayout from "./MasonryLayout";
-import Link from "next/link";
+import LinkBtn from "../common/LinkBtn";
 import { useRouter } from "next/router";
 
 const UserLayout = ({ user, pins }) => {
@@ -13,28 +13,18 @@ const UserLayout = ({ user, pins }) => {
 
 			<div className="flex justify-center mb-8">
 				<div className="py-3 mx-2">
-					<Link href={`/${user.username}/created`}>
-						<a
-							className={`relative p-2 font-semibold rounded-lg hover:bg-dimmed-500 ${
-								isCreatedPage &&
-								"pointer-events-none before:w-[calc(100%_-_16px)] before:h-[3px] before:bg-gray-900 before:rounded-full before:absolute before:-bottom-[3px]"
-							}`}
-						>
-							Created
-						</a>
-					</Link>
+					<LinkBtn
+						href={`/${user.username}/created`}
+						text="Created"
+						isCurrPage={isCreatedPage}
+					/>
 				</div>
 				<div className="py-3 mx-2">
-					<Link href={`/${user.username}/saved`}>
-						<a
-							className={`relative p-2 font-semibold rounded-lg hover:bg-dimmed-500 ${
-								!isCreatedPage &&
-								"pointer-events-none before:w-[calc(100%_-_16px)] before:h-[3px] before:bg-gray-900 before:rounded-full before:absolute before:-bottom-[3px]"
-							}`}
-						>
-							Saved
-						</a>
-					</Link>
+					<LinkBtn
+						href={`/${user.username}/saved`}
+						text="Saved"
+						isCurrPage={!isCreatedPage}
+					/>
 				</div>
 			</div>
 

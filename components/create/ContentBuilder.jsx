@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
-import Avatar from "../common/Avatar";
-import { useValidation } from "../../hooks";
+import ProfileImg from "../common/ProfileImg";
+import { useValidation, useAuth } from "../../hooks";
 import Checkbox from "../headlessui/Checkbox";
 
 const Field = ({
@@ -65,6 +65,7 @@ const ContentBuilder = ({
 	setInvalidUrlMsg,
 }) => {
 	const { checkUrl } = useValidation();
+	const { authUser } = useAuth();
 
 	const fields = [
 		{
@@ -114,7 +115,11 @@ const ContentBuilder = ({
 			<div className="mt-4 flex items-center pr-3 gap-1">
 				<Link href="/">
 					<a className="mx-1 rounded-full overflow-hidden h-11 w-11 relative">
-						<Avatar size={11} src="/assets/cat.jpg" />
+						<ProfileImg
+							profileUrl={authUser.profileUrl}
+							name={authUser.name}
+							size={11}
+						/>
 					</a>
 				</Link>
 

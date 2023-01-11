@@ -21,6 +21,9 @@ module.exports = {
          screens: {
             "mlg": "960px",
             "xs": "520px",
+         },
+         fontSize: {
+            "xs": "13px",
          }
       },
 	},

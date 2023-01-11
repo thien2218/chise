@@ -10,21 +10,21 @@ const AuthProvider = ({ children }) => {
 	const [authUser, setAuthUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [formLoading, setFormLoading] = useState(false);
-	const { setError, shortenEmailRegex } = useValidation();
+	const { setAuthError, shortenEmailRegex } = useValidation();
    const router = useRouter();
 
 	const login = async ({ email, password }) => {
-		const { error } = await Auth.login(email, password);
+		const { authError } = await Auth.login(email, password);
 		setFormLoading(true);
-		if (error) setError(error);
+		if (authError) setAuthError(authError);
 	};
 
 	const signup = async ({ email, password }) => {
-		const { error } = await Auth.signup(email, password);
+		const { authError } = await Auth.signup(email, password);
 		setFormLoading(true);
 
-		if (error) {
-			setError(error);
+		if (authError) {
+			setAuthError(authError);
 		} else {
 			const username = "@" + email.match(shortenEmailRegex)[0];
 			const updatedUser = await Auth.updateUser(username, "");
@@ -33,11 +33,11 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const loginWithGoogle = async () => {
-		const { user, isNewUser, error } = await Auth.loginWithGoogle();
+		const { user, isNewUser, authError } = await Auth.loginWithGoogle();
 		const curUsername = user?.email.match(shortenEmailRegex)[0];
 
-		if (error) {
-			setError(error);
+		if (authError) {
+			setAuthError(authError);
 		} else if (isNewUser && !(await Firestore.usernameExists(curUsername))) {
 			setLoading(true);
 			const combinedName = user?.displayName + "@" + curUsername;

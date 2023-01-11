@@ -8,7 +8,7 @@ export const useDb = () => useContext(DbContext);
 
 const DbProvider = ({ children }) => {
 	const { authUser, setAuthUser } = useAuth();
-	const { setError } = useValidation();
+	const { setAuthError } = useValidation();
 
 	// USER
 	const addUser = async ({ username, name, profileUrl, imgFile, ...about }) => {
@@ -37,7 +37,7 @@ const DbProvider = ({ children }) => {
 
 			await Firestore.createUser(username, values);
 		} else {
-			setError({
+			setAuthError({
 				invalid: "This username has already existed",
 			});
 		}
@@ -46,6 +46,10 @@ const DbProvider = ({ children }) => {
 	const updateUser = async (username, values) => {
 		await Firestore.updateUser(username, values);
 	};
+
+   const deleteUser = async (username) => {
+      await Firestore.deleteUser(username);
+   }
 
 	// PIN
 	const addPin = async (imgFile, values) => {
