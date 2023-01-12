@@ -3,7 +3,9 @@ import { SettingsLayout, AccManage } from "../../components";
 
 const Account = () => {
    return (
-      <div>Account</div>
+      <SettingsLayout>
+         <AccManage />
+      </SettingsLayout>
    )
 }
 

@@ -10,8 +10,9 @@ const AuthProvider = ({ children }) => {
 	const [authUser, setAuthUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [formLoading, setFormLoading] = useState(false);
-	const { setAuthError, shortenEmailRegex } = useValidation();
+	const { setAuthError } = useValidation();
    const router = useRouter();
+   const emailShortRegex = /^.*?(?=@)/;
 
 	const login = async ({ email, password }) => {
 		const { authError } = await Auth.login(email, password);
@@ -26,7 +27,7 @@ const AuthProvider = ({ children }) => {
 		if (authError) {
 			setAuthError(authError);
 		} else {
-			const username = "@" + email.match(shortenEmailRegex)[0];
+			const username = "@" + email.match(emailShortRegex)[0];
 			const updatedUser = await Auth.updateUser(username, "");
 			setAuthUser(updatedUser);
 		}
@@ -34,7 +35,7 @@ const AuthProvider = ({ children }) => {
 
 	const loginWithGoogle = async () => {
 		const { user, isNewUser, authError } = await Auth.loginWithGoogle();
-		const curUsername = user?.email.match(shortenEmailRegex)[0];
+		const curUsername = user?.email.match(emailShortRegex)[0];
 
 		if (authError) {
 			setAuthError(authError);

@@ -15,16 +15,18 @@ const UserLayout = ({ user, pins }) => {
 				<div className="py-3 mx-2">
 					<LinkBtn
 						href={`/${user.username}/created`}
-						text="Created"
 						isCurrPage={isCreatedPage}
-					/>
+					>
+						Created
+					</LinkBtn>
 				</div>
 				<div className="py-3 mx-2">
 					<LinkBtn
 						href={`/${user.username}/saved`}
-						text="Saved"
 						isCurrPage={!isCreatedPage}
-					/>
+					>
+						Saved
+					</LinkBtn>
 				</div>
 			</div>
 

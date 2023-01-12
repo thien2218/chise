@@ -3,7 +3,7 @@ import Image from "next/image";
 const AdjustedImg = ({ children, ratio, src, scale }) => {
 	return (
 		<div
-			className="relative w-full overflow-hidden rounded-lg h-0"
+			className="relative w-full h-0"
 			style={{
 				paddingBottom: `clamp(${120*scale}px, ${ratio}%, ${500*scale}px)`,
 			}}

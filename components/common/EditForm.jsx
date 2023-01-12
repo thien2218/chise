@@ -21,23 +21,25 @@ const EditField = ({ children, label, htmlFor }) => {
 
 const EditImgField = ({ imgRatio, imgSrc, handlePreview }) => {
 	return (
-		<AdjustedImg ratio={imgRatio} src={imgSrc} scale={1}>
-			<div className="relative w-full h-full overflow-hidden bg-black/40 opacity-0 hover:opacity-100 p-4">
-				<div className="rounded-lg h-full w-full border-dashed border-white border-[2px] flex-center flex-col text-center text-white gap-2 cursor-pointer">
-					<IoArrowUpCircle className="text-3xl" />
-					<span>Change image</span>
-				</div>
-
-				<input
-					type="file"
-					name="pinImg"
-					id="pinImg"
-					className="absolute left-0 -top-1/2 h-[150%] w-full cursor-pointer opacity-0"
-					accept=".jpg,.png,.webp,.jpeg"
-					onChange={handlePreview}
-				/>
-			</div>
-		</AdjustedImg>
+		<div className="overflow-hidden rounded-lg">
+         <AdjustedImg ratio={imgRatio} src={imgSrc} scale={1}>
+            <div className="relative w-full h-full overflow-hidden bg-black/40 opacity-0 hover:opacity-100 p-4">
+               <div className="rounded-lg h-full w-full border-dashed border-white border-[2px] flex-center flex-col text-center text-white gap-2 cursor-pointer">
+                  <IoArrowUpCircle className="text-3xl" />
+                  <span>Change image</span>
+               </div>
+         
+               <input
+                  type="file"
+                  name="pinImg"
+                  id="pinImg"
+                  className="absolute left-0 -top-1/2 h-[150%] w-full cursor-pointer opacity-0"
+                  accept=".jpg,.png,.webp,.jpeg"
+                  onChange={handlePreview}
+               />
+            </div>
+         </AdjustedImg>
+      </div>
 	);
 };
 
@@ -109,13 +111,13 @@ const EditForm = ({ setEdit, edit }) => {
 	};
 
 	return (
-		<form className="fixed overflow-y-scroll top-0 w-full h-full flex items-center z-20">
+		<form className="fixed overflow-y-scroll top-0 w-full h-full flex md:items-center items-start z-20">
 			<div
 				onClick={() => setEdit(null)}
 				className="absolute z-30 h-full w-full"
 			></div>
 
-			<div className="px-4 mx-auto w-full max-w-[56rem]">
+			<div className="p-4 mx-auto w-full max-w-[56rem]">
 				<div className="relative z-40 rounded-2xl bg-white shadow-[rgb(0_0_0_/_50%)_0_0_0_9000px]">
 					<h1 className="text-[1.75rem] font-medium text-center p-6">
 						Edit this pin

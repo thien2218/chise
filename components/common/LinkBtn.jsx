@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const LinkBtn = ({ href, text, isCurrPage }) => {
+const LinkBtn = ({ children, href, isCurrPage }) => {
 	return (
 		<Link href={href}>
 			<a
@@ -9,7 +9,7 @@ const LinkBtn = ({ href, text, isCurrPage }) => {
 					"pointer-events-none before:w-[calc(100%_-_16px)] before:h-[3px] before:bg-gray-900 before:rounded-full before:absolute before:-bottom-[3px]"
 				}`}
 			>
-				{text}
+				{children}
 			</a>
 		</Link>
 	);

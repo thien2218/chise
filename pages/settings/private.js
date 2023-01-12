@@ -2,9 +2,11 @@ import { withAuth } from "../../hooks";
 import { SettingsLayout, PrivateInfo } from "../../components";
 
 const Private = () => {
-  return (
-    <div>Private</div>
-  )
-}
+	return (
+		<SettingsLayout>
+			<PrivateInfo />
+		</SettingsLayout>
+	);
+};
 
 export default withAuth(Private);

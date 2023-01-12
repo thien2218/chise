@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { useAuth, useDb } from "../../hooks";
+import { useAuth, useDb, useLib } from "../../hooks";
 import Dropdown from "../headlessui/Dropdown";
 import AutoComplete from "../headlessui/AutoComplete";
-import countries from "i18n-iso-countries";
-import enLocale from "i18n-iso-countries/langs/en.json";
-import _ from "lodash";
 
 const PrivateForm = () => {
-	const { getCurDate, updateUser } = useDb();
+	const { updateUser } = useDb();
+   const { getCurDate, genderList, countryList, isEqual } = useLib();
 	const {
 		authUser: { username },
 		setAuthUser,
@@ -20,17 +18,6 @@ const PrivateForm = () => {
 	};
 	const [values, setValues] = useState(initObj);
 
-	const genderList = [
-		{ label: "Male", value: "male" },
-		{ label: "Female", value: "female" },
-	];
-
-	countries.registerLocale(enLocale);
-	const countryObj = countries.getNames("en", { select: "official" });
-	const countryList = Object.entries(countryObj).map(([key, value]) => {
-		return value;
-	});
-
 	const handleChange = (e) => {
 		const { value, name } = e.target;
 
@@ -42,7 +29,7 @@ const PrivateForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (_.isEqual(initObj, values)) return;
+		if (isEqual(initObj, values)) return;
 
 		await updateUser(username, { private: values });
 		setAuthUser((prev) => ({
@@ -73,7 +60,7 @@ const PrivateForm = () => {
 					</div>
 
 					<div className="py-3 flex flex-col gap-1 relative">
-						<label className="text-xs font-semibold">Country</label>
+						<label className="text-xs font-semibold">Country/region</label>
 						<AutoComplete
 							handleChange={handleChange}
 							defaultVal="United States of America"

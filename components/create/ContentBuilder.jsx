@@ -109,7 +109,7 @@ const ContentBuilder = ({
 	};
 
 	return (
-		<div className="flex flex-col pl-10 min-w-0">
+		<div className="flex flex-col mlg:pl-10 min-w-0">
 			<Field setValues={setValues} {...fields[0]} />
 
 			<div className="mt-4 flex items-center pr-3 gap-1">

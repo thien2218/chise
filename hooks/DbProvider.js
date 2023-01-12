@@ -2,13 +2,15 @@ import { useContext, createContext } from "react";
 import { Firestore, Auth, Storage } from "../services";
 import { useAuth } from "./AuthProvider";
 import { useValidation } from "./ValidationProvider";
+import { useLib } from "./LibProvider";
 
 const DbContext = createContext();
 export const useDb = () => useContext(DbContext);
 
 const DbProvider = ({ children }) => {
 	const { authUser, setAuthUser } = useAuth();
-	const { setAuthError } = useValidation();
+	const { setAuthError, checkUsernameExists } = useValidation();
+   const { getCurDate } = useLib();
 
 	// USER
 	const addUser = async ({ username, name, profileUrl, imgFile, ...about }) => {
@@ -19,7 +21,7 @@ const DbProvider = ({ children }) => {
 			? await Storage.uploadImage(imgFile, "profile")
 			: profileUrl || "";
 
-		if (emailAsUsername || !(await Firestore.usernameExists(username))) {
+		if (emailAsUsername || !(await checkUsernameExists(username))) {
 			const updatedUser = await Auth.updateUser(displayName, newProfileUrl);
 			setAuthUser({ ...updatedUser, isNewUser: true });
 
@@ -74,23 +76,11 @@ const DbProvider = ({ children }) => {
 		await Firestore.updateList(username, containsUser, req.col, req.id);
 	};
 
-	const getCurDate = () => {
-		const today = new Date();
-		const yyyy = today.getFullYear();
-		let mm = today.getMonth() + 1; // Months start at 0!
-		let dd = today.getDate();
-
-		if (dd < 10) dd = "0" + dd;
-		if (mm < 10) mm = "0" + mm;
-
-		const formattedToday = `${yyyy}-${mm}-${dd}`;
-		return formattedToday;
-	};
-
 	const value = {
 		addPin,
 		addUser,
       updateUser,
+      deleteUser,
 		updatePin,
       deletePin,
 		getCurDate,

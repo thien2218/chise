@@ -11,7 +11,7 @@ const TextField = ({
 }) => {
 	return (
 		<div className="flex flex-col mb-2">
-			<label className="ml-2 mb-1 text-xs font-light" htmlFor={name}>
+			<label className="mb-1 text-xs font-light" htmlFor={name}>
 				{label}
 			</label>
 

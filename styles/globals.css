@@ -8,6 +8,10 @@
 		@apply text-gray-900 text-sm sm:text-base;
 	}
 
+   button {
+      @apply min-w-max;
+   }
+
 	:root {
 		/* Colors */
 		--clr-primary: rgb(230 0 35 / 1);

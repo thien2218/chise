@@ -2,6 +2,7 @@ import { useAuth } from "../../hooks";
 import Button from "../common/Button";
 import ActionBtn from "../common/ActionBtn";
 import ProfileImg from "../common/ProfileImg";
+import Link from "next/link";
 
 const UserInfo = ({ user }) => {
 	const {
@@ -28,7 +29,11 @@ const UserInfo = ({ user }) => {
 
 			{authUsername == username ? (
 				<div className="my-1 pt-2">
-					<Button btnType="secondary-btn">Edit Profile</Button>
+					<button className="secondary-btn px-4 py-3">
+						<Link href="/settings/public">
+							<a>Edit Profile</a>
+						</Link>
+					</button>
 				</div>
 			) : (
 				<div className="my-1 pt-2 grid grid-cols-3 gap-3">

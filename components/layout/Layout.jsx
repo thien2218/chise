@@ -42,7 +42,7 @@ const Layout = ({ children, pageName }) => {
 			pageName != "Add Profile" ? (
 				<>
 					<Header />
-					<main className="pt-16">
+					<main className="pt-[4.5rem]">
 						<LayoutContext.Provider value={value}>
 							{children}
 						</LayoutContext.Provider>
