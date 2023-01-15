@@ -1,19 +1,27 @@
+import { useEffect } from "react";
 import Dropdown from "../headlessui/Dropdown";
 import AutoComplete from "../headlessui/AutoComplete";
 import { useLib } from "../../hooks";
+import { Firestore } from "../../services";
 
-const PrivateInfo = ({ values, setValues }) => {
+const PrivateInfo = ({ authUser, values, setValues }) => {
 	const { countryList, genderList, getCurDate } = useLib();
 
-	const handleChange = (e) => {};
+   useEffect(() => {
+      Firestore.getUser(authUser.username).then((user) => {
+         console.log(user.private);
+      });
+   }, []);
+
+	const handleChange = (e) => {
+      console.log(e.target.value);
+   };
 
 	return (
 		<div>
 			<h1 className="text-3xl font-medium">Personal information</h1>
 			<h2 className="mt-2 text-dark-gray">
-				Edit your basic personal info to improve recommendations. This
-				information is private and will not be visible in your public
-				profile.
+				This information is private and will not be visible in your public profile.
 			</h2>
 
 			<form className="mt-5">

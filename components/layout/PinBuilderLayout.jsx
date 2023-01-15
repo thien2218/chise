@@ -6,7 +6,6 @@ import ImgBuilder from "../create/ImgBuilder";
 import ContentBuilder from "../create/ContentBuilder";
 
 const PinBuilder = () => {
-	const [img, setImg] = useState({});
 	const [invalidUrlMsg, setInvalidUrlMsg] = useState("");
 	const [values, setValues] = useState({
 		savedBy: [],
@@ -20,8 +19,12 @@ const PinBuilder = () => {
    const containsUser = values.savedBy.includes(username);
 
 	const handleCreatePin = async () => {
-		if (!img.imgFile || invalidUrlMsg || !values.tags.length) return;
-		await addPin(img, values);
+      if (!values.imgFile || invalidUrlMsg || !values.tags.length) return;
+      
+      values.imgUrl = await uploadImg(imgFile, "pin");
+      const { imgFile, ...otherValues } = values;
+      
+		await addPin(otherValues);
 		router.push("/");
 	};
 
@@ -39,8 +42,8 @@ const PinBuilder = () => {
 			<div className="mx-auto w-full mlg:max-w-[56rem] max-w-[28rem]">
 				<div className="rounded-2xl bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid mlg:grid-cols-[1fr_1.4fr] md:p-10 p-6">
 					<ImgBuilder
-						setImg={setImg}
-						imgRatio={img.imgRatio}
+						setValues={setValues}
+						imgRatio={values.imgRatio}
 					/>
 
 					<ContentBuilder

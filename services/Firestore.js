@@ -13,6 +13,7 @@ import {
 	orderBy,
 	query,
 	setDoc,
+	startAfter,
 	updateDoc,
 	where,
 } from "firebase/firestore";
@@ -80,7 +81,13 @@ class Firestore {
 		}
 	}
 
-	async getPinsByQuery(q) {
+	async getPinsByQuery(conditionalQ = where("createdAt", "!=", null)) {
+		const q = query(
+			collection(this.db, "pins"),
+			limit(42),
+			orderBy("createdAt", "desc"),
+			conditionalQ
+		);
 		const pinsSnap = await getDocs(q);
 
 		return pinsSnap.docs.map((doc) => {
@@ -88,44 +95,16 @@ class Firestore {
 		});
 	}
 
-	queryPins() {
-		const q = query(
-			collection(this.db, "pins"),
-			// limit(60),
-			orderBy("createdAt", "desc")
-		);
-
-		return q;
-	}
+   queryLastVisible(lastSnap) {
+      return startAfter(lastSnap);
+   }
 
 	queryPinsCreatedBy(username) {
-		const q = query(
-			collection(this.db, "pins"),
-			// limit(30),
-			where("creator.username", "==", username)
-		);
-
-		return q;
+		return where("creator.username", "==", username);
 	}
 
 	queryPinsSavedBy(username) {
-		const q = query(
-			collection(this.db, "pins"),
-			// limit(30),
-			where("savedBy", "array-contains", username)
-		);
-
-		return q;
-	}
-
-	queryPinsExcept(id) {
-		const q = query(
-			collection(this.db, "pins"),
-			// limit(30),
-			where("id", "!=", id)
-		);
-
-		return q;
+		return where("savedBy", "array-contains", username);
 	}
 
 	// Update

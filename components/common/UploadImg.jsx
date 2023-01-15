@@ -3,7 +3,7 @@ import { useState, Children, cloneElement, isValidElement } from "react";
 const UploadImg = ({
 	children,
 	defaultSrc,
-	setImg,
+	setValues,
 	imgRatio,
 	selectedImg: SelectedImg,
 }) => {
@@ -42,10 +42,11 @@ const UploadImg = ({
 							`chise-image${uploadedAt}.webp`,
 							{ type: "image/webp" }
 						);
-						setImg({
+						setValues((prev) => ({
+                     ...prev,
 							imgFile: newFile,
 							imgRatio: newRatio,
-						});
+						}));
 					},
 					"image/webp",
 					0.85
@@ -63,7 +64,10 @@ const UploadImg = ({
 
 	const unselectImg = (e) => {
 		e.preventDefault();
-		setImg({});
+      setValues((prev) => {
+         const { imgFile, imgRatio, ...rest } = prev;
+         return rest;
+      });
 		setImgSrc(null);
 	};
 

@@ -17,14 +17,16 @@ const ValidationProvider = ({ children }) => {
 		input.length > upper || input.length < lower;
 	const checkEmail = (input) =>
 		!emailRegex.test(input) || input.match(emailRegex)[0] != input;
-	const checkName = (input) => !nameRegex.test(input);
+	const checkName = (input) => nameRegex.test(input);
 	const checkUsername = (input) => !usernameRegex.test(input);
 	const checkUsernameExists = async (input) =>
 		await Firestore.usernameExists(input);
 	const checkConfirmPw = (pw, confirmPw) => confirmPw != pw;
 	const checkUrl = (input) => input && !urlRegex.test(input);
+	const checkErrors = (error) =>
+		Object.values(error).filter((msg) => msg !== "").length;
 
-	const isValid = (name, cond, msg) => {
+	const authValid = (name, cond, msg) => {
 		if (cond) {
 			setAuthError({
 				...authError,
@@ -60,10 +62,11 @@ const ValidationProvider = ({ children }) => {
 		checkConfirmPw,
 		checkName,
 		checkUsername,
-      checkUsernameExists,
-		isValid,
-		handleSubmit,
+		checkUsernameExists,
 		checkUrl,
+      checkErrors,
+		authValid,
+		handleSubmit,
 	};
 
 	return (

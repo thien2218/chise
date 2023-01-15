@@ -18,7 +18,9 @@ function MyApp({ Component, pageProps }) {
 		"/auth/profile": "Add Profile",
 		"/": "Home",
 		"/create": "Create Pin",
-		"/setttings": "Setttings",
+		"/settings/public": "Settings",
+		"/settings/private": "Settings",
+		"/settings/account": "Settings",
 	};
 	const pageName = page[pathname] || "";
 	usePreserveScroll();

@@ -17,7 +17,7 @@ const AuthForm = ({ fields, submit, msgs }) => {
 		checkLength,
 		checkEmail,
 		checkConfirmPw,
-		isValid,
+		authValid,
 		handleSubmit,
 	} = useValidation();
 	const { loginWithGoogle } = useAuth();
@@ -35,11 +35,11 @@ const AuthForm = ({ fields, submit, msgs }) => {
 		}
 
 		if (name == "password") {
-			isValid(name, checkLength(value, 6, 20), msgs[name]);
+			authValid(name, checkLength(value, 6, 20), msgs[name]);
 		} else if (name == "confirm_password") {
-			isValid(name, checkConfirmPw(values.password, value), msgs[name]);
+			authValid(name, checkConfirmPw(values.password, value), msgs[name]);
 		} else if (name == "email") {
-			isValid(name, checkEmail(value), msgs[name]);
+			authValid(name, checkEmail(value), msgs[name]);
 		}
 	};
 

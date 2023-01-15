@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
-import { useAuth, useValidation } from "../../hooks";
+import { useEffect } from "react";
+import { useValidation } from "../../hooks";
 import TextField from "../common/TextField";
 import ProfileImg from "../common/ProfileImg";
 import UploadImg from "../common/UploadImg";
 import { ImArrowRight2 } from "react-icons/im";
+import { IoTrashBin } from "react-icons/io5";
 
 const ChangeBtn = ({ handlePreview }) => {
 	return (
@@ -18,23 +19,29 @@ const ChangeBtn = ({ handlePreview }) => {
 	);
 };
 
-const SelectedImg = ({ imgSrc }) => {
+const SelectedImg = ({ imgSrc, unselectImg }) => {
 	return (
 		<>
 			<ImArrowRight2 className="text-xl" />
-			<ProfileImg profileUrl={imgSrc} size={20} />
+			<div className="relative">
+				<ProfileImg profileUrl={imgSrc} size={20} />
+				<button
+					onClick={unselectImg}
+					className="absolute p-2 bg-dimmed-500 flex-center rounded-full -top-1 -right-1"
+				>
+					<IoTrashBin className="text-sm" />
+				</button>
+			</div>
 		</>
 	);
 };
 
-const PublicInfo = ({ values, setValues }) => {
-	const { authUser } = useAuth();
-	const [error, setError] = useState({});
-	const [img, setImg] = useState({});
-	const { checkUsername, checkName, checkUsernameExists } = useValidation();
+const PublicInfo = ({ authUser, values, setValues, setInitObj, error, setError }) => {
+	const { checkUsername, checkName } = useValidation();
 
 	useEffect(() => {
 		setValues(authUser);
+      setInitObj(authUser);
 	}, []);
 
 	const handleChange = (e) => {
@@ -43,15 +50,20 @@ const PublicInfo = ({ values, setValues }) => {
 		if (name == "name" && checkName(value)) {
 			setError({
 				...error,
-				name: "Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}",
+				[name]: "Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}",
 			});
 		} else if (name == "username" && checkUsername(value)) {
 			setError({
 				...error,
-				username:
+				[name]:
 					"Username cannot contain any white spaces or special characters",
 			});
-		}
+		} else {
+			setError({
+				...error,
+				[name]: "",
+			});
+      }
 
 		setValues({
 			...values,
@@ -79,10 +91,7 @@ const PublicInfo = ({ values, setValues }) => {
 							size={20}
 						/>
 
-						<UploadImg
-							setImg={setImg}
-							selectedImg={SelectedImg}
-						>
+						<UploadImg setValues={setValues} selectedImg={SelectedImg}>
 							<ChangeBtn />
 						</UploadImg>
 					</div>
@@ -127,7 +136,11 @@ const PublicInfo = ({ values, setValues }) => {
 						handleChange={handleChange}
 						handleFocus={() => {}}
 					/>
-					<span className="absolute text-xs text-dark-gray font-light ml-2 -translate-y-3">
+					<span
+						className={`absolute text-xs text-dark-gray font-light -translate-y-3 ${
+							error.username ? "opacity-0" : "opacity-100"
+						}`}
+					>
 						http://localhost:3000/{values.username}
 					</span>
 				</div>

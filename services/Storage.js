@@ -7,7 +7,7 @@ class Storage {
 	}
 
 	// Upload
-	async uploadImage(file, folder) {
+	async uploadImg(file, folder) {
 		const imgRef = ref(this.storage, `${folder}_images/${file.name}`);
       
 		return await uploadBytes(imgRef, file).then(async (snap) => {

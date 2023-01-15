@@ -43,9 +43,13 @@ const UploadField = ({ handlePreview }) => {
 	);
 };
 
-const ImgBuilder = ({ setImg, imgRatio }) => {
+const ImgBuilder = ({ setValues, imgRatio }) => {
 	return (
-		<UploadImg setImg={setImg} imgRatio={imgRatio} selectedImg={SelectedImg}>
+		<UploadImg
+			setValues={setValues}
+			imgRatio={imgRatio}
+			selectedImg={SelectedImg}
+		>
 			<UploadField />
 		</UploadImg>
 	);

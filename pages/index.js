@@ -14,8 +14,7 @@ function Home({ pins }) {
 }
 
 export async function getServerSideProps() {
-   const q = Firestore.queryPins();
-	const pins = await Firestore.getPinsByQuery(q);
+	const pins = await Firestore.getPinsByQuery();
 
 	return {
 		props: {

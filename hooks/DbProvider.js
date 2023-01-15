@@ -12,28 +12,18 @@ const DbProvider = ({ children }) => {
 	const { setAuthError, checkUsernameExists } = useValidation();
 	const { getCurDate } = useLib();
 
-	// USER
-	const addUser = async ({
-		username,
-		name,
-		profileUrl,
-		imgFile,
-		...about
-	}) => {
+	// -----------USER-----------
+	const addUser = async (profileUrl, { username, name, about }) => {
 		const displayName = name + "@" + username;
 		const emailAsUsername = authUser.username == username;
 
-		const newProfileUrl = imgFile
-			? await Storage.uploadImage(imgFile, "profile")
-			: profileUrl || "";
-
 		if (emailAsUsername || !(await checkUsernameExists(username))) {
-			const updatedUser = await Auth.updateUser(displayName, newProfileUrl);
+			const updatedUser = await Auth.updateUser(displayName, profileUrl);
 			setAuthUser({ ...updatedUser, isNewUser: true });
 
 			const values = {
 				...updatedUser,
-				...about,
+				about,
 				followers: [],
 				following: 0,
 				private: {
@@ -59,26 +49,19 @@ const DbProvider = ({ children }) => {
 		await Firestore.deleteUser(username);
 	};
 
-	// PIN
-	const addPin = async (img, values) => {
+	// -----------PIN-----------
+	const addPin = async (values) => {
 		const { emailVerified, email, ...creator } = authUser;
-		const { imgFile, imgRatio } = img;
 		const createdAt = new Date().getTime();
-      
-		const imgUrl = await Storage.uploadImage(imgFile, "pin");
+
 		await Firestore.createPin({
 			creator,
-			imgUrl,
-			imgRatio,
 			createdAt,
 			...values,
 		});
 	};
 
-	const updatePin = async (id, values, img) => {
-		if (img.imgFile) {
-			values.imgUrl = await Storage.uploadImage(imgFile, "pin");
-		}
+	const updatePin = async (id, { imgFile, ...values }) => {
 		await Firestore.updatePin(id, values);
 	};
 
@@ -86,7 +69,12 @@ const DbProvider = ({ children }) => {
 		await Firestore.deletePin(id);
 	};
 
-	// OTHER
+	// -----------STORAGE-----------
+	const uploadImg = async (imgFile, col) => {
+      return await Storage.uploadImg(imgFile, col);
+	};
+
+	// -----------OTHER-----------
 	const updateList = async (username, containsUser, req) => {
 		await Firestore.updateList(username, containsUser, req.col, req.id);
 	};
@@ -99,6 +87,7 @@ const DbProvider = ({ children }) => {
 		updatePin,
 		deletePin,
 		updateList,
+		uploadImg,
 	};
 
 	return <DbContext.Provider value={value}>{children}</DbContext.Provider>;

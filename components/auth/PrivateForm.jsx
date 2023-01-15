@@ -12,7 +12,7 @@ const PrivateForm = () => {
 	} = useAuth();
 
 	const initObj = {
-		gender: "male",
+		gender: "Male",
 		country: "United States of America",
 		birthday: getCurDate(),
 	};

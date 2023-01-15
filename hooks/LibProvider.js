@@ -10,9 +10,9 @@ const LibProvider = ({ children }) => {
 	const { isEqual } = _;
 
 	const genderList = [
-		{ label: "Male", value: "male" },
-		{ label: "Female", value: "female" },
-      { label: "Other", value: "other" },
+      "Male",
+      "Female",
+      "Other"
 	];
 
 	countries.registerLocale(enLocale);

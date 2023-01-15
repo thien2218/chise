@@ -11,10 +11,8 @@ const ProfileForm = ({ fields, msgs }) => {
 		authUser: { username, name, profileUrl },
 	} = useAuth();
 	const required = fields.map((field) => field.name);
-   const { addUser } = useDb();
-
-	const [img, setImg] = useState({});
 	const [values, setValues] = useState({});
+   const { addUser, uploadImg } = useDb();
 
 	useEffect(() => {
 		setValues({ username, name, profileUrl });
@@ -26,7 +24,7 @@ const ProfileForm = ({ fields, msgs }) => {
 		checkLength,
 		checkUsername,
 		checkName,
-		isValid,
+		authValid,
 		handleSubmit,
 	} = useValidation();
 
@@ -43,10 +41,10 @@ const ProfileForm = ({ fields, msgs }) => {
 		}
 
 		if (name == "username") {
-			isValid(name, checkUsername(value), msgs[name].textDigitOnly);
-			isValid(name, checkLength(value, 3, 20), msgs[name].lengthBetween);
+			authValid(name, checkUsername(value), msgs[name].textDigitOnly);
+			authValid(name, checkLength(value, 3, 20), msgs[name].lengthBetween);
 		} else if (name == "name") {
-			isValid(name, checkName(value), msgs[name]);
+			authValid(name, checkName(value), msgs[name]);
 		}
 	};
 
@@ -66,10 +64,18 @@ const ProfileForm = ({ fields, msgs }) => {
 		});
 	};
 
+   const submit = async ({ imgFile, profileUrl, imgRatio, ...values }) => {
+      const newProfileUrl = imgFile
+			? await uploadImg(imgFile, "profile")
+			: profileUrl || "";
+
+      await addUser(newProfileUrl, values);
+   }
+
 	return (
 		<form className="relative w-full max-w-sm px-10 pb-8 pt-24 bg-white rounded-2xl shadow-lg">
 			<UploadImg
-				setImg={setImg}
+				setValues={setValues}
 				selectedImg={ProfileCopy}
 				defaultSrc={profileUrl}
 			>
@@ -109,7 +115,7 @@ const ProfileForm = ({ fields, msgs }) => {
 			<button
 				onClick={(e) => {
 					e.preventDefault();
-					handleSubmit(required, { ...values, imgFile: img.imgFile }, addUser);
+					handleSubmit(required, values, submit);
 				}}
 				className="primary-btn w-full py-2 px-4 rounded-2xl mt-2"
 			>

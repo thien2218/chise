@@ -2,10 +2,9 @@ import { useState } from "react";
 import Button from "./Button";
 import AdjustedImg from "./AdjustedImg";
 import { IoArrowUpCircle } from "react-icons/io5";
-import { useValidation, useDb } from "../../hooks";
+import { useValidation, useDb, useLib } from "../../hooks";
 import UploadImg from "./UploadImg";
 import { useRouter } from "next/router";
-import _ from "lodash";
 import Dropdown from "../headlessui/Dropdown";
 
 const EditField = ({ children, label, htmlFor }) => {
@@ -46,11 +45,11 @@ const EditImgField = ({ imgRatio, imgSrc, handlePreview }) => {
 const EditForm = ({ setEdit, edit }) => {
 	const { id, ...otherValues } = edit;
 	const [values, setValues] = useState(otherValues);
-	const [img, setImg] = useState({});
 	const [error, setError] = useState({});
 
-	const { checkUrl } = useValidation();
-	const { updatePin, deletePin } = useDb();
+	const { checkUrl, checkErrors } = useValidation();
+	const { updatePin, deletePin, uploadImg } = useDb();
+   const { isEqual } = useLib();
 	const { replace, asPath } = useRouter();
 
 	const options = [
@@ -100,12 +99,17 @@ const EditForm = ({ setEdit, edit }) => {
 	};
 
 	const handleSubmit = async () => {
-		if (Object.keys(error).length === 0 || _.isEqual(otherValues, values)) {
+		if (!checkErrors(error) || isEqual(otherValues, values)) {
          setEdit(null);
          return;
       }
 
-		await updatePin(id, values, img);
+      if (values.imgFile) {
+         values.imgUrl = await uploadImg(imgFile, "pin");
+      }
+      const { imgFile, ...neededValues } = values;
+
+		await updatePin(id, neededValues);
 		setEdit(null);
 		replace(asPath);
 	};
@@ -206,8 +210,8 @@ const EditForm = ({ setEdit, edit }) => {
 
 						<div className="py-3 px-4 row-start-1">
 							<UploadImg
-								setImg={setImg}
-								imgRatio={img.imgRatio}
+								setValues={setValues}
+								imgRatio={values.imgRatio}
 								selectedImg={EditImgField}
 							>
 								<EditImgField

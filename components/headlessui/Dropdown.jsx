@@ -10,7 +10,7 @@ const Dropdown = ({ options, defaultVal, handleChange, name }) => {
 		handleChange({
 			target: {
 				name,
-				value: selected.value,
+				value: selected,
 			},
 		});
 	}, [selected]);
@@ -19,7 +19,7 @@ const Dropdown = ({ options, defaultVal, handleChange, name }) => {
 		<Listbox value={selected} onChange={setSelected}>
 			<div className="relative mt-1">
 				<Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-4 pr-10 text-left bg-dimmed-400 hover:bg-dimmed-500 focus-visible:ring-blueish">
-					<span className="block truncate">{selected.label}</span>
+					<span className="block truncate">{selected}</span>
 					<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
 						<IoIosArrowDown className="text-xl" />
 					</span>
@@ -52,7 +52,7 @@ const Dropdown = ({ options, defaultVal, handleChange, name }) => {
 												selected ? "font-medium" : "font-normal"
 											}`}
 										>
-											{option.label}
+											{option}
 										</span>
 										{selected && (
 											<span className="absolute inset-y-0 left-0 flex items-center pl-3 text-blueish">
