@@ -22,7 +22,7 @@ const ValidationProvider = ({ children }) => {
 	const checkUsernameExists = async (input) =>
 		await Firestore.usernameExists(input);
 	const checkConfirmPw = (pw, confirmPw) => confirmPw != pw;
-	const checkUrl = (input) => !(input && urlRegex.test(input));
+	const checkUrl = (input) => input && !urlRegex.test(input);
 
 	const isValid = (name, cond, msg) => {
 		if (cond) {

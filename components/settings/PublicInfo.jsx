@@ -2,15 +2,40 @@ import { useState, useEffect } from "react";
 import { useAuth, useValidation } from "../../hooks";
 import TextField from "../common/TextField";
 import ProfileImg from "../common/ProfileImg";
+import UploadImg from "../common/UploadImg";
+import { ImArrowRight2 } from "react-icons/im";
+
+const ChangeBtn = ({ handlePreview }) => {
+	return (
+		<div className="relative py-2 px-3 font-medium rounded-full secondary-btn overflow-hidden">
+			Change
+			<input
+				type="file"
+				className="opacity-0 h-[150%] w-full absolute left-0 cursor-pointer -translate-y-[50%]"
+				onChange={handlePreview}
+			/>
+		</div>
+	);
+};
+
+const SelectedImg = ({ imgSrc }) => {
+	return (
+		<>
+			<ImArrowRight2 className="text-xl" />
+			<ProfileImg profileUrl={imgSrc} size={20} />
+		</>
+	);
+};
 
 const PublicInfo = ({ values, setValues }) => {
 	const { authUser } = useAuth();
 	const [error, setError] = useState({});
+	const [img, setImg] = useState({});
 	const { checkUsername, checkName, checkUsernameExists } = useValidation();
 
-   useEffect(() => {
-      setValues(authUser);
-   }, []);
+	useEffect(() => {
+		setValues(authUser);
+	}, []);
 
 	const handleChange = (e) => {
 		const { value, name } = e.target;
@@ -54,9 +79,12 @@ const PublicInfo = ({ values, setValues }) => {
 							size={20}
 						/>
 
-						<button className="py-2 px-3 font-medium rounded-full secondary-btn">
-							Change
-						</button>
+						<UploadImg
+							setImg={setImg}
+							selectedImg={SelectedImg}
+						>
+							<ChangeBtn />
+						</UploadImg>
 					</div>
 				</div>
 

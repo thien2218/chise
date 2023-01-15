@@ -7,9 +7,8 @@ class Storage {
 	}
 
 	// Upload
-	async uploadImage(file, col) {
-      const fileName = file.name.replace(".webp", "");
-		const imgRef = ref(this.storage, `${col}_images/${fileName}`);
+	async uploadImage(file, folder) {
+		const imgRef = ref(this.storage, `${folder}_images/${file.name}`);
       
 		return await uploadBytes(imgRef, file).then(async (snap) => {
 			return await getDownloadURL(snap.ref).then((downloadUrl) => {

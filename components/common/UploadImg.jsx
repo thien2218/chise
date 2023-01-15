@@ -3,14 +3,13 @@ import { useState, Children, cloneElement, isValidElement } from "react";
 const UploadImg = ({
 	children,
 	defaultSrc,
-	setImgFile,
-   setValues,
-   imgRatio,
+	setImg,
+	imgRatio,
 	selectedImg: SelectedImg,
 }) => {
 	const [imgSrc, setImgSrc] = useState(defaultSrc ?? null);
 
-	const compressImg = (file, maxW, name) => {
+	const compressImg = (file) => {
 		if (!file) return;
 
 		const reader = new FileReader();
@@ -24,21 +23,15 @@ const UploadImg = ({
 			imgEle.onload = function (event) {
 				const { width, height } = event.target;
 				const canvas = document.createElement("canvas");
-				const W = width >= maxW ? maxW : width;
+				const W = width > 500 ? 500 : width;
 				const H = (height * W) / width;
 
 				const newRatio = Math.floor((H / W) * 100);
-				const createdAt = new Date().getTime();
+				const uploadedAt = new Date().getTime();
 				canvas.height = H;
 				canvas.width = W;
 
-				setValues((prev) => ({
-					...prev,
-					createdAt,
-					imgRatio: newRatio,
-				}));
 				setImgSrc(newSrc);
-
 				const ctx = canvas.getContext("2d");
 				ctx.drawImage(imgEle, 0, 0, W, H);
 
@@ -46,10 +39,13 @@ const UploadImg = ({
 					(blob) => {
 						const newFile = new File(
 							[blob],
-							`${name}-image${createdAt}.webp`,
+							`chise-image${uploadedAt}.webp`,
 							{ type: "image/webp" }
 						);
-						setImgFile(newFile);
+						setImg({
+							imgFile: newFile,
+							imgRatio: newRatio,
+						});
 					},
 					"image/webp",
 					0.85
@@ -60,22 +56,22 @@ const UploadImg = ({
 		};
 	};
 
-   const handlePreview = (e) => {
+	const handlePreview = (e) => {
 		const file = e.target.files[0];
-		compressImg(file, 200, "profile");
+		compressImg(file);
 	};
 
-   const unselectImg = (e) => {
-      e.preventDefault();
-      setImgFile(null);
-      setImgSrc(null);
-   }
+	const unselectImg = (e) => {
+		e.preventDefault();
+		setImg({});
+		setImgSrc(null);
+	};
 
 	const childrenWithProps = Children.map(children, (child) => {
 		if (isValidElement(child)) {
 			return cloneElement(child, { handlePreview });
 		}
-      return child;
+		return child;
 	});
 
 	if (imgSrc)
@@ -83,8 +79,8 @@ const UploadImg = ({
 			<SelectedImg
 				imgSrc={imgSrc}
 				imgRatio={imgRatio}
-            unselectImg={unselectImg}
-            handlePreview={handlePreview}
+				unselectImg={unselectImg}
+				handlePreview={handlePreview}
 			/>
 		);
 

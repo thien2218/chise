@@ -10,14 +10,20 @@ export const useDb = () => useContext(DbContext);
 const DbProvider = ({ children }) => {
 	const { authUser, setAuthUser } = useAuth();
 	const { setAuthError, checkUsernameExists } = useValidation();
-   const { getCurDate } = useLib();
+	const { getCurDate } = useLib();
 
 	// USER
-	const addUser = async ({ username, name, profileUrl, imgFile, ...about }) => {
+	const addUser = async ({
+		username,
+		name,
+		profileUrl,
+		imgFile,
+		...about
+	}) => {
 		const displayName = name + "@" + username;
 		const emailAsUsername = authUser.username == username;
 
-      const newProfileUrl = imgFile
+		const newProfileUrl = imgFile
 			? await Storage.uploadImage(imgFile, "profile")
 			: profileUrl || "";
 
@@ -49,27 +55,36 @@ const DbProvider = ({ children }) => {
 		await Firestore.updateUser(username, values);
 	};
 
-   const deleteUser = async (username) => {
-      await Firestore.deleteUser(username);
-   }
-
-	// PIN
-	const addPin = async (imgFile, values) => {
-		const { emailVerified, email, ...creator } = authUser;
-		const imgUrl = await Storage.uploadImage(imgFile, "pin");
-		await Firestore.createPin({ creator, imgUrl, ...values });
+	const deleteUser = async (username) => {
+		await Firestore.deleteUser(username);
 	};
 
-	const updatePin = async (id, values, imgFile) => {
-		if (imgFile) {
+	// PIN
+	const addPin = async (img, values) => {
+		const { emailVerified, email, ...creator } = authUser;
+		const { imgFile, imgRatio } = img;
+		const createdAt = new Date().getTime();
+      
+		const imgUrl = await Storage.uploadImage(imgFile, "pin");
+		await Firestore.createPin({
+			creator,
+			imgUrl,
+			imgRatio,
+			createdAt,
+			...values,
+		});
+	};
+
+	const updatePin = async (id, values, img) => {
+		if (img.imgFile) {
 			values.imgUrl = await Storage.uploadImage(imgFile, "pin");
 		}
 		await Firestore.updatePin(id, values);
 	};
 
-   const deletePin = async (id) => {
-      await Firestore.deletePin(id);
-   }
+	const deletePin = async (id) => {
+		await Firestore.deletePin(id);
+	};
 
 	// OTHER
 	const updateList = async (username, containsUser, req) => {
@@ -79,11 +94,10 @@ const DbProvider = ({ children }) => {
 	const value = {
 		addPin,
 		addUser,
-      updateUser,
-      deleteUser,
+		updateUser,
+		deleteUser,
 		updatePin,
-      deletePin,
-		getCurDate,
+		deletePin,
 		updateList,
 	};
 

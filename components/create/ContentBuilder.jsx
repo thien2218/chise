@@ -1,65 +1,13 @@
-import { useState } from "react";
 import Link from "next/link";
 import ProfileImg from "../common/ProfileImg";
 import { useValidation, useAuth } from "../../hooks";
 import Checkbox from "../headlessui/Checkbox";
-
-const Field = ({
-	styles,
-	desc,
-	maxCharCount,
-	placeholder,
-	name,
-	setValues,
-}) => {
-	const [charCount, setCharCount] = useState(maxCharCount);
-	const [allowInput, setAllowInput] = useState(true);
-	const { checkLength } = useValidation();
-
-	const handleKeyDown = (e) => {
-		if (e.keyCode <= 222 && e.keyCode >= 65 && !e.metaKey && !allowInput) {
-			e.preventDefault();
-		}
-	};
-
-	const handleInput = (e) => {
-		const curText = e.target.innerText.trim();
-		const len = maxCharCount - curText.length;
-
-		setAllowInput(len > 0);
-
-		if (checkLength(curText, 0, maxCharCount)) {
-			e.target.innerText = curText.slice(0, maxCharCount);
-			len = 0;
-		}
-
-		setCharCount(len);
-		setValues((prev) => ({
-			...prev,
-			[name]: e.target.innerText,
-		}));
-	};
-
-	return (
-		<div className="mt-6">
-			<div
-				contentEditable
-				className={`${styles} relative w-full focus:outline-none empty:before:content-[attr(placeholder)] empty:before:text-dark-gray cursor-text peer after:absolute after:w-full after:h-[1px] after:bg-black/30 after:bottom-0 after:left-0 pb-2.5 focus:after:h-[2px] focus:after:bg-blueish`}
-				placeholder={placeholder}
-				onKeyDown={handleKeyDown}
-				onInput={handleInput}
-			/>
-
-			<div className="flex justify-between text-xs opacity-0 peer-focus:opacity-100 mt-[2px] text-dark-gray">
-				<span>{desc}</span>
-				<span className="w-6 text-right">{charCount}</span>
-			</div>
-		</div>
-	);
-};
+import VarcharField from "./VarcharField";
+import TagsField from "./TagsField";
 
 const ContentBuilder = ({
 	children,
+	tags,
 	setValues,
 	invalidUrlMsg,
 	setInvalidUrlMsg,
@@ -70,16 +18,21 @@ const ContentBuilder = ({
 	const fields = [
 		{
 			name: "title",
-			styles: "heading",
 			desc: "The first 40 characters that shows up in the pin feeds",
-			maxCharCount: 100,
+			maxCount: 100,
 			placeholder: "Add your title",
 		},
 		{
 			name: "description",
 			desc: "People will see the first 100 characters of description when they click on your pin",
-			maxCharCount: 750,
+			maxCount: 750,
 			placeholder: "Tell everyone about your pin",
+		},
+		{
+			name: "tags",
+			desc: "Tags will help everyone relate to your pins with ease",
+			maxCount: 7,
+			placeholder: "Add at least one tag for your pin",
 		},
 	];
 
@@ -110,10 +63,10 @@ const ContentBuilder = ({
 
 	return (
 		<div className="flex flex-col mlg:pl-10 min-w-0">
-			<Field setValues={setValues} {...fields[0]} />
+			<VarcharField isTitle setValues={setValues} {...fields[0]} />
 
-			<div className="mt-4 flex items-center pr-3 gap-1">
-				<Link href="/">
+			<div className="mt-3 flex items-center pr-3 gap-1">
+				<Link href={`${authUser.username}/created`}>
 					<a className="mx-1 rounded-full overflow-hidden h-11 w-11 relative">
 						<ProfileImg
 							profileUrl={authUser.profileUrl}
@@ -123,12 +76,12 @@ const ContentBuilder = ({
 					</a>
 				</Link>
 
-				<Link href="/">
+				<Link href={`${authUser.username}/created`}>
 					<a className="font-semibold text-sm">Thien Huynh</a>
 				</Link>
 			</div>
 
-			<Field setValues={setValues} {...fields[1]} />
+			<VarcharField setValues={setValues} {...fields[1]} />
 
 			<div className="flex items-center gap-2 mt-2">
 				<span>Disable comment section</span>
@@ -139,7 +92,9 @@ const ContentBuilder = ({
 				/>
 			</div>
 
-			<div className="flex-1 flex flex-col justify-end items-end gap-4 mt-6">
+			<div className="flex-1 flex flex-col justify-end items-end gap-4">
+				<TagsField setValues={setValues} tags={tags} {...fields[2]} />
+
 				<div className="w-full">
 					<input
 						type="url"
@@ -154,7 +109,7 @@ const ContentBuilder = ({
 						}}
 					/>
 
-					<span className="text-xs text-primary mt-1 h-12 block whitespace-pre-wrap">
+					<span className="text-xs text-primary mt-[2px] h-14 block whitespace-pre-wrap leading-[18px]">
 						{invalidUrlMsg}
 					</span>
 				</div>

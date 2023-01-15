@@ -24,11 +24,10 @@ const Profile = () => {
          placeholder: "Ex: Ada Lovelace",
       },
    ];
-   const { addUser } = useDb();
 
    return (
       <AuthLayout>
-         <ProfileForm fields={fields} submit={addUser} msgs={msgs} />
+         <ProfileForm fields={fields} msgs={msgs} />
       </AuthLayout>
    )
 }

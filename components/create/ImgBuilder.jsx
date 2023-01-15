@@ -4,16 +4,18 @@ import UploadImg from "../common/UploadImg";
 
 const SelectedImg = ({ imgSrc, imgRatio, unselectImg }) => {
 	return (
-		<div className="overflow-hidden rounded-lg">
-         <AdjustedImg ratio={imgRatio} src={imgSrc} scale={1.5}>
-            <button
-               className="absolute bg-white rounded-full h-12 w-12 p-1 hover:bg-dimmed-500 cursor-pointer right-4 top-4 border-4 border-white flex-center"
-               onClick={unselectImg}
-            >
-               <IoTrashBin className="text-2xl" />
-            </button>
-         </AdjustedImg>
-      </div>
+		<div>
+			<div className="overflow-hidden rounded-lg">
+				<AdjustedImg ratio={imgRatio} src={imgSrc} scale={1.5}>
+					<button
+						className="absolute bg-white rounded-full h-12 w-12 p-1 hover:bg-dimmed-500 cursor-pointer right-4 top-4 border-4 border-white flex-center"
+						onClick={unselectImg}
+					>
+						<IoTrashBin className="text-2xl" />
+					</button>
+				</AdjustedImg>
+			</div>
+		</div>
 	);
 };
 
@@ -41,14 +43,9 @@ const UploadField = ({ handlePreview }) => {
 	);
 };
 
-const ImgBuilder = ({ setImgFile, imgRatio, setValues }) => {
+const ImgBuilder = ({ setImg, imgRatio }) => {
 	return (
-		<UploadImg
-			setImgFile={setImgFile}
-			setValues={setValues}
-         imgRatio={imgRatio}
-			selectedImg={SelectedImg}
-		>
+		<UploadImg setImg={setImg} imgRatio={imgRatio} selectedImg={SelectedImg}>
 			<UploadField />
 		</UploadImg>
 	);

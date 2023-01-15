@@ -6,12 +6,12 @@ import ImgBuilder from "../create/ImgBuilder";
 import ContentBuilder from "../create/ContentBuilder";
 
 const PinBuilder = () => {
-	const [imgFile, setImgFile] = useState(null);
+	const [img, setImg] = useState({});
 	const [invalidUrlMsg, setInvalidUrlMsg] = useState("");
 	const [values, setValues] = useState({
-		imgRatio: 0,
 		savedBy: [],
 		cmtDisabled: false,
+      tags: [],
 	});
    
 	const { addPin } = useDb();
@@ -20,8 +20,8 @@ const PinBuilder = () => {
    const containsUser = values.savedBy.includes(username);
 
 	const handleCreatePin = async () => {
-		if (!imgFile || invalidUrlMsg) return;
-		await addPin(imgFile, values);
+		if (!img.imgFile || invalidUrlMsg || !values.tags.length) return;
+		await addPin(img, values);
 		router.push("/");
 	};
 
@@ -39,12 +39,12 @@ const PinBuilder = () => {
 			<div className="mx-auto w-full mlg:max-w-[56rem] max-w-[28rem]">
 				<div className="rounded-2xl bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid mlg:grid-cols-[1fr_1.4fr] md:p-10 p-6">
 					<ImgBuilder
-						setImgFile={setImgFile}
-						setValues={setValues}
-						imgRatio={values.imgRatio}
+						setImg={setImg}
+						imgRatio={img.imgRatio}
 					/>
 
 					<ContentBuilder
+                  tags={values.tags}
 						setValues={setValues}
 						invalidUrlMsg={invalidUrlMsg}
 						setInvalidUrlMsg={setInvalidUrlMsg}

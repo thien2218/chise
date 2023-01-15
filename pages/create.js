@@ -1,9 +1,9 @@
-import { PinBuilder } from "../components";
+import { PinBuilderLayout } from "../components";
 import { withAuth } from "../hooks";
 
 const Create = () => {
    return (
-      <PinBuilder />
+      <PinBuilderLayout />
    )
 }
 

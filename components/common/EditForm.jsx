@@ -46,10 +46,10 @@ const EditImgField = ({ imgRatio, imgSrc, handlePreview }) => {
 const EditForm = ({ setEdit, edit }) => {
 	const { id, ...otherValues } = edit;
 	const [values, setValues] = useState(otherValues);
-	const [imgFile, setImgFile] = useState(null);
+	const [img, setImg] = useState({});
 	const [error, setError] = useState({});
 
-	const { checkLength, checkUrl } = useValidation();
+	const { checkUrl } = useValidation();
 	const { updatePin, deletePin } = useDb();
 	const { replace, asPath } = useRouter();
 
@@ -70,12 +70,12 @@ const EditForm = ({ setEdit, edit }) => {
 	const handleChange = (e) => {
 		const { value, name } = e.target;
 
-		if (name == "title" && checkLength(value.trim(), 0, 100)) {
+		if (name == "title" && value.trim().length > 100) {
 			setError({
 				...error,
 				title: "Title can only contain less than 100 characters",
 			});
-		} else if (name == "description" && checkLength(value.trim(), 0, 750)) {
+		} else if (name == "description" && value.trim().length > 750) {
 			setError({
 				...error,
 				description:
@@ -105,7 +105,7 @@ const EditForm = ({ setEdit, edit }) => {
          return;
       }
 
-		await updatePin(id, values, imgFile);
+		await updatePin(id, values, img);
 		setEdit(null);
 		replace(asPath);
 	};
@@ -206,10 +206,8 @@ const EditForm = ({ setEdit, edit }) => {
 
 						<div className="py-3 px-4 row-start-1">
 							<UploadImg
-								setImgFile={setImgFile}
-								setValues={setValues}
-								imgRatio={values.imgRatio}
-								defaultSrc={values.imgUrl}
+								setImg={setImg}
+								imgRatio={img.imgRatio}
 								selectedImg={EditImgField}
 							>
 								<EditImgField

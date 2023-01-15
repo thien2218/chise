@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import TextField from "../common/TextField";
-import { useAuth, useValidation } from "../../hooks";
+import { useAuth, useValidation, useDb } from "../../hooks";
 import ProfileCopy from "./ProfileCopy";
 import ProfileUpload from "./ProfileUpload";
 import UploadImg from "../common/UploadImg";
 
-const ProfileForm = ({ fields, submit, msgs }) => {
+const ProfileForm = ({ fields, msgs }) => {
 	const {
 		logout,
 		authUser: { username, name, profileUrl },
 	} = useAuth();
 	const required = fields.map((field) => field.name);
+   const { addUser } = useDb();
 
-	const [imgFile, setImgFile] = useState(null);
+	const [img, setImg] = useState({});
 	const [values, setValues] = useState({});
 
 	useEffect(() => {
@@ -68,12 +69,11 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 	return (
 		<form className="relative w-full max-w-sm px-10 pb-8 pt-24 bg-white rounded-2xl shadow-lg">
 			<UploadImg
-				setValues={setValues}
-				setImgFile={setImgFile}
+				setImg={setImg}
 				selectedImg={ProfileCopy}
 				defaultSrc={profileUrl}
 			>
-				<ProfileUpload username={username} />
+				<ProfileUpload name={name} />
 			</UploadImg>
 
 			{fields.map((field, id) => (
@@ -109,7 +109,7 @@ const ProfileForm = ({ fields, submit, msgs }) => {
 			<button
 				onClick={(e) => {
 					e.preventDefault();
-					handleSubmit(required, { ...values, imgFile }, submit);
+					handleSubmit(required, { ...values, imgFile: img.imgFile }, addUser);
 				}}
 				className="primary-btn w-full py-2 px-4 rounded-2xl mt-2"
 			>
