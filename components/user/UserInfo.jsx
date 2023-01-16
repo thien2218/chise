@@ -37,7 +37,10 @@ const UserInfo = ({ user }) => {
 				</div>
 			) : (
 				<div className="my-1 pt-2 grid grid-cols-3 gap-3">
-					<Button btnType="secondary-btn">Block</Button>
+					<Button btnType="secondary-btn" onClick={() => {}} noAsync>
+						Block
+					</Button>
+
 					<ActionBtn
 						btnType="primary-btn"
 						list={followers}
@@ -46,7 +49,10 @@ const UserInfo = ({ user }) => {
 					>
 						Follow
 					</ActionBtn>
-					<Button btnType="secondary-btn">Report</Button>
+               
+					<Button btnType="secondary-btn" onClick={() => {}} noAsync>
+						Report
+					</Button>
 				</div>
 			)}
 		</div>

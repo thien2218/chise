@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Auth from "../services/Auth";
 import { useAuth } from "./AuthProvider";
 import { useValidation } from "./ValidationProvider";
-import { Loader } from "../components";
+import { SpinLoader } from "../components";
 
 const AuthObserver = ({ children }) => {
 	const { setAuthUser, loading, setLoading } = useAuth();
@@ -22,7 +22,7 @@ const AuthObserver = ({ children }) => {
 	}, []);
 
 	if (loading) {
-		return <Loader />;
+		return <SpinLoader />;
 	}
 
 	return children;

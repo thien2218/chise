@@ -1,15 +1,7 @@
-import { useDb, withoutProfile } from "../../hooks";
+import { withoutProfile } from "../../hooks";
 import { AuthLayout, ProfileForm } from "../../components";
 
 const Profile = () => {
-   const msgs = {
-      username: {
-         lengthBetween: "Username must contain between 3 to 20 characters",
-         textDigitOnly: "Username can only contain text or digits",
-      },
-      name: "Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}"
-   }
-
    const fields = [
       {
          name: "username",
@@ -27,7 +19,7 @@ const Profile = () => {
 
    return (
       <AuthLayout>
-         <ProfileForm fields={fields} msgs={msgs} />
+         <ProfileForm fields={fields} />
       </AuthLayout>
    )
 }

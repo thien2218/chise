@@ -1,8 +1,8 @@
-import { ReportForm } from "../components";
+import Modal from "../components/headlessui/Modal";
 
 const Design = () => {
 	return (
-		<ReportForm />
+		<Modal />
 	);
 };
 

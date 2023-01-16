@@ -1,13 +1,19 @@
 import TextField from "../common/TextField";
-import { useAuth } from "../../hooks";
-import { useState } from "react";
+import { useEffect } from "react";
 import Button from "../common/Button";
+import { useDb } from "../../hooks";
 
-const AccManage = () => {
-	const {
-		authUser: { username, email },
-	} = useAuth();
-	const [emailVal, setEmailVal] = useState(email);
+const AccManage = ({ authUser, values, setValues, setInitObj }) => {
+	useEffect(() => {
+      const initObj = {
+         email: authUser.email,
+      }
+      
+		setValues(initObj);
+		setInitObj(initObj);
+	}, []);
+
+   const { deleteUser } = useDb();
 
 	return (
 		<div className="min-h-[50rem]">
@@ -22,7 +28,7 @@ const AccManage = () => {
 				name="email"
 				label="Email"
 				type="text"
-				defaultVal={emailVal}
+				defaultVal={values.email}
 				handleBlur={() => {}}
 				handleChange={() => {}}
 				handleFocus={() => {}}
@@ -30,32 +36,32 @@ const AccManage = () => {
 
 			<h3 className="text-xl font-medium my-5">Change your password</h3>
 			<div className="grid grid-cols-2 gap-3">
-            <TextField
-               name="password"
-               label="Old password"
-               type="text"
-               defaultVal={""}
-               handleBlur={() => {}}
-               handleChange={() => {}}
-               handleFocus={() => {}}
-            />
+				<TextField
+					name="password"
+					label="Old password"
+					type="text"
+					defaultVal={""}
+					handleBlur={() => {}}
+					handleChange={() => {}}
+					handleFocus={() => {}}
+				/>
 
-            <TextField
-               name="password"
-               label="New password"
-               type="text"
-               defaultVal={""}
-               handleBlur={() => {}}
-               handleChange={() => {}}
-               handleFocus={() => {}}
-            />
+				<TextField
+					name="password"
+					label="New password"
+					type="text"
+					defaultVal={""}
+					handleBlur={() => {}}
+					handleChange={() => {}}
+					handleFocus={() => {}}
+				/>
 
-            <div className="flex justify-end col-start-2">
-               <Button btnType="secondary-btn" onClick={() => {}}>
-                  Change password
-               </Button>
-            </div>
-         </div>
+				<div className="flex justify-end col-start-2">
+					<Button btnType="secondary-btn" onClick={() => {}}>
+						Change password
+					</Button>
+				</div>
+			</div>
 
 			<h3 className="text-xl font-medium my-5 text-primary">Danger zone</h3>
 			<div className="flex items-center justify-between mb-10">
@@ -64,19 +70,23 @@ const AccManage = () => {
 					<span className="font-light">Hide your Pins and profile</span>
 				</div>
 
-            <Button btnType="secondary-btn" onClick={() => {}}>
-               Deactivate account
-            </Button>
+				<Button btnType="secondary-btn" onClick={() => {}}>
+					Deactivate account
+				</Button>
 			</div>
 			<div className="flex items-center justify-between">
 				<div>
-					<h4 className="font-medium mb-2">Delete your data and account</h4>
-					<span className="font-light">Delete your account and account data</span>
+					<h4 className="font-medium mb-2">
+						Delete your data and account
+					</h4>
+					<span className="font-light">
+						Delete your account and account data
+					</span>
 				</div>
 
-            <button className="text-primary rounded-full font-semibold px-4 py-3 bg-red-100/80 hover:bg-red-100 transition ease-in-out duration-100 min-w-max">
-               Delete account
-            </button>
+				<Button btnType="warning-btn">
+					Delete account
+				</Button>
 			</div>
 		</div>
 	);

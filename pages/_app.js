@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import { Layout } from "../components";
-import { useRouter } from "next/router";
+import { useRouter, Router } from "next/router";
 import {
 	AuthProvider,
 	ValidationProvider,
@@ -9,6 +9,8 @@ import {
 	usePreserveScroll,
 	LibProvider,
 } from "../hooks";
+import nProgress from "nprogress";
+nProgress.configure({ showSpinner: false })
 
 function MyApp({ Component, pageProps }) {
 	const { pathname } = useRouter();
@@ -24,6 +26,14 @@ function MyApp({ Component, pageProps }) {
 	};
 	const pageName = page[pathname] || "";
 	usePreserveScroll();
+
+   Router.events.on("routeChangeStart", (url) => {
+      nProgress.start();
+   })
+
+   Router.events.on("routeChangeComplete", (url) => {
+      nProgress.done();
+   })
 
 	return (
 		<LibProvider>

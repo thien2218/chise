@@ -3,9 +3,12 @@ export { default as MasonryLayout } from "./layout/MasonryLayout";
 export { default as UserLayout } from "./layout/UserLayout";
 export { default as AuthLayout } from "./layout/AuthLayout";
 export { default as PinLayout } from "./layout/PinLayout";
-export { default as Loader } from "./layout/Loader";
 export { default as PinBuilderLayout } from "./layout/PinBuilderLayout";
 export { default as SettingsLayout } from "./layout/SettingsLayout";
+
+export { default as SpinLoader } from "./loader/SpinLoader";
+export { default as ToastLoader } from "./loader/ToastLoader";
+export { default as MoreLoader } from "./loader/MoreLoader";
 
 export { default as AuthForm } from "./auth/AuthForm";
 export { default as ProfileForm } from "./auth/ProfileForm";

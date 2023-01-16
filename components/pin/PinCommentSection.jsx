@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import ProfileImg from "../common/ProfileImg";
+import { useLayout } from "../layout/Layout";
 import PinComment from "./PinComment";
 
 const PinCommentSection = ({ comments }) => {
 	const [showComments, setShowComments] = useState(true);
    const [comment, setComment] = useState("");
+   const { isProcessing, setIsProcessing } = useLayout();
 
    const handleComment = (e) => {
       const { value } = e.target;

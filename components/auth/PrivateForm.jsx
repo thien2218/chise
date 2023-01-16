@@ -43,10 +43,10 @@ const PrivateForm = () => {
 			<div className="px-4 mx-auto w-full max-w-[26rem]">
 				<div className="relative z-40 rounded-2xl bg-white shadow-[rgb(0_0_0_/_50%)_0_0_0_9000px] px-8 py-6">
 					<h1 className="text-center text-3xl font-medium">
-						You're all set!
+						You&apos;re all set!
 					</h1>
 					<span className="block text-center mb-2">
-						Let's add some more info before you go
+						Let&apos;s add some more info before you go
 					</span>
 
 					<div className="py-3 flex flex-col gap-1 relative">
@@ -90,7 +90,7 @@ const PrivateForm = () => {
 					</span>
 					<button
 						onClick={handleSubmit}
-						className="primary-btn w-full py-2 rounded-full relative z-[2] mt-2"
+						className="primary-btn btn-transition w-full py-2 rounded-full relative z-[2] mt-2"
 					>
 						Done
 					</button>

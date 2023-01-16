@@ -39,7 +39,10 @@ const ReportForm = ({ setReport }) => {
 
 	return (
 		<form className="fixed overflow-y-scroll w-full h-full flex items-center top-0 z-20">
-         <div onClick={() => setReport(null)} className="absolute z-30 h-full w-full"></div>
+			<div
+				onClick={() => setReport(null)}
+				className="absolute z-30 h-full w-full"
+			></div>
 
 			<div className="px-4 mx-auto w-full max-w-lg">
 				<div className="relative z-40 rounded-2xl bg-white shadow-[rgb(0_0_0_/_50%)_0_0_0_9000px] px-8 py-6">
@@ -54,10 +57,13 @@ const ReportForm = ({ setReport }) => {
 							<Button
 								onClick={() => setReport(null)}
 								btnType="secondary-btn"
+								noAsync
 							>
 								Cancel
 							</Button>
-							<Button btnType="primary-btn">Report</Button>
+							<Button noAsync btnType="primary-btn" onClick={() => {}}>
+								Report
+							</Button>
 						</div>
 					</div>
 				</div>

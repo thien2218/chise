@@ -2,12 +2,6 @@ import { AuthLayout, AuthForm } from "../../components";
 import { useAuth, withoutAuth } from "../../hooks";
 
 const Signup = () => {
-   const msgs = {
-      email: "Invalid email pattern",
-      password: "Password must contain between 6 to 20 characters",
-      confirm_password: "Password confirmation does not match",
-   }
-
    const fields = [
       {
          name: "email",
@@ -33,7 +27,7 @@ const Signup = () => {
 
    return (
       <AuthLayout>
-         <AuthForm fields={fields} submit={signup} msgs={msgs} />
+         <AuthForm fields={fields} submit={signup} />
       </AuthLayout>
    )
 }

@@ -36,34 +36,56 @@ const SelectedImg = ({ imgSrc, unselectImg }) => {
 	);
 };
 
-const PublicInfo = ({ authUser, values, setValues, setInitObj, error, setError }) => {
-	const { checkUsername, checkName } = useValidation();
+const PublicInfo = ({
+	authUser,
+	values,
+	setValues,
+	setInitObj,
+	error,
+	setError,
+}) => {
+	const { checkUsername, checkName, checkLength } = useValidation();
 
 	useEffect(() => {
 		setValues(authUser);
-      setInitObj(authUser);
+		setInitObj(authUser);
 	}, []);
 
 	const handleChange = (e) => {
 		const { value, name } = e.target;
 
 		if (name == "name" && checkName(value)) {
-			setError({
-				...error,
-				[name]: "Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}",
-			});
-		} else if (name == "username" && checkUsername(value)) {
-			setError({
-				...error,
-				[name]:
-					"Username cannot contain any white spaces or special characters",
-			});
+			if (checkName(value)) {
+				setError({
+					...error,
+					[name]:
+						"Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}",
+				});
+			} else if (checkLength(value, 3, 100)) {
+				setError({
+					...error,
+					[name]: "Name must contain at least 3 characters, max 100",
+				});
+			}
+		} else if (name == "username") {
+			if (checkUsername(value)) {
+				setError({
+					...error,
+					[name]:
+						"Username cannot contain any white spaces or special characters",
+				});
+			} else if (checkLength(value, 3, 20)) {
+				setError({
+					...error,
+					[name]: "Username can only have between 3 to 20 characters",
+				});
+			}
 		} else {
 			setError({
 				...error,
 				[name]: "",
 			});
-      }
+		}
 
 		setValues({
 			...values,

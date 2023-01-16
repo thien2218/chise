@@ -8,9 +8,7 @@ const PinActions = ({ pinData }) => {
 		authUser: { username },
 	} = useAuth();
 	const { setEdit, setReport } = useLayout();
-	const { id, creator, link, savedBy, imgRatio, imgUrl, cmtDisabled } =
-		pinData;
-	const isCreator = (creator.username = username);
+	const isCreator = (pinData.creator.username = username);
 
 	return (
 		<div className="flex justify-between">
@@ -19,11 +17,12 @@ const PinActions = ({ pinData }) => {
 					<HiDownload />
 				</button>
 
-				{link && (
+				{pinData.link && (
 					<a
-						href={link}
+						href={pinData.link}
 						className="p-3 hover:bg-dimmed-500 rounded-full text-2xl"
 						target="_blank"
+						rel="noreferrer noopener"
 					>
 						<HiLink />
 					</a>
@@ -31,24 +30,14 @@ const PinActions = ({ pinData }) => {
 
 				{isCreator ? (
 					<button
-						onClick={() =>
-							setEdit({
-								id,
-								link,
-								cmtDisabled,
-								imgUrl,
-								imgRatio,
-								title: pinData.title,
-								description: pinData.description,
-							})
-						}
+						onClick={() => setEdit(pinData)}
 						className="p-3 hover:bg-dimmed-500 rounded-full text-2xl"
 					>
 						<HiPencil />
 					</button>
 				) : (
 					<button
-						onClick={() => setReport(id)}
+						onClick={() => setReport({ id: pinData.id, col: "pins" })}
 						className="p-3 hover:bg-dimmed-500 rounded-full text-2xl"
 					>
 						<HiFlag />
@@ -58,9 +47,9 @@ const PinActions = ({ pinData }) => {
 
 			<ActionBtn
 				btnType="primary-btn"
-				list={savedBy}
+				list={pinData.savedBy}
 				altText="Saved"
-				req={{ col: "pins", id }}
+				req={{ col: "pins", id: pinData.id }}
 			>
 				Save
 			</ActionBtn>

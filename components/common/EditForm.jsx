@@ -114,12 +114,17 @@ const EditForm = ({ setEdit, edit }) => {
 		replace(asPath);
 	};
 
+   const handleDelete = async () => {
+      await deletePin(id);
+		replace(asPath);
+   }
+
 	return (
 		<form className="fixed overflow-y-scroll top-0 w-full h-full flex md:items-center items-start z-20">
 			<div
 				onClick={() => setEdit(null)}
 				className="absolute z-30 h-full w-full"
-			></div>
+			/>
 
 			<div className="p-4 mx-auto w-full max-w-[56rem]">
 				<div className="relative z-40 rounded-2xl bg-white shadow-[rgb(0_0_0_/_50%)_0_0_0_9000px]">
@@ -223,7 +228,7 @@ const EditForm = ({ setEdit, edit }) => {
 					</div>
 
 					<div className="flex justify-between p-6">
-						<Button btnType="secondary-btn" onClick={() => deletePin(id)}>
+						<Button btnType="secondary-btn" onClick={handleDelete}>
 							Delete
 						</Button>
 
@@ -231,9 +236,11 @@ const EditForm = ({ setEdit, edit }) => {
 							<Button
 								btnType="secondary-btn"
 								onClick={() => setEdit(null)}
+                        noAsync
 							>
 								Cancel
 							</Button>
+                     
 							<Button btnType="primary-btn" onClick={handleSubmit}>
 								Save
 							</Button>

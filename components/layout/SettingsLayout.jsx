@@ -89,6 +89,7 @@ const SettingsLayout = ({ children }) => {
 				<Button
 					btnType={`${clickable ? "secondary-btn" : "disabled-btn"}`}
 					onClick={clickable ? handleCancel : () => {}}
+               noAsync
 				>
 					Cancel
 				</Button>

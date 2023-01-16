@@ -10,10 +10,19 @@ const LibProvider = ({ children }) => {
 	const { isEqual } = _;
 
 	const genderList = [
-      "Male",
-      "Female",
-      "Other"
-	];
+      {
+         label: "Male",
+         value: "Male",
+      },
+      {
+         label: "Female",
+         value: "Female",
+      },
+      {
+         label: "Other",
+         value: "Other",
+      }
+   ];
 
 	countries.registerLocale(enLocale);
 	const countryObj = countries.getNames("en", { select: "official" });
@@ -23,16 +32,16 @@ const LibProvider = ({ children }) => {
 
 	const getCurDate = () => {
 		const yourDate = new Date();
-      const yyyyMMdd = yourDate.toISOString().split('T')[0];
+		const yyyyMMdd = yourDate.toISOString().split("T")[0];
 
-      return yyyyMMdd;
+		return yyyyMMdd;
 	};
 
 	const value = {
 		isEqual,
 		genderList,
 		countryList,
-      getCurDate,
+		getCurDate,
 	};
 
 	return <LibContext.Provider value={value}>{children}</LibContext.Provider>;

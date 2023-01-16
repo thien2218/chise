@@ -21,7 +21,7 @@ const PinLayout = ({ pinData, pins }) => {
                <ImArrowLeft2 className="text-xl" />
             </button>
          
-            <div className="mlg:py-6 pb-6 pt-1 mx-auto w-full mlg:max-w-[60rem] max-w-[30rem]">
+            <div className="mlg:pb-6 mlg:pt-3 pb-4 pt-1 mx-auto w-full mlg:max-w-[60rem] max-w-[30rem]">
                <div className="rounded-2xl bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid mlg:grid-cols-2">
                   <div className="mlg:p-4">
                      <div className="overflow-hidden mlg:rounded-lg rounded-t-lg">
@@ -31,6 +31,7 @@ const PinLayout = ({ pinData, pins }) => {
                                  <a
                                     className="px-3 py-2 font-semibold h-max md:opacity-0  md:group-hover:opacity-100 opacity-100 bg-white rounded-full flex items-center"
                                     target="_blank"
+                                    rel="noreferrer noopener"
                                  >
                                     <ImArrowUpRight2 className="text-lg mr-1.5" />
                                     <span>View image</span>

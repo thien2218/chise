@@ -29,26 +29,21 @@ const ActionBtn = ({ children, btnType, list, altText, req }) => {
 		}
 	};
 
-	const debounceUpdate = useCallback(debounce(handleUpdate, 2000), [compareState]);
+	const debounceUpdate = useCallback(debounce(handleUpdate, 2000), [
+		compareState,
+	]);
 
 	useEffect(() => {
 		debounceUpdate(containsUser);
 	}, [containsUser]);
 
-	if (containsUser) {
-		return (
-			<Button
-				btnType="arbitrary-btn"
-				onClick={() => setContainsUser(!containsUser)}
-			>
-				{altText}
-			</Button>
-		);
-	}
-
 	return (
-		<Button btnType={btnType} onClick={() => setContainsUser(!containsUser)}>
-			{children}
+		<Button
+			btnType={containsUser ? "arbitrary-btn" : btnType}
+			onClick={() => setContainsUser(!containsUser)}
+         noAsync
+		>
+			{containsUser ? altText : children}
 		</Button>
 	);
 };

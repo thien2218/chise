@@ -5,7 +5,18 @@ import ProfileCopy from "./ProfileCopy";
 import ProfileUpload from "./ProfileUpload";
 import UploadImg from "../common/UploadImg";
 
-const ProfileForm = ({ fields, msgs }) => {
+const ProfileForm = ({ fields }) => {
+   const msgs = {
+      username: {
+         lengthBetween: "Username can only have between 3 to 20 characters",
+         textDigitOnly: "Username can only contain text or digits",
+      },
+      name: {
+         exceptSpecialSet: "Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}",
+         lengthBetween: "Name must be at least 3 characters, max 100"
+      }
+   }
+
 	const {
 		logout,
 		authUser: { username, name, profileUrl },
@@ -44,7 +55,8 @@ const ProfileForm = ({ fields, msgs }) => {
 			authValid(name, checkUsername(value), msgs[name].textDigitOnly);
 			authValid(name, checkLength(value, 3, 20), msgs[name].lengthBetween);
 		} else if (name == "name") {
-			authValid(name, checkName(value), msgs[name]);
+			authValid(name, checkName(value), msgs[name].exceptSpecialSet);
+			authValid(name, checkLength(value, 3, 100), msgs[name].lengthBetween);
 		}
 	};
 
@@ -117,7 +129,7 @@ const ProfileForm = ({ fields, msgs }) => {
 					e.preventDefault();
 					handleSubmit(required, values, submit);
 				}}
-				className="primary-btn w-full py-2 px-4 rounded-2xl mt-2"
+				className="primary-btn btn-transition w-full py-2 px-4 rounded-2xl mt-2"
 			>
 				Continue
 			</button>

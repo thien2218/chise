@@ -5,7 +5,11 @@ import TextField from "../common/TextField";
 import { useAuth, useValidation } from "../../hooks";
 import { useRouter } from "next/router";
 
-const AuthForm = ({ fields, submit, msgs }) => {
+const AuthForm = ({ fields, submit }) => {
+   const msgs = {
+      email: "Invalid email pattern",
+      password: "Password must contain between 6 to 20 characters",
+   }
 	const { pathname } = useRouter();
 	const required = fields.map((field) => field.name);
 	const initState = required.reduce((acc, cur) => ({ ...acc, [cur]: "" }), {});
@@ -85,7 +89,7 @@ const AuthForm = ({ fields, submit, msgs }) => {
 					e.preventDefault();
 					handleSubmit(required, values, submit);
 				}}
-				className="primary-btn w-full py-2 px-4 rounded-2xl mt-2"
+				className="primary-btn btn-transition w-full py-2 px-4 rounded-2xl mt-2"
 			>
 				Continue
 			</button>
@@ -93,7 +97,7 @@ const AuthForm = ({ fields, submit, msgs }) => {
 			<p className="my-2 font-semibold text-sm text-center">OR</p>
 
 			<button
-				className="google-auth-btn w-full py-2 px-4 rounded-2xl"
+				className="google-auth-btn btn-transition w-full py-2 px-4 rounded-2xl"
 				onClick={(e) => {
 					e.preventDefault();
 					loginWithGoogle();
