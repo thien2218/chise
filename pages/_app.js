@@ -20,8 +20,8 @@ function MyApp({ Component, pageProps }) {
 		"/auth/profile": "Add Profile",
 		"/": "Home",
 		"/create": "Create Pin",
-		"/[username]/settings/info": "Settings",
-		"/[username]/settings/account": "Settings",
+		"/[userId]/settings/info": "Settings",
+		"/[userId]/settings/account": "Settings",
 	};
 	const pageName = page[pathname] || "";
 	usePreserveScroll();

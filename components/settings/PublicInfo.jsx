@@ -37,7 +37,7 @@ const SelectedImg = ({ imgSrc, unselectImg }) => {
 };
 
 const PublicInfo = ({
-   user,
+   info,
 	values,
 	setValues,
    setInitObj,
@@ -47,8 +47,8 @@ const PublicInfo = ({
 	const { checkUsername, checkName, checkLength } = useValidation();
 
    useEffect(() => {
-      setValues(user);
-      setInitObj(user);
+      setValues(info);
+      setInitObj(info);
    }, []);
 
 	const handleChange = (e) => {
@@ -100,13 +100,13 @@ const PublicInfo = ({
 	};
 
 	return (
-		<div className="mb-16">
+		<div className="mb-12">
 			<h1 className="text-3xl font-medium">Public profile</h1>
-			<h2 className="mt-2 text-dark-gray">
+			<h2 className="mt-2 mb-5 text-dark-gray">
 				People visiting your profile will see the following info
 			</h2>
 
-			<form className="mt-5">
+			<form>
 				<div className="mt-2">
 					<label className="ml-2 block text-xs mb-1 font-light">
 						Profile image
@@ -114,8 +114,8 @@ const PublicInfo = ({
 
 					<div className="flex items-center gap-4">
 						<ProfileImg
-							profileUrl={user.profileUrl}
-							username={user.username}
+							profileUrl={info.profileUrl}
+							username={info.username}
 							size={20}
 						/>
 
@@ -153,7 +153,7 @@ const PublicInfo = ({
 					/>
 				</div>
 
-				<div className="mt-2 relative">
+				<div className="mt-2">
 					<TextField
 						name="username"
 						label="Username"
@@ -164,13 +164,6 @@ const PublicInfo = ({
 						handleChange={handleChange}
 						handleFocus={() => {}}
 					/>
-					<span
-						className={`absolute text-xs text-dark-gray font-light -translate-y-3 ${
-							error.username ? "opacity-0" : "opacity-100"
-						}`}
-					>
-						http://localhost:3000/{values.username}
-					</span>
 				</div>
 			</form>
 		</div>

@@ -66,7 +66,7 @@ const ContentBuilder = ({
 			<VarcharField isTitle setValues={setValues} {...fields[0]} />
 
 			<div className="mt-3 flex items-center pr-3 gap-1">
-				<Link href={`${authUser.username}/created`}>
+				<Link href={`${authUser.id}/created`}>
 					<a className="mx-1 rounded-full overflow-hidden h-11 w-11 relative">
 						<ProfileImg
 							profileUrl={authUser.profileUrl}
@@ -76,7 +76,7 @@ const ContentBuilder = ({
 					</a>
 				</Link>
 
-				<Link href={`${authUser.username}/created`}>
+				<Link href={`${authUser.id}/created`}>
 					<a className="font-semibold text-sm">{authUser.name}</a>
 				</Link>
 			</div>

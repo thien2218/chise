@@ -10,7 +10,7 @@ const AuthProvider = ({ children }) => {
 	const [authUser, setAuthUser] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [formLoading, setFormLoading] = useState(false);
-	const { setAuthError } = useValidation();
+	const { setAuthError, checkUserExists } = useValidation();
    const router = useRouter();
    const emailShortRegex = /^.*?(?=@)/;
 
@@ -36,31 +36,19 @@ const AuthProvider = ({ children }) => {
 	const loginWithGoogle = async () => {
 		const { user, isNewUser, authError } = await Auth.loginWithGoogle();
 		const curUsername = user?.email.match(emailShortRegex)[0];
-      const profileUrl = user?.photoUrl ?? "";
 
 		if (authError) {
 			setAuthError(authError);
-		} else if (isNewUser && !(await Firestore.usernameExists(curUsername))) {
+		} else if (isNewUser && !(await checkUserExists(curUsername))) {
 			setLoading(true);
-			const combinedName = user?.displayName + "@" + curUsername;
+         const profileUrl = user.photoUrl ?? "";
+         const combinedName = user.displayName + "@" + curUsername;
 			const updatedUser = await Auth.updateUser(combinedName, profileUrl);
 
 			setAuthUser({ ...updatedUser, isNewUser });
 			setLoading(false);
 
-         const values = {
-				name: updatedUser.name,
-            profileUrl: updatedUser.profileUrl,
-				followers: [],
-				following: 0,
-				privateInfo: {
-					gender: "Male",
-					country: "United States of America",
-					birthday: getCurDate(),
-				},
-			};
-
-			await Firestore.createUser(updatedUser.username, values);
+			await Firestore.createUser(updatedUser);
 		}
 	};
 

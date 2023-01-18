@@ -21,12 +21,16 @@ const AccManage = ({ values, setValues, setInitObj }) => {
 	return (
 		<div className="min-h-[50rem]">
 			<h1 className="text-3xl font-medium">Account management</h1>
-			<h2 className="mt-2 text-dark-gray">
+			<h2 className="mt-2 my-5 text-dark-gray">
 				Make changes to your email address and password. This information is
 				also private and will not be visible in your public profile.
 			</h2>
 
-			<h3 className="text-xl font-medium my-5">Change your email address</h3>
+         <span className="text-xl">
+            Coming soon...
+         </span>
+
+			{/* <h3 className="text-xl font-medium">Change your email address</h3>
 			<TextField
 				name="email"
 				label="Email"
@@ -90,7 +94,7 @@ const AccManage = ({ values, setValues, setInitObj }) => {
 				<Button btnType="warning-btn">
 					Delete account
 				</Button>
-			</div>
+			</div> */}
 		</div>
 	);
 };

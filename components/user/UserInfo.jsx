@@ -49,33 +49,37 @@ const UserInfo = ({ user }) => {
 			{authUser.username === user.username ? (
 				<div className="my-1 pt-2">
 					<button className="secondary-btn px-4 py-3 rounded-full">
-						<Link href={`/${authUser.username}/settings/public`}>
+						<Link href={`/${authUser.id}/settings/public`}>
 							<a>Edit Profile</a>
 						</Link>
 					</button>
 				</div>
 			) : (
 				<div className="my-1 pt-2 grid grid-cols-3 gap-3">
-					<Button btnType="secondary-btn" onClick={() => {}} noAsync>
-						Block
-					</Button>
+					<div className="flex justify-end">
+                  <Button btnType="secondary-btn" onClick={() => {}} noAsync>
+                     Block
+                  </Button>
+               </div>
 
 					<ActionBtn
 						btnType="primary-btn"
 						list={user.followers}
 						altText="Following"
-						req={{ action: "follow", id: user.username }}
+						req={{ action: "follow", id: user.id }}
 					>
 						Follow
 					</ActionBtn>
 
-					<Button
-						btnType="secondary-btn"
-						onClick={() => setReport({ col: "users", id: user.username })}
-						noAsync
-					>
-						Report
-					</Button>
+					<div className="flex">
+                  <Button
+                     btnType="secondary-btn"
+                     onClick={() => setReport({ col: "users", id: user.username })}
+                     noAsync
+                  >
+                     Report
+                  </Button>
+               </div>
 				</div>
 			)}
 		</div>

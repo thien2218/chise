@@ -5,7 +5,7 @@ import Button from "./Button";
 const ActionBtn = ({ children, btnType, list, altText, req }) => {
 	const { authUser } = useAuth();
    const { action, id } = req;
-	const initState = list.includes(authUser.username);
+	const initState = list.includes(authUser.id);
 
 	const [compareState, setCompareState] = useState(initState);
 	const [containsUser, setContainsUser] = useState(initState);
@@ -24,9 +24,9 @@ const ActionBtn = ({ children, btnType, list, altText, req }) => {
 	const handleUpdate = async (containsUser) => {
 		if (containsUser != compareState) {
          if (action === "save") {
-            await updateSavedByList(authUser.username, id, containsUser);
+            await updateSavedByList(authUser.id, id, containsUser);
          } else if (action === "follow") {
-            await updateFollowList(authUser.username, id, containsUser);
+            await updateFollowList(authUser.id, id, containsUser);
          }
 			setCompareState(!compareState);
 		}

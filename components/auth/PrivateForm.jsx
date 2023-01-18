@@ -5,16 +5,13 @@ import AutoComplete from "../headlessui/AutoComplete";
 
 const PrivateForm = () => {
 	const { updateUser } = useDb();
-   const { getCurDate, genderList, countryList, isEqual } = useLib();
-	const {
-		authUser: { username },
-		setAuthUser,
-	} = useAuth();
+	const { getCurrDate, genderList, countryList, isEqual } = useLib();
+	const { authUser, setAuthUser } = useAuth();
 
 	const initObj = {
 		gender: "Male",
 		country: "United States of America",
-		birthday: getCurDate(),
+		birthday: getCurrDate(),
 	};
 	const [values, setValues] = useState(initObj);
 
@@ -33,9 +30,9 @@ const PrivateForm = () => {
 			...prev,
 			isNewUser: false,
 		}));
-      
+
 		if (isEqual(initObj, values)) return;
-		await updateUser(username, { privateInfo: values });
+		await updateUser(authUser.id, { privateInfo: values });
 	};
 
 	return (
@@ -54,13 +51,15 @@ const PrivateForm = () => {
 						<Dropdown
 							handleChange={handleChange}
 							name="gender"
-                     defaultVal={genderList[0]}
+							defaultVal={genderList[0]}
 							options={genderList}
 						/>
 					</div>
 
 					<div className="py-3 flex flex-col gap-1 relative">
-						<label className="text-xs font-semibold">Country/region</label>
+						<label className="text-xs font-semibold">
+							Country/region
+						</label>
 						<AutoComplete
 							handleChange={handleChange}
 							defaultVal="United States of America"
@@ -80,7 +79,7 @@ const PrivateForm = () => {
 							id="birthday"
 							className="pl-3 pr-2 py-2 rounded-lg border-[1.5px] border-dimmed-600"
 							value={values.birthday}
-							max={getCurDate()}
+							max={getCurrDate()}
 							onChange={handleChange}
 						/>
 					</div>

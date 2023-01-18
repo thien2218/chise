@@ -26,70 +26,88 @@ class Firestore {
 
 	// ------------ USER ------------
 
-	// Read
-	async usernameExists(username) {
-		const userRef = doc(this.db, "users", username);
-		const user = await getDoc(userRef, username);
-		return user.exists();
+	// Create
+	async createUser(userData) {
+      const { id, ...data } = userData;
+
+		const values = {
+         about: "",
+			followers: [],
+			following: [],
+			privateInfo: {
+				gender: "Male",
+				country: "United States of America",
+				birthday: new Date().toLocaleDateString('en-ca'),
+			},
+			...data,
+		};
+
+      const userRef = doc(this.db, "users", id);
+		return await setDoc(userRef, values);
 	}
 
-	async getUser(username) {
-		const userRef = doc(this.db, "users", username);
+	// Read
+	async userExists(username) {
+      const q = query(
+         collection(this.db, "users"),
+         where("username", "==", username)
+      );
+
+      const userSnap = await getDocs(q);
+      return !userSnap.empty;
+	}
+
+	async getUser(id) {
+		const userRef = doc(this.db, "users", id);
 		const userSnap = await getDoc(userRef);
 
 		if (userSnap.exists()) {
 			const userData = userSnap.data();
-         userData.username = userSnap.id;
+         userData.id = userSnap.id;
 			return userData;
-		}
+      }
 	}
 
-	async getUsers() {
+	async getUserIds() {
 		const usersSnap = await getDocs(collection(this.db, "users"));
-
-		return usersSnap.docs.map((doc) => {
-			const data = doc.data();
-			data.username = doc.id;
-			return data;
-		});
+		return usersSnap.docs.map((doc) => doc.id);
 	}
 
 	// Update
-	async updateUser(username, values) {
-		const userRef = doc(this.db, "users", username);
+	async updateUser(id, values) {
+		const userRef = doc(this.db, "users", id);
 		return await updateDoc(userRef, values);
 	}
 
-	async updateFollowList(authUsername, username, containsUser) {
+	async updateFollowList(authUserId, userId, containsUser) {
 		const batch = writeBatch(this.db);
 		const arrOperation = containsUser ? arrayUnion : arrayRemove;
 
-		const userRef = doc(this.db, "users", username);
+		const userRef = doc(this.db, "users", userId);
 		batch.update(userRef, {
-			followers: arrOperation(authUsername),
+			followers: arrOperation(authUserId),
 		});
 
-		const authUserRef = doc(this.db, "users", authUsername);
+		const authUserRef = doc(this.db, "users", authUserId);
 		batch.update(authUserRef, {
-			following: arrOperation(username),
+			following: arrOperation(userId),
 		});
 
 		return await batch.commit();
 	}
 
-	// Create
-	async createUser(username, values) {
-		const userRef = doc(this.db, "users", username);
-		return await setDoc(userRef, values);
-	}
-
 	// Delete
-	async deleteUser(username) {
-		const userRef = doc(this.db, "users", username);
-		return await deleteDoc(userRef);
-	}
+	// async deleteUser(userId) {
+	// 	const userRef = doc(this.db, "users", userId);
+	// 	return await deleteDoc(userRef);
+	// }
 
 	// ------------ PIN ------------
+
+	// Create
+	async createPin(values) {
+		return await addDoc(collection(this.db, "pins"), values);
+	}
 
 	// Read
 	async getPin(id) {
@@ -98,7 +116,7 @@ class Firestore {
 
 		if (pinSnap.exists()) {
 			const pinData = pinSnap.data();
-         pinData.id = pinSnap.id;
+			pinData.id = pinSnap.id;
 			return pinData;
 		}
 	}
@@ -119,16 +137,16 @@ class Firestore {
 		});
 	}
 
-	queryLastVisible(lastSnap) {
+	queryPinsAfter(lastSnap) {
 		return startAfter(lastSnap);
 	}
 
-	queryPinsCreatedBy(username) {
-		return where("creator.username", "==", username);
+	queryPinsCreatedBy(userId) {
+		return where("creator.id", "==", userId);
 	}
 
-	queryPinsSavedBy(username) {
-		return where("savedBy", "array-contains", username);
+	queryPinsSavedBy(userId) {
+		return where("savedBy", "array-contains", userId);
 	}
 
 	// Update
@@ -137,18 +155,13 @@ class Firestore {
 		return await updateDoc(pinRef, values);
 	}
 
-	async updateSavedByList(username, pinId, containsUser) {
+	async updateSavedByList(userId, pinId, containsUser) {
 		const pinRef = doc(this.db, "pins", pinId);
-		const arrOperation = containsUser ? arrayRemove : arrayUnion;
+		const arrOperation = containsUser ? arrayUnion : arrayRemove;
 
 		return await updateDoc(pinRef, {
-			savedBy: arrOperation(username),
+			savedBy: arrOperation(userId),
 		});
-	}
-
-	// Create
-	async createPin(values) {
-		return await addDoc(collection(this.db, "pins"), values);
 	}
 
 	// Delete

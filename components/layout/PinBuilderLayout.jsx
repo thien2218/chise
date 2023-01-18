@@ -13,7 +13,7 @@ const PinBuilder = () => {
       tags: [],
 	});
    
-	const { addPin, uploadImg } = useDb();
+	const { createPin, uploadImg } = useDb();
    const { authUser: { username } } = useAuth();
 	const router = useRouter();
    const containsUser = values.savedBy.includes(username);
@@ -24,7 +24,7 @@ const PinBuilder = () => {
       values.imgUrl = await uploadImg(values.imgFile, "pin");
       const { imgFile, ...otherValues } = values;
       
-		await addPin(otherValues);
+		await createPin(otherValues);
 		router.push("/");
 	};
 

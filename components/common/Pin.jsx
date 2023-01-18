@@ -97,14 +97,14 @@ const Pin = ({ pin }) => {
 					</a>
 				</Link>
 
-				<Link href={`/${creator.username}/created`}>
-					<a className="flex items-center hover:last:underline">
+				<Link href={`/${creator.id}/created`}>
+					<a className="flex items-center group">
 						<ProfileImg
 							profileUrl={creator.profileUrl}
 							username={creator.username}
 							size={8}
 						/>
-						<div className="text-sm ml-1.5">{creator.name}</div>
+						<div className="text-sm ml-1.5 group-hover:underline">{creator.name}</div>
 					</a>
 				</Link>
 			</div>

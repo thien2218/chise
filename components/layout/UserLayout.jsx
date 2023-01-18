@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 const UserLayout = ({ user, pins }) => {
 	const { pathname } = useRouter();
-	const isCreatedPage = pathname == "/[username]/created";
+	const isCreatedPage = pathname == "/[userId]/created";
 
 	return (
 		<>
@@ -14,7 +14,7 @@ const UserLayout = ({ user, pins }) => {
 			<div className="flex justify-center mb-8">
 				<div className="py-3 mx-2">
 					<LinkBtn
-						href={`/${user.username}/created`}
+						href={`/${user.id}/created`}
 						isCurrPage={isCreatedPage}
 					>
 						Created
@@ -22,7 +22,7 @@ const UserLayout = ({ user, pins }) => {
 				</div>
 				<div className="py-3 mx-2">
 					<LinkBtn
-						href={`/${user.username}/saved`}
+						href={`/${user.id}/saved`}
 						isCurrPage={!isCreatedPage}
 					>
 						Saved

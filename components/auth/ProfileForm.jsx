@@ -21,7 +21,7 @@ const ProfileForm = ({ fields }) => {
 	const { logout, authUser } = useAuth();
 	const required = fields.map((field) => field.name);
 	const [values, setValues] = useState({});
-	const { addUser, uploadImg } = useDb();
+	const { createUser, uploadImg } = useDb();
 
 	useEffect(() => {
 		const { username, name, profileUrl } = authUser;
@@ -80,7 +80,7 @@ const ProfileForm = ({ fields }) => {
 			? await uploadImg(imgFile, "profile")
 			: profileUrl;
 
-		await addUser({ ...values, profileUrl: newProfileUrl });
+		await createUser({ ...values, profileUrl: newProfileUrl });
 	};
 
 	return (

@@ -25,7 +25,7 @@ const HeaderMenu = ({ children }) => {
                      <span className="block text-lg font-medium">{authUser?.name}</span>
                      <span className="block text-xs text-gray-400">@{authUser?.username}</span>
                   </div>
-						<Link href={`/${authUser?.username}/created`}>
+						<Link href={`/${authUser?.id}/created`}>
 							<Menu.Item>
 								{({ active }) => (
 									<a
@@ -39,7 +39,7 @@ const HeaderMenu = ({ children }) => {
 							</Menu.Item>
 						</Link>
 
-						<Link href={`/${authUser?.username}/settings/info`}>
+						<Link href={`/${authUser?.id}/settings/info`}>
 							<Menu.Item>
 								{({ active }) => (
 									<a

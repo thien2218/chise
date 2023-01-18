@@ -19,8 +19,8 @@ const ValidationProvider = ({ children }) => {
 		!emailRegex.test(input) || input.match(emailRegex)[0] != input;
 	const checkName = (input) => nameRegex.test(input);
 	const checkUsername = (input) => !usernameRegex.test(input);
-	const checkUsernameExists = async (input) =>
-		await Firestore.usernameExists(input);
+	const checkUserExists = async (input) =>
+		await Firestore.userExists(input);
 	const checkConfirmPw = (pw, confirmPw) => confirmPw != pw;
 	const checkUrl = (input) => input && !urlRegex.test(input);
 	const checkErrors = (error) =>
@@ -62,7 +62,7 @@ const ValidationProvider = ({ children }) => {
 		checkConfirmPw,
 		checkName,
 		checkUsername,
-		checkUsernameExists,
+		checkUserExists,
 		checkUrl,
 		checkErrors,
 		authValid,

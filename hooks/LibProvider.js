@@ -30,18 +30,15 @@ const LibProvider = ({ children }) => {
 		return value;
 	});
 
-	const getCurDate = () => {
-		const yourDate = new Date();
-		const yyyyMMdd = yourDate.toISOString().split("T")[0];
-
-		return yyyyMMdd;
+	const getCurrDate = () => {
+		return new Date().toLocaleDateString('en-ca');
 	};
 
 	const value = {
 		isEqual,
 		genderList,
 		countryList,
-		getCurDate,
+		getCurrDate,
 	};
 
 	return <LibContext.Provider value={value}>{children}</LibContext.Provider>;

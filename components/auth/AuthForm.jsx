@@ -9,6 +9,7 @@ const AuthForm = ({ fields, submit }) => {
    const msgs = {
       email: "Invalid email pattern",
       password: "Password must contain between 6 to 20 characters",
+      confirm_password: "Two passwords written don't match each other"
    }
 	const { pathname } = useRouter();
 	const required = fields.map((field) => field.name);
