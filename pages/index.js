@@ -7,7 +7,7 @@ function Home({ pins }) {
 
 	return (
 		<>
-			{authUser.isNewUser && <PrivateForm />}
+			{authUser.isNewUser ? <PrivateForm /> : null}
 			<MasonryLayout pins={pins} />
 		</>
 	);

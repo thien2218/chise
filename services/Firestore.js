@@ -16,6 +16,7 @@ import {
 	startAfter,
 	updateDoc,
 	where,
+	writeBatch,
 } from "firebase/firestore";
 
 class Firestore {
@@ -38,6 +39,7 @@ class Firestore {
 
 		if (userSnap.exists()) {
 			const userData = userSnap.data();
+         userData.username = userSnap.id;
 			return userData;
 		}
 	}
@@ -46,7 +48,9 @@ class Firestore {
 		const usersSnap = await getDocs(collection(this.db, "users"));
 
 		return usersSnap.docs.map((doc) => {
-			return doc.data();
+			const data = doc.data();
+			data.username = doc.id;
+			return data;
 		});
 	}
 
@@ -54,6 +58,23 @@ class Firestore {
 	async updateUser(username, values) {
 		const userRef = doc(this.db, "users", username);
 		return await updateDoc(userRef, values);
+	}
+
+	async updateFollowList(authUsername, username, containsUser) {
+		const batch = writeBatch(this.db);
+		const arrOperation = containsUser ? arrayUnion : arrayRemove;
+
+		const userRef = doc(this.db, "users", username);
+		batch.update(userRef, {
+			followers: arrOperation(authUsername),
+		});
+
+		const authUserRef = doc(this.db, "users", authUsername);
+		batch.update(authUserRef, {
+			following: arrOperation(username),
+		});
+
+		return await batch.commit();
 	}
 
 	// Create
@@ -77,6 +98,7 @@ class Firestore {
 
 		if (pinSnap.exists()) {
 			const pinData = pinSnap.data();
+         pinData.id = pinSnap.id;
 			return pinData;
 		}
 	}
@@ -91,13 +113,15 @@ class Firestore {
 		const pinsSnap = await getDocs(q);
 
 		return pinsSnap.docs.map((doc) => {
-			return doc.data();
+			const data = doc.data();
+			data.id = doc.id;
+			return data;
 		});
 	}
 
-   queryLastVisible(lastSnap) {
-      return startAfter(lastSnap);
-   }
+	queryLastVisible(lastSnap) {
+		return startAfter(lastSnap);
+	}
 
 	queryPinsCreatedBy(username) {
 		return where("creator.username", "==", username);
@@ -113,34 +137,24 @@ class Firestore {
 		return await updateDoc(pinRef, values);
 	}
 
+	async updateSavedByList(username, pinId, containsUser) {
+		const pinRef = doc(this.db, "pins", pinId);
+		const arrOperation = containsUser ? arrayRemove : arrayUnion;
+
+		return await updateDoc(pinRef, {
+			savedBy: arrOperation(username),
+		});
+	}
+
 	// Create
 	async createPin(values) {
-		const pinRef = await addDoc(collection(this.db, "pins"), values);
-		return await updateDoc(pinRef, {
-			id: pinRef.id,
-		});
+		return await addDoc(collection(this.db, "pins"), values);
 	}
 
 	// Delete
 	async deletePin(id) {
 		const pinRef = doc(this.db, "pins", id);
 		return await deleteDoc(pinRef);
-	}
-
-	// ------------ OTHER ------------
-	async updateList(username, containsUser, col, id) {
-		const listName = col == "pins" ? "savedBy" : "followers";
-		const docRef = doc(this.db, col, id);
-
-		if (containsUser) {
-			return await updateDoc(docRef, {
-				[listName]: arrayUnion(username),
-			});
-		}
-
-		return await updateDoc(docRef, {
-			[listName]: arrayRemove(username),
-		});
 	}
 }
 

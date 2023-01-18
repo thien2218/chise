@@ -1,11 +1,10 @@
 import { useState, Children, cloneElement, isValidElement, useEffect } from "react";
-import { useDb, useLib, useValidation, useAuth } from "../../hooks";
+import { useDb, useLib, useValidation } from "../../hooks";
 import { useRouter } from "next/router";
 import LinkBtn from "../common/LinkBtn";
 import Button from "../common/Button";
 
-const SettingsLayout = ({ children }) => {
-   const { authUser } = useAuth();
+const SettingsLayout = ({ children, username }) => {
 	const { updateUser, uploadImg } = useDb();
 	const { isEqual } = useLib();
    const { checkErrors } = useValidation();
@@ -23,24 +22,18 @@ const SettingsLayout = ({ children }) => {
 		}
    }, [values, initObj, error]);
 
-	const isPublicSettings = pathname === "/settings/public";
-	const isPrivateSettings = pathname === "/settings/private";
-	const isAccountSettings = pathname === "/settings/account";
+	const isInfoSettings = pathname === "/[username]/settings/info";
+	const isAccountSettings = pathname === "/[username]/settings/account";
 
 	const navLinks = [
 		{
-			text: "Public profile",
-			href: "/settings/public",
-			isCurrPage: isPublicSettings,
-		},
-		{
-			text: "Personal information",
-			href: "/settings/private",
-			isCurrPage: isPrivateSettings,
+			text: "Your profile",
+			href: `/${username}/settings/info`,
+			isCurrPage: isInfoSettings,
 		},
 		{
 			text: "Account management",
-			href: "/settings/account",
+			href: `/${username}/settings/account`,
 			isCurrPage: isAccountSettings,
 		},
 	];
@@ -48,11 +41,12 @@ const SettingsLayout = ({ children }) => {
 	const handleSubmit = async () => {
       if (values.imgFile) {
          const { imgFile, imgRatio, ...rest } = values;
-         rest.imgUrl = await uploadImg(imgFile, "profile");
+         rest.profileUrl = await uploadImg(imgFile, "profile");
          values = rest;
       }
+      const { username, ...otherValues } = values;
 
-      await updateUser(authUser.username, values);
+      await updateUser(username, otherValues);
 	};
 
 	const handleCancel = () => {
@@ -62,7 +56,6 @@ const SettingsLayout = ({ children }) => {
 	const childrenWithProps = Children.map(children, (child) => {
 		if (isValidElement(child)) {
 			return cloneElement(child, {
-            authUser,
 				values,
 				setValues,
             setInitObj,

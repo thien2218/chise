@@ -39,7 +39,7 @@ const HeaderMenu = ({ children }) => {
 							</Menu.Item>
 						</Link>
 
-						<Link href="/settings/public">
+						<Link href={`/${authUser?.username}/settings/info`}>
 							<Menu.Item>
 								{({ active }) => (
 									<a

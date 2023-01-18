@@ -6,28 +6,27 @@ import ProfileUpload from "./ProfileUpload";
 import UploadImg from "../common/UploadImg";
 
 const ProfileForm = ({ fields }) => {
-   const msgs = {
-      username: {
-         lengthBetween: "Username can only have between 3 to 20 characters",
-         textDigitOnly: "Username can only contain text or digits",
-      },
-      name: {
-         exceptSpecialSet: "Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}",
-         lengthBetween: "Name must be at least 3 characters, max 100"
-      }
-   }
+	const msgs = {
+		username: {
+			lengthBetween: "Username can only have between 3 to 20 characters",
+			textDigitOnly: "Username can only contain text or digits",
+		},
+		name: {
+			exceptSpecialSet:
+				"Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}",
+			lengthBetween: "Name must be at least 3 characters, max 100",
+		},
+	};
 
-	const {
-		logout,
-		authUser: { username, name, profileUrl },
-	} = useAuth();
+	const { logout, authUser } = useAuth();
 	const required = fields.map((field) => field.name);
 	const [values, setValues] = useState({});
-   const { addUser, uploadImg } = useDb();
+	const { addUser, uploadImg } = useDb();
 
 	useEffect(() => {
-		setValues({ username, name, profileUrl });
-	}, [username, name, profileUrl]);
+		const { username, name, profileUrl } = authUser;
+		setValues({ username, name, profileUrl, about: "" });
+	}, [authUser]);
 
 	const {
 		authError,
@@ -76,22 +75,22 @@ const ProfileForm = ({ fields }) => {
 		});
 	};
 
-   const submit = async ({ imgFile, profileUrl, imgRatio, ...values }) => {
-      const newProfileUrl = imgFile
+	const submit = async ({ imgFile, profileUrl, imgRatio, ...values }) => {
+		const newProfileUrl = imgFile
 			? await uploadImg(imgFile, "profile")
-			: profileUrl || "";
+			: profileUrl;
 
-      await addUser(newProfileUrl, values);
-   }
+		await addUser({ ...values, profileUrl: newProfileUrl });
+	};
 
 	return (
 		<form className="relative w-full max-w-sm px-10 pb-8 pt-24 bg-white rounded-2xl shadow-lg">
 			<UploadImg
 				setValues={setValues}
 				selectedImg={ProfileCopy}
-				defaultSrc={profileUrl}
+				defaultSrc={authUser.profileUrl}
 			>
-				<ProfileUpload name={name} />
+				<ProfileUpload username={authUser.username} />
 			</UploadImg>
 
 			{fields.map((field, id) => (
@@ -107,9 +106,9 @@ const ProfileForm = ({ fields }) => {
 			))}
 
 			<div className="w-full mb-2">
-            <label className="ml-2 text-sm pointer-events-none" htmlFor="about">
-               About (optional)
-            </label>
+				<label className="ml-2 text-sm pointer-events-none" htmlFor="about">
+					About (optional)
+				</label>
 
 				<textarea
 					name="about"

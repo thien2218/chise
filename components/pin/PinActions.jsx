@@ -4,11 +4,11 @@ import ActionBtn from "../common/ActionBtn";
 import { useLayout } from "../layout/Layout";
 
 const PinActions = ({ pinData }) => {
-	const {
-		authUser: { username },
-	} = useAuth();
+	const { authUser } = useAuth();
 	const { setEdit, setReport } = useLayout();
-	const isCreator = (pinData.creator.username = username);
+
+   const { creator } = pinData;
+	const isCreator = creator.username === authUser.username;
 
 	return (
 		<div className="flex justify-between">
@@ -49,7 +49,7 @@ const PinActions = ({ pinData }) => {
 				btnType="primary-btn"
 				list={pinData.savedBy}
 				altText="Saved"
-				req={{ col: "pins", id: pinData.id }}
+				req={{ action: "save", id: pinData.id }}
 			>
 				Save
 			</ActionBtn>

@@ -63,7 +63,7 @@ const Header = () => {
 						<div className="h-11 cursor-pointer aspect-square rounded-full flex-center hover:bg-dimmed-600">
 							<ProfileImg
 								profileUrl={authUser?.profileUrl}
-								name={authUser?.name}
+								username={authUser?.username}
 								size={8}
 							/>
 						</div>

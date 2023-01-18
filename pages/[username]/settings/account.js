@@ -1,5 +1,5 @@
-import { withAuth } from "../../hooks";
-import { SettingsLayout, AccManage } from "../../components";
+import { withAuth } from "../../../hooks";
+import { SettingsLayout, AccManage } from "../../../components";
 
 const Account = () => {
    return (

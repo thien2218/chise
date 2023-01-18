@@ -20,20 +20,15 @@ class Auth {
 		return onAuthStateChanged(this.auth, (user) => cb(user));
 	}
 
-   getCurrUser() {
-      const user = this.auth.currentUser;
-      return this.extractUserData(user);
-   }
-
 	extractUserData(user) {
-		const strName = user.displayName || "";
+		const strName = user.displayName ?? "";
 		const nameAndUsername = strName.split("@");
 
 		return {
 			name: nameAndUsername[0],
 			username: nameAndUsername[1],
 			emailVerified: user.emailVerified,
-			profileUrl: user.photoURL,
+			profileUrl: user.photoURL ?? "",
          email: user.email,
 		};
 	}
@@ -43,7 +38,7 @@ class Auth {
 			displayName,
 			photoURL,
 		}).then(() => {
-			return this.getCurrUser();
+			return this.extractUserData(this.auth.currentUser);
 		});
 	}
 

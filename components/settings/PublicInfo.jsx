@@ -37,55 +37,51 @@ const SelectedImg = ({ imgSrc, unselectImg }) => {
 };
 
 const PublicInfo = ({
-	authUser,
+   user,
 	values,
 	setValues,
-	setInitObj,
+   setInitObj,
 	error,
 	setError,
 }) => {
 	const { checkUsername, checkName, checkLength } = useValidation();
 
-	useEffect(() => {
-		setValues(authUser);
-		setInitObj(authUser);
-	}, []);
+   useEffect(() => {
+      setValues(user);
+      setInitObj(user);
+   }, []);
 
 	const handleChange = (e) => {
 		const { value, name } = e.target;
 
-		if (name == "name" && checkName(value)) {
-			if (checkName(value)) {
-				setError({
-					...error,
-					[name]:
-						"Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}",
-				});
-			} else if (checkLength(value, 3, 100)) {
-				setError({
-					...error,
-					[name]: "Name must contain at least 3 characters, max 100",
-				});
-			}
-		} else if (name == "username") {
-			if (checkUsername(value)) {
-				setError({
-					...error,
-					[name]:
-						"Username cannot contain any white spaces or special characters",
-				});
-			} else if (checkLength(value, 3, 20)) {
-				setError({
-					...error,
-					[name]: "Username can only have between 3 to 20 characters",
-				});
-			}
-		} else {
-			setError({
-				...error,
-				[name]: "",
-			});
-		}
+      if (name === "name" && checkName(value)) {
+         setError({
+            ...error,
+            [name]:
+               "Name mustn't contain any of these characters: @#$^*-+=|\"`\\<>[]{}",
+         });
+      } else if (name === "name" && checkLength(value, 3, 100)) {
+         setError({
+            ...error,
+            [name]: "Name must contain at least 3 characters, max 100",
+         });
+      } else if (name === "username" && checkUsername(value)) {
+         setError({
+            ...error,
+            [name]:
+               "Username cannot contain any white space or special character",
+         });
+      } else if (name === "username" && checkLength(value, 3, 20)) {
+         setError({
+            ...error,
+            [name]: "Username can only have between 3 to 20 characters",
+         });
+      } else {
+         setError({
+            ...error,
+            [name]: "",
+         });
+      }
 
 		setValues({
 			...values,
@@ -93,8 +89,18 @@ const PublicInfo = ({
 		});
 	};
 
+	const handleBlur = (e) => {
+		const { name, value } = e.target;
+		const actualVal = value.trim();
+
+		setValues({
+			...values,
+			[name]: actualVal,
+		});
+	};
+
 	return (
-		<div className="min-h-screen">
+		<div className="mb-16">
 			<h1 className="text-3xl font-medium">Public profile</h1>
 			<h2 className="mt-2 text-dark-gray">
 				People visiting your profile will see the following info
@@ -108,8 +114,8 @@ const PublicInfo = ({
 
 					<div className="flex items-center gap-4">
 						<ProfileImg
-							profileUrl={authUser.profileUrl}
-							name={authUser.name}
+							profileUrl={user.profileUrl}
+							username={user.username}
 							size={20}
 						/>
 
@@ -126,7 +132,7 @@ const PublicInfo = ({
 						type="text"
 						error={error.name}
 						defaultVal={values.name}
-						handleBlur={() => {}}
+						handleBlur={handleBlur}
 						handleChange={handleChange}
 						handleFocus={() => {}}
 					/>
@@ -154,7 +160,7 @@ const PublicInfo = ({
 						type="text"
 						error={error.username}
 						defaultVal={values.username}
-						handleBlur={() => {}}
+						handleBlur={handleBlur}
 						handleChange={handleChange}
 						handleFocus={() => {}}
 					/>

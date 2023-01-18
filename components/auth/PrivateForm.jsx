@@ -29,13 +29,13 @@ const PrivateForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (isEqual(initObj, values)) return;
-
-		await updateUser(username, { private: values });
 		setAuthUser((prev) => ({
 			...prev,
 			isNewUser: false,
 		}));
+      
+		if (isEqual(initObj, values)) return;
+		await updateUser(username, { privateInfo: values });
 	};
 
 	return (

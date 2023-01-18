@@ -70,14 +70,14 @@ const ContentBuilder = ({
 					<a className="mx-1 rounded-full overflow-hidden h-11 w-11 relative">
 						<ProfileImg
 							profileUrl={authUser.profileUrl}
-							name={authUser.name}
+							username={authUser.username}
 							size={11}
 						/>
 					</a>
 				</Link>
 
 				<Link href={`${authUser.username}/created`}>
-					<a className="font-semibold text-sm">Thien Huynh</a>
+					<a className="font-semibold text-sm">{authUser.name}</a>
 				</Link>
 			</div>
 

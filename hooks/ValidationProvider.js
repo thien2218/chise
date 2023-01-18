@@ -24,7 +24,7 @@ const ValidationProvider = ({ children }) => {
 	const checkConfirmPw = (pw, confirmPw) => confirmPw != pw;
 	const checkUrl = (input) => input && !urlRegex.test(input);
 	const checkErrors = (error) =>
-		!Object.values(error).filter((msg) => msg !== "").length;
+		!!Object.values(error).filter((msg) => msg !== "").length;
 
 	const authValid = (name, cond, msg) => {
 		if (cond) {

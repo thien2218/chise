@@ -3,15 +3,14 @@ import { useAuth, useDb } from "../../hooks";
 import Button from "./Button";
 
 const ActionBtn = ({ children, btnType, list, altText, req }) => {
-	const {
-		authUser: { username },
-	} = useAuth();
-	const initState = list.includes(username);
+	const { authUser } = useAuth();
+   const { action, id } = req;
+	const initState = list.includes(authUser.username);
 
 	const [compareState, setCompareState] = useState(initState);
 	const [containsUser, setContainsUser] = useState(initState);
 
-	const { updateList } = useDb();
+	const { updateSavedByList, updateFollowList } = useDb();
 
 	const debounce = (cb, delay) => {
 		let timeout;
@@ -24,7 +23,11 @@ const ActionBtn = ({ children, btnType, list, altText, req }) => {
 
 	const handleUpdate = async (containsUser) => {
 		if (containsUser != compareState) {
-			await updateList(username, containsUser, req);
+         if (action === "save") {
+            await updateSavedByList(authUser.username, id, containsUser);
+         } else if (action === "follow") {
+            await updateFollowList(authUser.username, id, containsUser);
+         }
 			setCompareState(!compareState);
 		}
 	};
@@ -41,7 +44,7 @@ const ActionBtn = ({ children, btnType, list, altText, req }) => {
 		<Button
 			btnType={containsUser ? "arbitrary-btn" : btnType}
 			onClick={() => setContainsUser(!containsUser)}
-         noAsync
+			noAsync
 		>
 			{containsUser ? altText : children}
 		</Button>

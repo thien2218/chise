@@ -50,7 +50,7 @@ const EditForm = ({ setEdit, edit }) => {
 	const { checkUrl, checkErrors } = useValidation();
 	const { updatePin, deletePin, uploadImg } = useDb();
    const { isEqual } = useLib();
-	const { replace, asPath } = useRouter();
+	const router = useRouter();
 
 	const options = [
 		{
@@ -99,7 +99,7 @@ const EditForm = ({ setEdit, edit }) => {
 	};
 
 	const handleSubmit = async () => {
-		if (!checkErrors(error) || isEqual(otherValues, values)) {
+		if (checkErrors(error) || isEqual(otherValues, values)) {
          setEdit(null);
          return;
       }
@@ -111,12 +111,12 @@ const EditForm = ({ setEdit, edit }) => {
 
 		await updatePin(id, neededValues);
 		setEdit(null);
-		replace(asPath);
+		router.replace(router.asPath);
 	};
 
    const handleDelete = async () => {
       await deletePin(id);
-		replace(asPath);
+		router.replace(router.asPath);
    }
 
 	return (

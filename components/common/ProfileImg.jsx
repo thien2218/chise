@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Avvvatars from "avvvatars-react";
 
-const ProfileImg = ({ profileUrl, name, size }) => {
+const ProfileImg = ({ profileUrl, username, size }) => {
    if (profileUrl) {
       return (
          <Image
@@ -15,7 +15,7 @@ const ProfileImg = ({ profileUrl, name, size }) => {
       )
    }
 
-   return <Avvvatars size={size * 4} value={name} />
+   return <Avvvatars size={size * 4} value={username} />
 }
 
 export default ProfileImg;

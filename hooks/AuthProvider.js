@@ -36,26 +36,30 @@ const AuthProvider = ({ children }) => {
 	const loginWithGoogle = async () => {
 		const { user, isNewUser, authError } = await Auth.loginWithGoogle();
 		const curUsername = user?.email.match(emailShortRegex)[0];
+      const profileUrl = user?.photoUrl ?? "";
 
 		if (authError) {
 			setAuthError(authError);
 		} else if (isNewUser && !(await Firestore.usernameExists(curUsername))) {
 			setLoading(true);
 			const combinedName = user?.displayName + "@" + curUsername;
-			const updatedUser = await Auth.updateUser(combinedName);
+			const updatedUser = await Auth.updateUser(combinedName, profileUrl);
 
-			setAuthUser(updatedUser);
+			setAuthUser({ ...updatedUser, isNewUser });
 			setLoading(false);
+
          const values = {
-				...updatedUser,
+				name: updatedUser.name,
+            profileUrl: updatedUser.profileUrl,
 				followers: [],
 				following: 0,
-				private: {
-					gender: "male",
+				privateInfo: {
+					gender: "Male",
 					country: "United States of America",
 					birthday: getCurDate(),
 				},
 			};
+
 			await Firestore.createUser(updatedUser.username, values);
 		}
 	};

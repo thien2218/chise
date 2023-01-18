@@ -13,21 +13,22 @@ const DbProvider = ({ children }) => {
 	const { getCurDate } = useLib();
 
 	// -----------USER-----------
-	const addUser = async (profileUrl, { username, name, about }) => {
+	const addUser = async ({ profileUrl, username, name, about }) => {
 		const displayName = name + "@" + username;
-		const emailAsUsername = authUser.username == username;
+		const emailAsUsername = authUser.username === username;
 
 		if (emailAsUsername || !(await checkUsernameExists(username))) {
 			const updatedUser = await Auth.updateUser(displayName, profileUrl);
 			setAuthUser({ ...updatedUser, isNewUser: true });
 
 			const values = {
-				...updatedUser,
+            name: updatedUser.name,
+				profileUrl: updatedUser.profileUrl,
 				about,
 				followers: [],
-				following: 0,
-				private: {
-					gender: "male",
+				following: [],
+				privateInfo: {
+					gender: "Male",
 					country: "United States of America",
 					birthday: getCurDate(),
 				},
@@ -42,7 +43,20 @@ const DbProvider = ({ children }) => {
 	};
 
 	const updateUser = async (username, values) => {
-		await Firestore.updateUser(username, values);
+      if (authUser.username !== username) {
+         await Firestore.deleteUser(authUser.username);
+
+         const combinedName = values.name + "@" + username;
+         await Auth.updateUser(combinedName, values.profileUrl);
+
+         await Firestore.createUser(username, values);
+      } else {
+         await Firestore.updateUser(authUser.username, values);
+      }
+	};
+
+	const updateFollowList = async (username, id, containsUser) => {
+		await Firestore.updateFollowList(username, id, containsUser);
 	};
 
 	const deleteUser = async (username) => {
@@ -65,28 +79,28 @@ const DbProvider = ({ children }) => {
 		await Firestore.updatePin(id, values);
 	};
 
+	const updateSavedByList = async (username, id, containsUser) => {
+		await Firestore.updateSavedByList(username, id, containsUser);
+	};
+
 	const deletePin = async (id) => {
 		await Firestore.deletePin(id);
 	};
 
 	// -----------STORAGE-----------
 	const uploadImg = async (imgFile, col) => {
-      return await Storage.uploadImg(imgFile, col);
-	};
-
-	// -----------OTHER-----------
-	const updateList = async (username, containsUser, req) => {
-		await Firestore.updateList(username, containsUser, req.col, req.id);
+		return await Storage.uploadImg(imgFile, col);
 	};
 
 	const value = {
 		addPin,
 		addUser,
 		updateUser,
+		updateFollowList,
 		deleteUser,
 		updatePin,
+		updateSavedByList,
 		deletePin,
-		updateList,
 		uploadImg,
 	};
 

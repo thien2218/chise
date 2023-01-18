@@ -1,19 +1,22 @@
 import TextField from "../common/TextField";
 import { useEffect } from "react";
 import Button from "../common/Button";
-import { useDb } from "../../hooks";
+import { useDb, useAuth } from "../../hooks";
 
-const AccManage = ({ authUser, values, setValues, setInitObj }) => {
+const AccManage = ({ values, setValues, setInitObj }) => {
+   const { authUser } = useAuth();
+   const { deleteUser } = useDb();
+
 	useEffect(() => {
       const initObj = {
          email: authUser.email,
       }
+
+      console.log(authUser);
       
 		setValues(initObj);
 		setInitObj(initObj);
 	}, []);
-
-   const { deleteUser } = useDb();
 
 	return (
 		<div className="min-h-[50rem]">

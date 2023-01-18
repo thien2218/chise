@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { pinID } }) {
 	const pins = (await Firestore.getPinsByQuery()).filter(
-		(doc) => doc.id != pinID
+		(data) => data.id != pinID
 	);
 	const pinData = await Firestore.getPin(pinID);
 

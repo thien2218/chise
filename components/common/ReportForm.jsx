@@ -38,19 +38,19 @@ const ReportForm = ({ setReport }) => {
 	];
 
 	return (
-		<form className="fixed overflow-y-scroll w-full h-full flex items-center top-0 z-20">
+		<form className="fixed overflow-y-scroll w-full h-full flex items-start top-0 z-20">
 			<div
 				onClick={() => setReport(null)}
 				className="absolute z-30 h-full w-full"
-			></div>
+			/>
 
-			<div className="px-4 mx-auto w-full max-w-lg">
+			<div className="p-4 mx-auto w-full max-w-lg">
 				<div className="relative z-40 rounded-2xl bg-white shadow-[rgb(0_0_0_/_50%)_0_0_0_9000px] px-8 py-6">
-					<h1 className="text-center text-3xl mb-6 font-medium">
+					<h1 className="text-center text-3xl mb-5 font-medium">
 						Report activity
 					</h1>
 
-					<div className="flex flex-col gap-3">
+					<div className="flex flex-col">
 						<RadioInput options={options} srOnly="Report activity" />
 
 						<div className="flex gap-3 mt-2 justify-end">
@@ -61,6 +61,7 @@ const ReportForm = ({ setReport }) => {
 							>
 								Cancel
 							</Button>
+
 							<Button noAsync btnType="primary-btn" onClick={() => {}}>
 								Report
 							</Button>

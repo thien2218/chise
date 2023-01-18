@@ -9,11 +9,9 @@ import ProfileImg from "./ProfileImg";
 
 const Pin = ({ pin }) => {
 	const { setEdit, setReport } = useLayout();
-
-	const {
-		authUser: { username },
-	} = useAuth();
-	const isCreator = pin.creator.username == username;
+	const { id, creator } = pin;
+	const { authUser } = useAuth();
+	const isCreator = creator.username == authUser.username;
 
 	const shortenLink = (link) => {
 		const protocolRegex = /(?:(https|http):\/\/)(?:www\.)?/;
@@ -30,7 +28,7 @@ const Pin = ({ pin }) => {
 			<div className="overflow-hidden rounded-lg">
 				<AdjustedImg ratio={pin.imgRatio} src={pin.imgUrl} scale={1}>
 					<div className="relative w-full h-full opacity-100 md:opacity-0 md:hover:opacity-100 transition duration-100 flex flex-col justify-between">
-						<Link href={`/pin/${pin.id}`}>
+						<Link href={`/pin/${id}`}>
 							<a className="z-[8] absolute w-full h-full bg-black/30 hidden md:block" />
 						</Link>
 
@@ -49,7 +47,7 @@ const Pin = ({ pin }) => {
 									btnType="primary-btn"
 									list={pin.savedBy}
 									altText="Saved"
-									req={{ col: "pins", id: pin.id }}
+									req={{ action: "save", id }}
 								>
 									Save
 								</ActionBtn>
@@ -78,7 +76,9 @@ const Pin = ({ pin }) => {
 
 								{!isCreator && (
 									<button
-										onClick={() => setReport({ id: pin.id, col: "pins" })}
+										onClick={() =>
+											setReport({ id, col: "pins" })
+										}
 										className="aspect-square flex-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition"
 									>
 										<HiFlag className="text-lg" />
@@ -91,20 +91,20 @@ const Pin = ({ pin }) => {
 			</div>
 
 			<div className="py-2 px-1.5">
-				<Link href={`/pin/${pin.id}`}>
+				<Link href={`/pin/${id}`}>
 					<a>
 						<h1 className="font-semibold mb-1 text-sm">{pin.title}</h1>
 					</a>
 				</Link>
 
-				<Link href={`/${pin.creator.username}/created`}>
+				<Link href={`/${creator.username}/created`}>
 					<a className="flex items-center hover:last:underline">
 						<ProfileImg
-							profileUrl={pin.creator.profileUrl}
-							name={pin.creator.name}
+							profileUrl={creator.profileUrl}
+							username={creator.username}
 							size={8}
 						/>
-						<div className="text-sm ml-1.5">{pin.creator.name}</div>
+						<div className="text-sm ml-1.5">{creator.name}</div>
 					</a>
 				</Link>
 			</div>
