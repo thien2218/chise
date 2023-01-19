@@ -1,27 +1,26 @@
-import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import Button from "../common/Button";
 
-const Modal = ({ handleConfirm, handleCancel }) => {
-	let [isOpen, setIsOpen] = useState(true);
+const Modal = ({
+	children,
+	handleConfirm,
+	noAsyncConfirm,
+	title,
+	description,
+}) => {
+	let [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<>
-			<div className="fixed inset-0 flex items-center justify-center">
-				<button
-					type="button"
-					onClick={() => {
-                  setIsOpen(true);
-               }}
-					className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-				>
-					Open dialog
-				</button>
-			</div>
+			<div onClick={() => setIsOpen(true)}>{children}</div>
 
 			<Transition appear show={isOpen} as={Fragment}>
-				<Dialog as="div" className="relative z-10" onClose={() => {
-               setIsOpen(false);
-            }}>
+				<Dialog
+					as="div"
+					className="relative z-10"
+					onClose={() => setIsOpen(false)}
+				>
 					<Transition.Child
 						as={Fragment}
 						enter="ease-out duration-300"
@@ -35,7 +34,7 @@ const Modal = ({ handleConfirm, handleCancel }) => {
 					</Transition.Child>
 
 					<div className="fixed inset-0 overflow-y-auto">
-						<div className="flex min-h-full items-center justify-center p-4 text-center">
+						<div className="flex min-h-full items-center justify-center px-4 text-center">
 							<Transition.Child
 								as={Fragment}
 								enter="ease-out duration-300"
@@ -45,31 +44,36 @@ const Modal = ({ handleConfirm, handleCancel }) => {
 								leaveFrom="opacity-100 scale-100"
 								leaveTo="opacity-0 scale-95"
 							>
-								<Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+								<Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
 									<Dialog.Title
 										as="h3"
-										className="text-lg font-medium leading-6 text-gray-900"
+										className="text-2xl font-medium text-secondary"
 									>
-										Payment successful
+										{title}
 									</Dialog.Title>
 									<div className="mt-2">
-										<p className="text-sm text-gray-500">
-											Your payment has been successfully submitted.
-											Weve sent you an email with all of the details
-											of your order.
-										</p>
+										<p className="text-dark-gray">{description}</p>
 									</div>
 
-									<div className="mt-4">
-										<button
-											type="button"
-											className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-											onClick={() => {
-                                    setIsOpen(false);
-                                 }}
+									<div className="mt-4 flex gap-3">
+										<Button
+											btnType="secondary-btn"
+											onClick={() => setIsOpen(false)}
+											noAsync
 										>
-											Got it, thanks!
-										</button>
+											Cancel
+										</Button>
+
+										<Button
+											btnType="primary-btn"
+											onClick={async () => {
+												setIsOpen(false);
+												await handleConfirm();
+											}}
+											noAsync={noAsyncConfirm}
+										>
+											Confirm
+										</Button>
 									</div>
 								</Dialog.Panel>
 							</Transition.Child>

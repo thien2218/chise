@@ -113,7 +113,7 @@ const ProfileForm = ({ fields }) => {
 				<textarea
 					name="about"
 					id="about"
-					className="resize-none h-32 outline-none border-2 border-[#cdcdcd] rounded-2xl py-2 px-4 focus:border-blueish w-full hover:border-[#888888] mt-1"
+					className="resize-none h-32 outline-none border-2 border-gray-300 rounded-2xl py-2 px-4 focus:border-blue-500 w-full hover:border-gray-400 mt-1"
 					placeholder="Tell us more about you"
 					onChange={handleChange}
 				/>

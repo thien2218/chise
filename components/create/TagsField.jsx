@@ -47,7 +47,7 @@ const TagsField = ({ name, maxCount, desc, placeholder, setValues, tags }) => {
 		<div className="mt-6 w-full">
 			<div
 				className={`relative flex gap-2 flex-wrap w-full focus:outline-none after:absolute after:w-full after:h-[1px] after:bg-black/30 after:bottom-0 after:left-0 pb-2.5 ${
-					isFocused ? "after:h-[2px] after:bg-blueish" : ""
+					isFocused ? "after:h-[2px] after:bg-blue-500" : ""
 				}`}
 			>
             {tags.map((tag, idx) => (

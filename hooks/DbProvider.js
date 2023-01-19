@@ -28,7 +28,20 @@ const DbProvider = ({ children }) => {
 	};
 
 	const updateUser = async (id, values) => {
-      await Firestore.updateUser(id, values);
+		if (
+			authUser.username !== values.username ||
+			authUser.name !== values.name ||
+			authUser.profileUrl !== values.profileUrl
+		) {
+			const combinedName = values.name + "@" + values.username;
+			const { email, emailVerified, ...rest } = await Auth.updateUser(
+				combinedName,
+				values.profileUrl
+			);
+			await Firestore.updateCreator(id, { creator: rest });
+		}
+
+		await Firestore.updateUser(id, values);
 	};
 
 	const updateFollowList = async (userId, pinId, containsUser) => {

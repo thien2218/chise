@@ -3,14 +3,15 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import TextField from "../common/TextField";
 import { useAuth, useValidation } from "../../hooks";
+import { useLayout } from "../layout/Layout";
 import { useRouter } from "next/router";
 
 const AuthForm = ({ fields, submit }) => {
-   const msgs = {
-      email: "Invalid email pattern",
-      password: "Password must contain between 6 to 20 characters",
-      confirm_password: "Two passwords written don't match each other"
-   }
+	const msgs = {
+		email: "Invalid email pattern",
+		password: "Password must contain between 6 to 20 characters",
+		confirm_password: "Two passwords written don't match each other",
+	};
 	const { pathname } = useRouter();
 	const required = fields.map((field) => field.name);
 	const initState = required.reduce((acc, cur) => ({ ...acc, [cur]: "" }), {});
@@ -26,6 +27,7 @@ const AuthForm = ({ fields, submit }) => {
 		handleSubmit,
 	} = useValidation();
 	const { loginWithGoogle } = useAuth();
+	const { setIsProcessing } = useLayout();
 
 	const handleBlur = (e) => {
 		const value = e.target.value.trim();
@@ -56,7 +58,7 @@ const AuthForm = ({ fields, submit }) => {
 	};
 
 	const handleChange = (e) => {
-      const { value, name } = e.target;
+		const { value, name } = e.target;
 
 		setValues({
 			...values,
@@ -88,7 +90,11 @@ const AuthForm = ({ fields, submit }) => {
 			<button
 				onClick={(e) => {
 					e.preventDefault();
-					handleSubmit(required, values, submit);
+					setIsProcessing(true);
+
+					handleSubmit(required, values, submit).then(() => {
+						setIsProcessing(false);
+					});
 				}}
 				className="primary-btn btn-transition w-full py-2 px-4 rounded-2xl mt-2"
 			>
@@ -101,7 +107,11 @@ const AuthForm = ({ fields, submit }) => {
 				className="google-auth-btn btn-transition w-full py-2 px-4 rounded-2xl"
 				onClick={(e) => {
 					e.preventDefault();
-					loginWithGoogle();
+					setIsProcessing(true);
+
+					loginWithGoogle().then(() => {
+						setIsProcessing(false);
+					});
 				}}
 			>
 				<div className="flex gap-3 items-center">

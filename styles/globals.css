@@ -5,11 +5,11 @@
 
 @layer base {
 	html {
-		@apply text-gray-900 text-sm sm:text-base;
+		@apply text-secondary text-[15px] leading-5 sm:text-base sm:leading-[22px];
 	}
 
 	button {
-		@apply min-w-max;
+		@apply min-w-max outline-none focus-visible:ring-2 focus-visible:ring-blue-500;
 	}
 
 	:root {

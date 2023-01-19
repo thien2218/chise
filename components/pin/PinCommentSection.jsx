@@ -34,7 +34,7 @@ const PinCommentSection = ({ comments }) => {
 
 						<div
 							contentEditable
-							className="relative flex-1 max-w-[calc(100%_-_3rem)] empty:before:content-[attr(placeholder)] empty:before:text-dark-gray cursor-text py-2 px-3.5 rounded-full shadow-[0_0_0_1.5px_inset] shadow-dimmed-700 focus:outline-none focus:shadow-blueish focus:rounded-2xl peer"
+							className="relative flex-1 max-w-[calc(100%_-_3rem)] empty:before:content-[attr(placeholder)] empty:before:text-dark-gray cursor-text py-2 px-3.5 rounded-full shadow-[0_0_0_1.5px_inset] shadow-dimmed-700 focus:outline-none focus:shadow-blue-500 focus:rounded-2xl peer"
 							placeholder="Add a comment"
                      onChange={handleComment}
 						/>

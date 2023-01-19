@@ -43,7 +43,7 @@ class Firestore {
 		};
 
       const userRef = doc(this.db, "users", id);
-		return await setDoc(userRef, values);
+		return setDoc(userRef, values);
 	}
 
 	// Read
@@ -76,7 +76,7 @@ class Firestore {
 	// Update
 	async updateUser(id, values) {
 		const userRef = doc(this.db, "users", id);
-		return await updateDoc(userRef, values);
+		return updateDoc(userRef, values);
 	}
 
 	async updateFollowList(authUserId, userId, containsUser) {
@@ -93,7 +93,7 @@ class Firestore {
 			following: arrOperation(userId),
 		});
 
-		return await batch.commit();
+		return batch.commit();
 	}
 
 	// Delete
@@ -106,7 +106,7 @@ class Firestore {
 
 	// Create
 	async createPin(values) {
-		return await addDoc(collection(this.db, "pins"), values);
+		return addDoc(collection(this.db, "pins"), values);
 	}
 
 	// Read
@@ -137,8 +137,8 @@ class Firestore {
 		});
 	}
 
-	queryPinsAfter(lastSnap) {
-		return startAfter(lastSnap);
+	queryPinsAfter(createdAt) {
+		return startAfter(createdAt);
 	}
 
 	queryPinsCreatedBy(userId) {
@@ -150,16 +150,33 @@ class Firestore {
 	}
 
 	// Update
-	async updatePin(id, values) {
-		const pinRef = doc(this.db, "pins", id);
-		return await updateDoc(pinRef, values);
+	async updatePin(pinId, values) {
+		const pinRef = doc(this.db, "pins", pinId);
+		return updateDoc(pinRef, values);
+	}
+
+	async updateCreator(userId, values) {
+      const q = query(
+         collection(this.db, "pins"),
+         where("creator.id", "==", userId)
+      );
+
+      return getDocs(q).then((snap) => {
+         const batch = writeBatch(this.db);
+
+         snap.docs.forEach((doc) => {
+            batch.update(doc.ref, values);
+         });
+
+         return batch.commit();
+      });
 	}
 
 	async updateSavedByList(userId, pinId, containsUser) {
 		const pinRef = doc(this.db, "pins", pinId);
 		const arrOperation = containsUser ? arrayUnion : arrayRemove;
 
-		return await updateDoc(pinRef, {
+		return updateDoc(pinRef, {
 			savedBy: arrOperation(userId),
 		});
 	}
@@ -167,7 +184,7 @@ class Firestore {
 	// Delete
 	async deletePin(id) {
 		const pinRef = doc(this.db, "pins", id);
-		return await deleteDoc(pinRef);
+		return deleteDoc(pinRef);
 	}
 }
 

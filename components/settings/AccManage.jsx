@@ -22,8 +22,7 @@ const AccManage = ({ values, setValues, setInitObj }) => {
 		<div className="min-h-[50rem]">
 			<h1 className="text-3xl font-medium">Account management</h1>
 			<h2 className="mt-2 my-5 text-dark-gray">
-				Make changes to your email address and password. This information is
-				also private and will not be visible in your public profile.
+				Make changes to your email address and password. This information is also private and will not be visible in your public profile.
 			</h2>
 
          <span className="text-xl">

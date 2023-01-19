@@ -12,7 +12,6 @@ const Layout = ({ children, pageName }) => {
 	const [report, setReport] = useState(null);
 	const [edit, setEdit] = useState(null);
 	const [isProcessing, setIsProcessing] = useState(false);
-	const [isLoadingMore, setIsLoadingMore] = useState(false);
 
 	const title = `Chise${pageName ? " | " + pageName : ""}`;
 
@@ -25,16 +24,14 @@ const Layout = ({ children, pageName }) => {
 	}, [edit, report]);
 
 	const value = {
-		isLoadingMore,
 		isProcessing,
-		setIsLoadingMore,
 		setIsProcessing,
 		setEdit,
 		setReport,
 	};
 
 	return (
-		<>
+		<LayoutContext.Provider value={value}>
 			<Head>
 				<meta charSet="UTF-8" />
 				<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -50,7 +47,7 @@ const Layout = ({ children, pageName }) => {
 			{pageName != "Login" &&
 			pageName != "Signup" &&
 			pageName != "Add Profile" ? (
-				<LayoutContext.Provider value={value}>
+				<>
 					<Header />
 
 					<main className="pt-[4.5rem]">{children}</main>
@@ -60,11 +57,11 @@ const Layout = ({ children, pageName }) => {
 					) : edit ? (
 						<EditForm edit={edit} setEdit={setEdit} />
 					) : null}
-				</LayoutContext.Provider>
+				</>
 			) : (
 				children
 			)}
-		</>
+		</LayoutContext.Provider>
 	);
 };
 

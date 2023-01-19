@@ -6,7 +6,7 @@ const LinkBtn = ({ children, href, isCurrPage }) => {
 			<a
 				className={`relative p-2 font-semibold rounded-lg hover:bg-dimmed-500 ${
 					isCurrPage &&
-					"pointer-events-none before:w-[calc(100%_-_16px)] before:h-[3px] before:bg-gray-900 before:rounded-full before:absolute before:-bottom-[3px]"
+					"pointer-events-none before:w-[calc(100%_-_16px)] before:h-[3px] before:bg-secondary before:rounded-full before:absolute before:-bottom-[3px]"
 				}`}
 			>
 				{children}

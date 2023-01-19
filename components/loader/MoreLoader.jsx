@@ -1,14 +1,43 @@
-const MoreLoader = () => {
-   return (
-      <div className="w-full flex justify-center py-6">
-         <div className="lds-ellipsis">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-         </div>
-      </div>
-   )
-}
+import Link from "next/link";
+
+const MoreLoader = ({ isLoadingMore, noMorePin }) => {
+	return (
+		<div
+			className={`w-full flex-center flex-col gap-2 py-6 ${
+				isLoadingMore || noMorePin ? "opacity-100" : "opacity-0"
+			}`}
+		>
+			{!noMorePin ? (
+				<>
+					<div className="lds-ellipsis">
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
+
+					<span className="text-xl text-center font-semibold text-dark-gray">
+						Enjoy the feed?
+						<br />
+						Let's add some more
+					</span>
+				</>
+			) : (
+				<>
+					<span className="text-dark-gray">
+						Nothing more to show...yet! Create your own ideas here
+					</span>
+					<Link href="/create">
+						<a>
+							<button className="primary-btn px-3 py-3 text-sm rounded-full">
+								Create Pin
+							</button>
+						</a>
+					</Link>
+				</>
+			)}
+		</div>
+	);
+};
 
 export default MoreLoader;

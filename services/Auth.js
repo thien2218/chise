@@ -87,7 +87,7 @@ class Auth {
 	}
 
 	async logout() {
-		return await signOut(this.auth);
+		return signOut(this.auth);
 	}
 }
 

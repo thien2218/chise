@@ -25,7 +25,7 @@ const AutoComplete = ({ options, name, defaultVal, handleChange }) => {
 		<Combobox value={selected} onChange={setSelected}>
 			<div className="relative mt-1">
 				<Combobox.Input
-					className="relative w-full rounded-lg border-[1.5px] border-dimmed-600 bg-white py-2 pl-4 pr-10 text-left focus-visible:ring-blueish"
+					className="relative w-full rounded-lg border-[1.5px] border-dimmed-600 bg-white py-2 pl-4 pr-10 text-left focus-visible:ring-blue-500"
 					onChange={(e) => setQuery(e.target.value)}
 				/>
 

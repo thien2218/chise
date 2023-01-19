@@ -140,7 +140,7 @@ const EditForm = ({ setEdit, edit }) => {
 										type="text"
 										name="title"
 										id="title"
-										className="w-full border-b-[1.5px] outline-none pb-1 text-xl focus:border-blueish"
+										className="w-full border-b-[1.5px] outline-none pb-1 text-xl focus:border-blue-500"
 										style={{
 											borderColor: `${
 												error.title ? "var(--clr-primary)" : ""
@@ -162,7 +162,7 @@ const EditForm = ({ setEdit, edit }) => {
 										type="text"
 										name="link"
 										id="link"
-										className="w-full border-b-[1.5px] outline-none pb-1 focus:border-blueish"
+										className="w-full border-b-[1.5px] outline-none pb-1 focus:border-blue-500"
 										style={{
 											borderColor: `${
 												error.link ? "var(--clr-primary)" : ""
@@ -183,7 +183,7 @@ const EditForm = ({ setEdit, edit }) => {
 									<textarea
 										name="description"
 										id="description"
-										className="resize-none h-56 outline-none border-[1.5px] rounded-lg py-1 px-2 focus:border-blueish w-full"
+										className="resize-none h-56 outline-none border-[1.5px] rounded-lg py-1 px-2 focus:border-blue-500 w-full"
 										style={{
 											borderColor: `${
 												error.description

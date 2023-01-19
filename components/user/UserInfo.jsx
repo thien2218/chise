@@ -41,7 +41,7 @@ const UserInfo = ({ user }) => {
 
 			{user.about && <p className="my-1 max-w-[40rem]">{user.about}</p>}
 
-			<div className="my-1 font-semibold">
+			<div className="my-1">
 				{formatNumber(user.following)} following -{" "}
 				{formatNumber(user.followers)} followers
 			</div>

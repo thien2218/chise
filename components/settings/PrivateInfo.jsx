@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Dropdown from "../headlessui/Dropdown";
 import AutoComplete from "../headlessui/AutoComplete";
 import { useLib } from "../../hooks";
@@ -23,8 +22,7 @@ const PrivateInfo = ({ values, setValues }) => {
 		<div className="xs:mb-56">
 			<h1 className="text-3xl font-medium">Personal information</h1>
 			<h2 className="mt-2 mb-5 text-dark-gray">
-				This information is private and will not be visible in your public
-				profile.
+				This information is private and will not be visible in your public profile.
 			</h2>
 
 			{privateInfo ? (
@@ -34,10 +32,9 @@ const PrivateInfo = ({ values, setValues }) => {
 						<Dropdown
 							handleChange={handleChange}
 							name="gender"
-							defaultVal={{
-								label: privateInfo.gender,
-								value: privateInfo.gender,
-							}}
+							defaultVal={genderList.filter(
+								(gender) => gender.value === privateInfo.gender
+							)[0]}
 							options={genderList}
 						/>
 					</div>

@@ -100,7 +100,7 @@ const ContentBuilder = ({
 						type="url"
 						name="destination"
 						placeholder="Add a destination link"
-						className="w-full outline-none border-b-[1.5px] border-dimmed-700 pb-2 focus:border-blueish"
+						className="w-full outline-none border-b-[1.5px] border-dimmed-700 pb-2 focus:border-blue-500"
 						onChange={handleChangeLink}
 						style={{
 							borderBottom: `${
