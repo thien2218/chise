@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Firestore } from "../../services";
 import MoreLoader from "../loader/MoreLoader";
 import Masonry from "react-masonry-css";
-import Pin from "../common/Pin";
+import Pin from "./Pin";
 
 const MasonryLayout = ({ pins, setPins }) => {
    const [isLoadingMore, setIsLoadingMore] = useState(false);

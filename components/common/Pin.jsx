@@ -1,15 +1,19 @@
+import { useState } from "react";
 import AdjustedImg from "./AdjustedImg";
 import Link from "next/link";
 import { HiPencil, HiFlag, HiDownload } from "react-icons/hi";
 import { IoLink } from "react-icons/io5";
 import { useAuth } from "../../hooks";
 import ActionBtn from "./ActionBtn";
-import { useLayout } from "../layout/Layout";
+import { useLayout } from "./Layout";
 import ProfileImg from "./ProfileImg";
+import Modal from "../headlessui/Modal";
+import EditForm from "../common/EditForm";
 
 const Pin = ({ pin }) => {
-	const { setEdit, setReport } = useLayout();
-	const { id, creator } = pin;
+   const [currPin, setCurrPin] = useState(pin);
+	const { setReport } = useLayout();
+	const { id, creator } = currPin;
 	const { authUser } = useAuth();
 	const isCreator = creator.username == authUser.username;
 
@@ -26,7 +30,7 @@ const Pin = ({ pin }) => {
 	return (
 		<div className="w-full px-1.5 pb-4">
 			<div className="overflow-hidden rounded-lg">
-				<AdjustedImg ratio={pin.imgRatio} src={pin.imgUrl} scale={1}>
+				<AdjustedImg ratio={currPin.imgRatio} src={currPin.imgUrl} scale={1}>
 					<div className="relative w-full h-full opacity-100 md:opacity-0 md:hover:opacity-100 transition duration-100 flex flex-col justify-between">
 						<Link href={`/pin/${id}`}>
 							<a className="z-[8] absolute w-full h-full bg-black/30 hidden md:block" />
@@ -34,18 +38,22 @@ const Pin = ({ pin }) => {
 
 						<div className="flex p-3 pb-0">
 							{isCreator && (
-								<button
-									onClick={() => setEdit(pin)}
-									className="h-8 w-8 flex-center bg-white/[.65] hover:bg-white/80 rounded-full z-[9] cursor-pointer transition m-1"
+								<Modal
+									title="Edit this pin"
+									maxW="max-w-[56rem]"
+									customProps={{ ...currPin, setCurrPin }}
+									dialogChild={EditForm}
 								>
-									<HiPencil className="text-lg" />
-								</button>
+									<button className="h-8 w-8 flex-center bg-white/[.65] hover:bg-white/80 rounded-full cursor-pointer transition m-1">
+										<HiPencil className="text-lg" />
+									</button>
+								</Modal>
 							)}
 
 							<div className="flex justify-end flex-1">
 								<ActionBtn
 									btnType="primary-btn"
-									list={pin.savedBy}
+									list={currPin.savedBy}
 									altText="Saved"
 									req={{ action: "save", id }}
 								>
@@ -55,16 +63,16 @@ const Pin = ({ pin }) => {
 						</div>
 
 						<div className="flex p-3 pt-4 gap-2.5">
-							{pin.link && (
+							{currPin.link && (
 								<a
-									href={pin.link}
+									href={currPin.link}
 									className="relative h-full flex bg-white/70 hover:bg-white/[.85] rounded-full z-[9] cursor-pointer transition max-w-max px-3 items-center gap-1.5 min-w-0"
 									target="_blank"
 									rel="noreferrer noopener"
 								>
 									<IoLink className="text-xl" />
 									<div className="text-sm truncate">
-										{shortenLink(pin.link)}
+										{shortenLink(currPin.link)}
 									</div>
 								</a>
 							)}
@@ -76,9 +84,7 @@ const Pin = ({ pin }) => {
 
 								{!isCreator && (
 									<button
-										onClick={() =>
-											setReport({ id, col: "pins" })
-										}
+										onClick={() => setReport({ id, col: "pins" })}
 										className="aspect-square flex-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition"
 									>
 										<HiFlag className="text-lg" />
@@ -93,7 +99,7 @@ const Pin = ({ pin }) => {
 			<div className="py-2 px-1.5">
 				<Link href={`/pin/${id}`}>
 					<a>
-						<h1 className="font-semibold mb-1 text-sm">{pin.title}</h1>
+						<h1 className="font-semibold mb-1 text-sm">{currPin.title}</h1>
 					</a>
 				</Link>
 
@@ -104,7 +110,9 @@ const Pin = ({ pin }) => {
 							username={creator.username}
 							size={8}
 						/>
-						<div className="text-sm ml-1.5 group-hover:underline">{creator.name}</div>
+						<div className="text-sm ml-1.5 group-hover:underline">
+							{creator.name}
+						</div>
 					</a>
 				</Link>
 			</div>

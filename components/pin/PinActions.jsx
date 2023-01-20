@@ -1,7 +1,7 @@
 import { HiLink, HiFlag, HiDownload, HiPencil } from "react-icons/hi";
 import { useAuth } from "../../hooks";
 import ActionBtn from "../common/ActionBtn";
-import { useLayout } from "../layout/Layout";
+import { useLayout } from "../common/Layout";
 
 const PinActions = ({ pinData }) => {
 	const { authUser } = useAuth();

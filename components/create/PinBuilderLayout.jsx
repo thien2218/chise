@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDb, useAuth } from "../../hooks";
 import Button from "../common/Button";
-import ImgBuilder from "../create/ImgBuilder";
-import ContentBuilder from "../create/ContentBuilder";
+import ImgBuilder from "./ImgBuilder";
+import ContentBuilder from "./ContentBuilder";
 
 const PinBuilder = () => {
 	const [invalidUrlMsg, setInvalidUrlMsg] = useState("");

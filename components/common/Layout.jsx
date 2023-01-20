@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import EditForm from "../common/EditForm";
-import ReportForm from "../common/ReportForm";
+import EditForm from "./EditForm";
+import ReportForm from "./ReportForm";
 import ToastLoader from "../loader/ToastLoader";
-import Header from "../common/Header";
+import Header from "./Header";
 import Head from "next/head";
 
 const LayoutContext = createContext();

@@ -4,6 +4,7 @@ import { useAuth, useValidation, useDb } from "../../hooks";
 import ProfileCopy from "./ProfileCopy";
 import ProfileUpload from "./ProfileUpload";
 import UploadImg from "../common/UploadImg";
+import { useLayout } from "../common/Layout";
 
 const ProfileForm = ({ fields }) => {
 	const msgs = {
@@ -21,7 +22,9 @@ const ProfileForm = ({ fields }) => {
 	const { logout, authUser } = useAuth();
 	const required = fields.map((field) => field.name);
 	const [values, setValues] = useState({});
+
 	const { createUser, uploadImg } = useDb();
+	const { setIsProcessing } = useLayout();
 
 	useEffect(() => {
 		const { username, name, profileUrl } = authUser;
@@ -126,7 +129,11 @@ const ProfileForm = ({ fields }) => {
 			<button
 				onClick={(e) => {
 					e.preventDefault();
-					handleSubmit(required, values, submit);
+					setIsProcessing(true);
+
+					handleSubmit(required, values, submit).then(() => {
+						setIsProcessing(false);
+					});
 				}}
 				className="primary-btn btn-transition w-full py-2 px-4 rounded-2xl mt-2"
 			>

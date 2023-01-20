@@ -1,10 +1,10 @@
-export { default as Layout } from "./layout/Layout";
-export { default as MasonryLayout } from "./layout/MasonryLayout";
-export { default as UserLayout } from "./layout/UserLayout";
-export { default as AuthLayout } from "./layout/AuthLayout";
-export { default as PinLayout } from "./layout/PinLayout";
-export { default as PinBuilderLayout } from "./layout/PinBuilderLayout";
-export { default as SettingsLayout } from "./layout/SettingsLayout";
+export { default as Layout } from "./common/Layout";
+export { default as MasonryLayout } from "./common/MasonryLayout";
+export { default as UserLayout } from "./user/UserLayout";
+export { default as PinLayout } from "./pin/PinLayout";
+export { default as PinBuilderLayout } from "./create/PinBuilderLayout";
+export { default as SettingsLayout } from "./settings/SettingsLayout";
+export { default as AuthLayout } from "./auth/AuthLayout";
 
 export { default as SpinLoader } from "./loader/SpinLoader";
 export { default as ToastLoader } from "./loader/ToastLoader";

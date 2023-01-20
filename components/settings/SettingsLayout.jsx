@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import LinkBtn from "../common/LinkBtn";
 import Button from "../common/Button";
 import Modal from "../headlessui/Modal";
+import ModalConfirm from "./ModalConfirm";
 
 const SettingsLayout = ({ children }) => {
 	const [values, setValues] = useState({});
@@ -49,19 +50,6 @@ const SettingsLayout = ({ children }) => {
 		},
 	];
 
-	const confirmText = {
-		reset: {
-			title: "Are you sure?",
-			description:
-				"Any changes you've made so far will be lost and reverted to original state",
-		},
-		update: {
-			title: "Apply these changes",
-			description:
-				"Once confirmed, you'll have to wait for 1 - 2 minutes before the changes are applied",
-		},
-	};
-
 	const handleSubmit = async () => {
 		if (values.imgFile) {
 			const { imgFile, imgRatio, ...rest } = values;
@@ -76,6 +64,39 @@ const SettingsLayout = ({ children }) => {
 	const handleCancel = () => {
 		setValues(initObj);
 	};
+
+	const confirmModal = [
+		{
+         title: "Are you sure?",
+         openBtn: {
+				text: "Reset",
+				btnType: "secondary-btn",
+			},
+			props: {
+				handleConfirm: handleCancel,
+				noAsync: true,
+            confirmTxt: "Discard",
+            cancelTxt: "Keep",
+            description:
+               "Any changes you've made so far will be discarded and revert to original state"
+			},
+		},
+		{
+         title: "Apply these changes",
+         openBtn: {
+				text: "Save",
+				btnType: "primary-btn",
+			},
+			props: {
+				handleConfirm: handleSubmit,
+				noAsync: false,
+            confirmTxt: "Confirm",
+            cancelTxt: "Cancel",
+            description:
+               "Once confirmed, you'll have to wait for 1 - 2 minutes before the changes are applied",
+			},
+		},
+	];
 
 	const childrenWithProps = Children.map(children, (child) => {
 		if (isValidElement(child)) {
@@ -105,29 +126,25 @@ const SettingsLayout = ({ children }) => {
 			</section>
 
 			<div className="h-16 w-full fixed z-10 bottom-0 left-0 shadow-[0_-1px_10px_-1px] shadow-black/10 bg-white flex-center gap-3">
-				<Modal
-					{...confirmText.reset}
-					noAsyncConfirm
-					handleConfirm={handleCancel}
-				>
-					<Button
-						btnType={`${clickable ? "secondary-btn" : "disabled-btn"}`}
-						onClick={() => {}}
-						noAsync
+				{confirmModal.map((item, idx) => (
+					<Modal
+						key={idx}
+                  title={item.title}
+                  maxW="max-w-lg"
+                  customProps={item.props}
+                  dialogChild={ModalConfirm}
 					>
-						Reset
-					</Button>
-				</Modal>
-
-				<Modal {...confirmText.update} handleConfirm={handleSubmit}>
-					<Button
-						btnType={`${clickable ? "primary-btn" : "disabled-btn"}`}
-						onClick={() => {}}
-						noAsync
-					>
-						Save
-					</Button>
-				</Modal>
+						<Button
+							btnType={`${
+								clickable ? item.openBtn.btnType : "disabled-btn"
+							}`}
+							onClick={() => {}}
+							noAsync
+						>
+							{item.openBtn.text}
+						</Button>
+					</Modal>
+				))}
 			</div>
 		</div>
 	);

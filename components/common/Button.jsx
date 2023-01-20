@@ -1,4 +1,4 @@
-import { useLayout } from "../layout/Layout";
+import { useLayout } from "./Layout";
 
 const Button = ({ children, onClick, btnType, noAsync }) => {
 	const { isProcessing, setIsProcessing } = useLayout();

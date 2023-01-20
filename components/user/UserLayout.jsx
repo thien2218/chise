@@ -1,5 +1,5 @@
-import UserInfo from "../user/UserInfo";
-import MasonryLayout from "./MasonryLayout";
+import UserInfo from "./UserInfo";
+import MasonryLayout from "../common/MasonryLayout";
 import LinkBtn from "../common/LinkBtn";
 import { useRouter } from "next/router";
 

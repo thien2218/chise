@@ -1,11 +1,11 @@
-import PinActions from "../pin/PinActions";
-import PinUserInfo from "../pin/PinUserInfo";
-import PinCommentSection from "../pin/PinCommentSection";
+import PinActions from "./PinActions";
+import PinUserInfo from "./PinUserInfo";
+import PinCommentSection from "./PinCommentSection";
 import AdjustedImg from "../common/AdjustedImg";
 import { ImArrowLeft2, ImArrowUpRight2 } from "react-icons/im";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import MasonryLayout from "./MasonryLayout";
+import MasonryLayout from "../common/MasonryLayout";
 
 const PinLayout = ({ pinData, pins }) => {
 	const { creator, imgRatio, imgUrl, cmtDisabled } = pinData;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import ProfileImg from "../common/ProfileImg";
-import { useLayout } from "../layout/Layout";
+import { useLayout } from "../common/Layout";
 import PinComment from "./PinComment";
 
 const PinCommentSection = ({ comments }) => {

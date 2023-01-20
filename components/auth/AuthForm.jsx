@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import TextField from "../common/TextField";
 import { useAuth, useValidation } from "../../hooks";
-import { useLayout } from "../layout/Layout";
+import { useLayout } from "../common/Layout";
 import { useRouter } from "next/router";
 
 const AuthForm = ({ fields, submit }) => {

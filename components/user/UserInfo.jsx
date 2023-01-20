@@ -1,5 +1,5 @@
 import { useAuth } from "../../hooks";
-import { useLayout } from "../layout/Layout";
+import { useLayout } from "../common/Layout";
 import Button from "../common/Button";
 import ActionBtn from "../common/ActionBtn";
 import ProfileImg from "../common/ProfileImg";

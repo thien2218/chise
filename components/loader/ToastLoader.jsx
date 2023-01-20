@@ -9,7 +9,7 @@ const ToastLoader = ({ isProcessing }) => {
          enter="transition duration-200"
          enterFrom="opacity-0 -translate-y-6"
          enterTo="opacity-100 translate-y-0"
-         leave="transition duration-300 delay-1000"
+         leave="transition duration-300 delay-[1.5s]"
          leaveFrom="opacity-100 translate-y-0"
          leaveTo="opacity-0 -translate-y-6"
       >
