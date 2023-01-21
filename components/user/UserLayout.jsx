@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 const UserLayout = ({ user, pins }) => {
 	const { pathname } = useRouter();
-	const isCreatedPage = pathname == "/[userId]/created";
+	const isCreatedPage = pathname === "/[userId]/created";
 
 	return (
 		<>

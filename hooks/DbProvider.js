@@ -81,6 +81,28 @@ const DbProvider = ({ children }) => {
 		return await Storage.uploadImg(imgFile, folder);
 	};
 
+   const downloadImg = (imgUrl) => {
+		const xhr = new XMLHttpRequest();
+
+		xhr.responseType = "blob";
+		xhr.onload = (event) => {
+			const blob = xhr.response;
+         const time = new Date().getTime();
+         const fileName = `pin_image${time}.webp`;
+         const file = new File([blob], fileName, { type: blob.type });
+
+         const url = URL.createObjectURL(file);
+         const a = document.createElement("a");
+         a.href = url;
+         a.download = file.name;
+         a.click();
+         a.remove();
+		};
+
+		xhr.open("GET", imgUrl);
+		xhr.send();
+	};
+
 	const value = {
 		createPin,
 		createUser,
@@ -90,6 +112,7 @@ const DbProvider = ({ children }) => {
 		updateSavedByList,
 		deletePin,
 		uploadImg,
+      downloadImg,
 	};
 
 	return <DbContext.Provider value={value}>{children}</DbContext.Provider>;

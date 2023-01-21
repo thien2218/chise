@@ -14,9 +14,9 @@ const PinBuilder = () => {
 	});
    
 	const { createPin, uploadImg } = useDb();
-   const { authUser: { username } } = useAuth();
+   const { authUser: { id } } = useAuth();
 	const router = useRouter();
-   const containsUser = values.savedBy.includes(username);
+   const containsUser = values.savedBy.includes(id);
 
 	const handleCreatePin = async () => {
       if (!values.imgFile || invalidUrlMsg || !values.tags.length) return;
@@ -29,7 +29,7 @@ const PinBuilder = () => {
 	};
 
 	const handleSave = () => {
-		const updatedList = containsUser ? [] : [username];
+		const updatedList = containsUser ? [] : [id];
 
 		setValues({
 			...values,

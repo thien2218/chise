@@ -3,19 +3,19 @@ import AdjustedImg from "./AdjustedImg";
 import Link from "next/link";
 import { HiPencil, HiFlag, HiDownload } from "react-icons/hi";
 import { IoLink } from "react-icons/io5";
-import { useAuth } from "../../hooks";
+import { useAuth, useDb } from "../../hooks";
 import ActionBtn from "./ActionBtn";
-import { useLayout } from "./Layout";
 import ProfileImg from "./ProfileImg";
-import Modal from "../headlessui/Modal";
-import EditForm from "../common/EditForm";
+import EditModal from "../modal/EditModal";
+import ReportModal from "../modal/ReportModal";
 
 const Pin = ({ pin }) => {
-   const [currPin, setCurrPin] = useState(pin);
-	const { setReport } = useLayout();
+	const [currPin, setCurrPin] = useState(pin);
 	const { id, creator } = currPin;
-	const { authUser } = useAuth();
-	const isCreator = creator.username == authUser.username;
+	
+   const { authUser } = useAuth();
+   const { downloadImg } = useDb();
+	const isCreator = creator.username === authUser.username;
 
 	const shortenLink = (link) => {
 		const protocolRegex = /(?:(https|http):\/\/)(?:www\.)?/;
@@ -30,7 +30,11 @@ const Pin = ({ pin }) => {
 	return (
 		<div className="w-full px-1.5 pb-4">
 			<div className="overflow-hidden rounded-lg">
-				<AdjustedImg ratio={currPin.imgRatio} src={currPin.imgUrl} scale={1}>
+				<AdjustedImg
+					ratio={currPin.imgRatio}
+					src={currPin.imgUrl}
+					scale={1}
+				>
 					<div className="relative w-full h-full opacity-100 md:opacity-0 md:hover:opacity-100 transition duration-100 flex flex-col justify-between">
 						<Link href={`/pin/${id}`}>
 							<a className="z-[8] absolute w-full h-full bg-black/30 hidden md:block" />
@@ -38,16 +42,11 @@ const Pin = ({ pin }) => {
 
 						<div className="flex p-3 pb-0">
 							{isCreator && (
-								<Modal
-									title="Edit this pin"
-									maxW="max-w-[56rem]"
-									customProps={{ ...currPin, setCurrPin }}
-									dialogChild={EditForm}
-								>
+								<EditModal {...currPin} setCurrPin={setCurrPin}>
 									<button className="h-8 w-8 flex-center bg-white/[.65] hover:bg-white/80 rounded-full cursor-pointer transition m-1">
 										<HiPencil className="text-lg" />
 									</button>
-								</Modal>
+								</EditModal>
 							)}
 
 							<div className="flex justify-end flex-1">
@@ -78,17 +77,19 @@ const Pin = ({ pin }) => {
 							)}
 
 							<div className="flex h-8 gap-2.5  ml-auto">
-								<button className="aspect-square flex-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition">
+								<button
+									onClick={() => downloadImg(currPin.imgUrl)}
+									className="aspect-square flex-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition"
+								>
 									<HiDownload className="text-lg" />
 								</button>
 
 								{!isCreator && (
-									<button
-										onClick={() => setReport({ id, col: "pins" })}
-										className="aspect-square flex-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition"
-									>
-										<HiFlag className="text-lg" />
-									</button>
+									<ReportModal id={id} col="pins">
+										<button className="h-full aspect-square flex-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition">
+											<HiFlag className="text-lg" />
+										</button>
+									</ReportModal>
 								)}
 							</div>
 						</div>
@@ -99,7 +100,9 @@ const Pin = ({ pin }) => {
 			<div className="py-2 px-1.5">
 				<Link href={`/pin/${id}`}>
 					<a>
-						<h1 className="font-semibold mb-1 text-sm">{currPin.title}</h1>
+						<h1 className="font-semibold mb-1 text-sm">
+							{currPin.title}
+						</h1>
 					</a>
 				</Link>
 

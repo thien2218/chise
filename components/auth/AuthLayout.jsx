@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 const AuthLayout = ({ children }) => {
 	const { pathname } = useRouter();
-	const isProfilePage = pathname == "/auth/profile";
+	const isProfilePage = pathname === "/auth/profile";
 
 	return (
 		<div className="h-screen w-screen relative">

@@ -50,7 +50,7 @@ const Modal = ({
 								>
 									<Dialog.Title
 										as="h3"
-										className="text-2xl text-center font-medium text-secondary"
+										className="text-[28px] leading-tight text-center font-medium text-secondary"
 									>
 										{title}
 									</Dialog.Title>

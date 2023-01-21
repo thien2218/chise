@@ -1,6 +1,6 @@
 import Button from "../common/Button";
 
-const ModalConfirm = ({
+const ConfirmDialog = ({
 	description,
 	handleConfirm,
 	noAsync,
@@ -14,8 +14,8 @@ const ModalConfirm = ({
 				<p className="text-dark-gray">{description}</p>
 			</div>
 
-			<div className="mt-4 flex gap-3">
-				{cancelTxt ?? (
+			<div className="mt-4 flex justify-end gap-3">
+				{cancelTxt && (
 					<Button
 						btnType="secondary-btn"
 						onClick={() => setIsOpen(false)}
@@ -40,4 +40,4 @@ const ModalConfirm = ({
 	);
 };
 
-export default ModalConfirm;
+export default ConfirmDialog;

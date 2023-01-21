@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import LinkBtn from "../common/LinkBtn";
 import Button from "../common/Button";
 import Modal from "../headlessui/Modal";
-import ModalConfirm from "./ModalConfirm";
+import ConfirmDialog from "../modal/ConfirmDialog";
 
 const SettingsLayout = ({ children }) => {
 	const [values, setValues] = useState({});
@@ -132,7 +132,7 @@ const SettingsLayout = ({ children }) => {
                   title={item.title}
                   maxW="max-w-lg"
                   customProps={item.props}
-                  dialogChild={ModalConfirm}
+                  dialogChild={ConfirmDialog}
 					>
 						<Button
 							btnType={`${

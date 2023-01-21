@@ -12,7 +12,7 @@ class Storage {
       
 		return await uploadBytes(imgRef, file).then(async (snap) => {
 			return await getDownloadURL(snap.ref).then((downloadUrl) => {
-				return downloadUrl.toString();
+				return downloadUrl;
 			});
 		});
 	}

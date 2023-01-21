@@ -23,7 +23,6 @@ export async function getStaticProps({ params: { pinId } }) {
          if (data.id === pinId) {
             pinData = data;
          }
-         
          return data.id != pinId;
       }
 	);

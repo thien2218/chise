@@ -41,11 +41,11 @@ const AuthForm = ({ fields, submit }) => {
 			return;
 		}
 
-		if (name == "password") {
+		if (name === "password") {
 			authValid(name, checkLength(value, 6, 20), msgs[name]);
-		} else if (name == "confirm_password") {
+		} else if (name === "confirm_password") {
 			authValid(name, checkConfirmPw(values.password, value), msgs[name]);
-		} else if (name == "email") {
+		} else if (name === "email") {
 			authValid(name, checkEmail(value), msgs[name]);
 		}
 	};
@@ -126,7 +126,7 @@ const AuthForm = ({ fields, submit }) => {
 				className="font-semibold mt-4 text-center text-sm"
 				onClick={() => setAuthError({})}
 			>
-				{pathname == "/auth/signup" ? (
+				{pathname === "/auth/signup" ? (
 					<Link href="/auth/login">
 						<a>Already a member? Log in</a>
 					</Link>

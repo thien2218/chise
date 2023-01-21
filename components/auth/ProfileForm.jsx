@@ -53,10 +53,10 @@ const ProfileForm = ({ fields }) => {
 			return;
 		}
 
-		if (name == "username") {
+		if (name === "username") {
 			authValid(name, checkUsername(value), msgs[name].textDigitOnly);
 			authValid(name, checkLength(value, 3, 20), msgs[name].lengthBetween);
-		} else if (name == "name") {
+		} else if (name === "name") {
 			authValid(name, checkName(value), msgs[name].exceptSpecialSet);
 			authValid(name, checkLength(value, 3, 100), msgs[name].lengthBetween);
 		}

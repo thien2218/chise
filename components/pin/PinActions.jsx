@@ -1,13 +1,12 @@
 import { HiLink, HiFlag, HiDownload, HiPencil } from "react-icons/hi";
 import { useAuth } from "../../hooks";
 import ActionBtn from "../common/ActionBtn";
-import { useLayout } from "../common/Layout";
+import EditModal from "../modal/EditModal";
+import ReportModal from "../modal/ReportModal";
 
-const PinActions = ({ pinData }) => {
+const PinActions = ({ currPin, setCurrPin }) => {
 	const { authUser } = useAuth();
-	const { setEdit, setReport } = useLayout();
-
-   const { creator } = pinData;
+	const { id, creator } = currPin;
 	const isCreator = creator.username === authUser.username;
 
 	return (
@@ -17,9 +16,9 @@ const PinActions = ({ pinData }) => {
 					<HiDownload />
 				</button>
 
-				{pinData.link && (
+				{currPin.link && (
 					<a
-						href={pinData.link}
+						href={currPin.link}
 						className="p-3 hover:bg-dimmed-500 rounded-full text-2xl"
 						target="_blank"
 						rel="noreferrer noopener"
@@ -29,27 +28,25 @@ const PinActions = ({ pinData }) => {
 				)}
 
 				{isCreator ? (
-					<button
-						onClick={() => setEdit(pinData)}
-						className="p-3 hover:bg-dimmed-500 rounded-full text-2xl"
-					>
-						<HiPencil />
-					</button>
+					<EditModal {...currPin} setCurrPin={setCurrPin}>
+						<button className="p-3 hover:bg-dimmed-500 rounded-full text-2xl">
+							<HiPencil />
+						</button>
+					</EditModal>
 				) : (
-					<button
-						onClick={() => setReport({ id: pinData.id, col: "pins" })}
-						className="p-3 hover:bg-dimmed-500 rounded-full text-2xl"
-					>
-						<HiFlag />
-					</button>
+					<ReportModal id={id} col="pins">
+						<button className="p-3 hover:bg-dimmed-500 rounded-full text-2xl">
+							<HiFlag />
+						</button>
+					</ReportModal>
 				)}
 			</div>
 
 			<ActionBtn
 				btnType="primary-btn"
-				list={pinData.savedBy}
+				list={currPin.savedBy}
 				altText="Saved"
-				req={{ action: "save", id: pinData.id }}
+				req={{ action: "save", id: currPin.id }}
 			>
 				Save
 			</ActionBtn>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PinActions from "./PinActions";
 import PinUserInfo from "./PinUserInfo";
 import PinCommentSection from "./PinCommentSection";
@@ -8,7 +9,8 @@ import { useRouter } from "next/router";
 import MasonryLayout from "../common/MasonryLayout";
 
 const PinLayout = ({ pinData, pins }) => {
-	const { creator, imgRatio, imgUrl, cmtDisabled } = pinData;
+   const [currPin, setCurrPin] = useState(pinData);
+	const { creator } = pinData;
 	const { back } = useRouter();
 
 	return (
@@ -25,9 +27,9 @@ const PinLayout = ({ pinData, pins }) => {
                <div className="rounded-2xl bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid mlg:grid-cols-2">
                   <div className="mlg:p-4">
                      <div className="overflow-hidden mlg:rounded-lg rounded-t-lg">
-                        <AdjustedImg ratio={imgRatio} src={imgUrl} scale={2}>
+                        <AdjustedImg ratio={currPin.imgRatio} src={currPin.imgUrl} scale={2}>
                            <div className="absolute h-full w-full group p-6 flex justify-end">
-                              <Link href={imgUrl}>
+                              <Link href={currPin.imgUrl}>
                                  <a
                                     className="px-3 py-2 font-semibold h-max md:opacity-0  md:group-hover:opacity-100 opacity-100 bg-white rounded-full flex items-center"
                                     target="_blank"
@@ -43,9 +45,9 @@ const PinLayout = ({ pinData, pins }) => {
                   </div>
          
                   <div className="p-5 flex flex-col">
-                     <PinActions pinData={pinData} />
-                     <h1 className="heading mt-4 pr-4">{pinData.title}</h1>
-                     <p className="text-sm pr-3">{pinData.description}</p>
+                     <PinActions currPin={currPin} setCurrPin={setCurrPin} />
+                     <h1 className="heading my-2 pr-4">{currPin.title}</h1>
+                     <p className="text-sm pr-3">{currPin.description}</p>
                      <PinUserInfo {...creator} />
                      {/* {!cmtDisabled && <PinCommentSection />} */}
                   </div>

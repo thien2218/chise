@@ -1,48 +1,13 @@
 import { useState } from "react";
-import Button from "./Button";
-import AdjustedImg from "./AdjustedImg";
-import { IoArrowUpCircle } from "react-icons/io5";
+import Button from "../common/Button";
+import { EditField, EditImgField } from "./EditComponents";
 import { useValidation, useDb, useLib } from "../../hooks";
-import UploadImg from "./UploadImg";
+import UploadImg from "../common/UploadImg";
 import { useRouter } from "next/router";
 import Dropdown from "../headlessui/Dropdown";
 import Modal from "../headlessui/Modal";
-import ModalConfirm from "../settings/ModalConfirm";
+import ConfirmDialog from "./ConfirmDialog";
 
-const EditField = ({ children, label, htmlFor }) => {
-	return (
-		<div className="py-3 px-4 grid md:grid-cols-[1fr_3fr] grid-cols-1 md:gap-4 gap-2">
-			<label className="text-sm h-min" htmlFor={htmlFor}>
-				{label}
-			</label>
-			{children}
-		</div>
-	);
-};
-
-const EditImgField = ({ imgRatio, imgSrc, handlePreview }) => {
-	return (
-		<div className="overflow-hidden rounded-lg">
-			<AdjustedImg ratio={imgRatio} src={imgSrc} scale={1}>
-				<div className="relative w-full h-full overflow-hidden bg-black/40 opacity-0 hover:opacity-100 p-4">
-					<div className="rounded-lg h-full w-full border-dashed border-white border-[2px] flex-center flex-col text-center text-white gap-2 cursor-pointer">
-						<IoArrowUpCircle className="text-3xl" />
-						<span>Change image</span>
-					</div>
-
-					<input
-						type="file"
-						name="pinImg"
-						id="pinImg"
-						className="absolute left-0 -top-1/2 h-[150%] w-full cursor-pointer opacity-0"
-						accept=".jpg,.png,.webp,.jpeg"
-						onChange={handlePreview}
-					/>
-				</div>
-			</AdjustedImg>
-		</div>
-	);
-};
 
 const EditForm = ({ setIsOpen, setCurrPin, id, ...fieldValues }) => {
 	const [values, setValues] = useState(fieldValues);
@@ -70,18 +35,18 @@ const EditForm = ({ setIsOpen, setCurrPin, id, ...fieldValues }) => {
 	const handleChange = (e) => {
 		const { value, name } = e.target;
 
-		if (name == "title" && value.trim().length > 100) {
+		if (name === "title" && value.trim().length > 100) {
 			setError({
 				...error,
 				title: "Title can only contain less than 100 characters",
 			});
-		} else if (name == "description" && value.trim().length > 750) {
+		} else if (name === "description" && value.trim().length > 750) {
 			setError({
 				...error,
 				description:
 					"Description can only contain less than 750 characters",
 			});
-		} else if (name == "link" && checkUrl(value)) {
+		} else if (name === "link" && checkUrl(value)) {
 			setError({
 				...error,
 				link: "Invalid destination link",
@@ -110,18 +75,31 @@ const EditForm = ({ setIsOpen, setCurrPin, id, ...fieldValues }) => {
 		}
 		const { imgFile, ...neededValues } = values;
 
+		setCurrPin({ id, ...neededValues });
 		await updatePin(id, neededValues);
-      setCurrPin({ id, ...neededValues });
 		setIsOpen(false);
 	};
 
 	const handleDelete = async () => {
 		await deletePin(id);
-		router.reload();
+      if (router.pathname === "/pin/[pinId]") {
+         router.push("/");
+      } else {
+         router.reload();
+      }
+	};
+
+	const deleteModalCustomProps = {
+		description:
+			"This action cannot be undone. Are you sure you want to proceed?",
+		confirmTxt: "Delete",
+		cancelTxt: "Cancel",
+		handleConfirm: handleDelete,
+		noAsync: false,
 	};
 
 	return (
-		<>
+		<div className="mt-2">
 			<div className="grid xs:grid-cols-[1fr_17.5rem] grid-cols-1">
 				<div className="row-start-2 xs:row-start-1">
 					<EditField label="Title" htmlFor="title">
@@ -203,15 +181,25 @@ const EditForm = ({ setIsOpen, setCurrPin, id, ...fieldValues }) => {
 						imgRatio={values.imgRatio}
 						selectedImg={EditImgField}
 					>
-						<EditImgField imgRatio={fieldValues.imgRatio} imgSrc={fieldValues.imgUrl} />
+						<EditImgField
+							imgRatio={fieldValues.imgRatio}
+							imgSrc={fieldValues.imgUrl}
+						/>
 					</UploadImg>
 				</div>
 			</div>
 
 			<div className="flex justify-between mt-6">
-				<Button btnType="secondary-btn" onClick={handleDelete}>
-					Delete
-				</Button>
+				<Modal
+					title="Delete this pin permanently"
+					maxW="max-w-lg"
+					customProps={deleteModalCustomProps}
+					dialogChild={ConfirmDialog}
+				>
+					<Button btnType="secondary-btn" onClick={() => {}} noAsync>
+						Delete
+					</Button>
+				</Modal>
 
 				<div className="flex gap-3">
 					<Button
@@ -227,8 +215,23 @@ const EditForm = ({ setIsOpen, setCurrPin, id, ...fieldValues }) => {
 					</Button>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 
-export default EditForm;
+const EditModal = (props) => {
+   const { children, ...customProps } = props;
+
+	return (
+		<Modal
+			title="Edit this pin"
+			maxW="max-w-[56rem]"
+			customProps={customProps}
+			dialogChild={EditForm}
+		>
+			{children}
+		</Modal>
+	);
+};
+
+export default EditModal;

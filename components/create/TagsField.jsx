@@ -10,7 +10,7 @@ const TagsField = ({ name, maxCount, desc, placeholder, setValues, tags }) => {
    useEffect(() => {
       setCount(maxCount - tags.length);
 
-      if (tags.length == maxCount) {
+      if (tags.length === maxCount) {
          setAllowInput(false);
       } else {
          setAllowInput(true);
@@ -27,7 +27,7 @@ const TagsField = ({ name, maxCount, desc, placeholder, setValues, tags }) => {
 				...prev,
 				[name]: [...tags, tag],
 			}));
-		} else if (e.keyCode == 8 && tags.length && !tag) {
+		} else if (e.keyCode === 8 && tags.length && !tag) {
          // Else if backspace (delete) and there is at least one item in tags and tag is an empty string
          setValues((prev) => ({
 				...prev,
