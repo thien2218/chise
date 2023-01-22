@@ -32,9 +32,7 @@ const PrivateInfo = ({ values, setValues }) => {
 						<Dropdown
 							handleChange={handleChange}
 							name="gender"
-							defaultVal={genderList.filter(
-								(gender) => gender.value === privateInfo.gender
-							)[0]}
+							defaultVal={privateInfo.gender}
 							options={genderList}
 						/>
 					</div>

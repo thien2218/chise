@@ -8,13 +8,12 @@ import Dropdown from "../headlessui/Dropdown";
 import Modal from "../headlessui/Modal";
 import ConfirmDialog from "./ConfirmDialog";
 
-
 const EditForm = ({ setIsOpen, setCurrPin, id, ...fieldValues }) => {
 	const [values, setValues] = useState(fieldValues);
 	const [error, setError] = useState({});
 
 	const { checkUrl, checkErrors } = useValidation();
-	const { updatePin, deletePin, uploadImg } = useDb();
+	const { updatePin, deletePin, uploadImg, deleteImg } = useDb();
 	const { isEqual } = useLib();
 	const router = useRouter();
 
@@ -28,9 +27,6 @@ const EditForm = ({ setIsOpen, setCurrPin, id, ...fieldValues }) => {
 			value: false,
 		},
 	];
-	const currGender = options.filter(
-		(option) => option.value === fieldValues.cmtDisabled
-	)[0];
 
 	const handleChange = (e) => {
 		const { value, name } = e.target;
@@ -71,22 +67,27 @@ const EditForm = ({ setIsOpen, setCurrPin, id, ...fieldValues }) => {
 		}
 
 		if (values.imgFile) {
-			values.imgUrl = await uploadImg(imgFile, "pin");
+         const { downloadUrl, path } = await uploadImg(values.imgFile, "pin");
+         await deleteImg(values.pinImgPath);
+			values.pinImgUrl = downloadUrl;
+         values.pinImgPath = path;
 		}
+      
+		setIsOpen(false);
 		const { imgFile, ...neededValues } = values;
-
+      
 		setCurrPin({ id, ...neededValues });
 		await updatePin(id, neededValues);
-		setIsOpen(false);
 	};
 
 	const handleDelete = async () => {
 		await deletePin(id);
-      if (router.pathname === "/pin/[pinId]") {
-         router.push("/");
-      } else {
-         router.reload();
-      }
+      await deleteImg(values.pinImgPath);
+		if (router.pathname === "/pin/[pinId]") {
+			router.push("/");
+		} else {
+			router.reload();
+		}
 	};
 
 	const deleteModalCustomProps = {
@@ -169,7 +170,7 @@ const EditForm = ({ setIsOpen, setCurrPin, id, ...fieldValues }) => {
 								handleChange={handleChange}
 								options={options}
 								name="cmtDisabled"
-								defaultVal={currGender}
+								defaultVal={fieldValues.cmtDisabled}
 							/>
 						</div>
 					</EditField>
@@ -177,13 +178,14 @@ const EditForm = ({ setIsOpen, setCurrPin, id, ...fieldValues }) => {
 
 				<div className="py-3 px-4 row-start-1">
 					<UploadImg
+                  imgUrl={values.pinImgUrl}
 						setValues={setValues}
 						imgRatio={values.imgRatio}
 						selectedImg={EditImgField}
 					>
 						<EditImgField
 							imgRatio={fieldValues.imgRatio}
-							imgSrc={fieldValues.imgUrl}
+							imgUrl={fieldValues.pinImgUrl}
 						/>
 					</UploadImg>
 				</div>
@@ -220,7 +222,7 @@ const EditForm = ({ setIsOpen, setCurrPin, id, ...fieldValues }) => {
 };
 
 const EditModal = (props) => {
-   const { children, ...customProps } = props;
+	const { children, ...customProps } = props;
 
 	return (
 		<Modal

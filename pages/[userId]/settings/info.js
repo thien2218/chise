@@ -3,17 +3,9 @@ import { SettingsLayout, PublicInfo, PrivateInfo } from "../../../components";
 import { Firestore } from "../../../services";
 
 const Info = ({ user }) => {
-   const info = {
-      username: user.username,
-      name: user.name,
-      profileUrl: user.profileUrl,
-      about: user.about,
-      privateInfo: user.privateInfo,
-   }
-
 	return (
 		<SettingsLayout>
-			<PublicInfo info={info} />
+			<PublicInfo user={user} />
 			<PrivateInfo />
 		</SettingsLayout>
 	);

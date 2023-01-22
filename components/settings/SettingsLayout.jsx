@@ -19,7 +19,7 @@ const SettingsLayout = ({ children }) => {
 	const [clickable, setClickable] = useState(false);
 
 	const { pathname } = useRouter();
-	const { updateUser, uploadImg } = useDb();
+	const { updateUser, uploadImg, deleteImg } = useDb();
 	const { isEqual } = useLib();
 	const { checkErrors } = useValidation();
 	const {
@@ -51,12 +51,6 @@ const SettingsLayout = ({ children }) => {
 	];
 
 	const handleSubmit = async () => {
-		if (values.imgFile) {
-			const { imgFile, imgRatio, ...rest } = values;
-			rest.profileUrl = await uploadImg(imgFile, "profile");
-			values = rest;
-		}
-
 		setInitObj(values);
 		await updateUser(id, values);
 	};

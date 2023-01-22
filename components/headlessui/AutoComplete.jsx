@@ -43,7 +43,7 @@ const AutoComplete = ({ options, name, defaultVal, handleChange }) => {
 					leaveTo="opacity-0 translate-y-[-10%]"
 					afterLeave={() => setQuery("")}
 				>
-					<Combobox.Options className="absolute mt-2 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-[8]">
+					<Combobox.Options className="absolute mt-2 max-h-52 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-[8]">
 						{filteredOptions.length === 0 && query !== "" ? (
 							<div className="relative cursor-default select-none py-2 px-4 text-gray-700">
 								Nothing found.
@@ -53,7 +53,7 @@ const AutoComplete = ({ options, name, defaultVal, handleChange }) => {
 								<Combobox.Option
 									key={idx}
 									className={({ active }) =>
-										`relative cursor-default select-none py-2 pl-9 pr-4 ${
+										`relative cursor-default select-none py-2.5 px-4 ${
 											active ? "bg-dimmed-400" : ""
 										}`
 									}
@@ -70,7 +70,7 @@ const AutoComplete = ({ options, name, defaultVal, handleChange }) => {
 											</span>
 											{selected ? (
 												<span
-													className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+													className={`text-blue-500 text-lg absolute inset-y-0 right-0 flex items-center mr-3 pl-1.5 ${
 														active ? "bg-dimmed-400" : ""
 													}`}
 												>

@@ -9,7 +9,7 @@ const PrivateForm = () => {
 	const { authUser, setAuthUser } = useAuth();
 
 	const initObj = {
-		gender: "Male",
+		gender: "male",
 		country: "United States of America",
 		birthday: getCurrDate(),
 	};
@@ -51,7 +51,7 @@ const PrivateForm = () => {
 						<Dropdown
 							handleChange={handleChange}
 							name="gender"
-							defaultVal={genderList[0]}
+							defaultVal={values.gender}
 							options={genderList}
 						/>
 					</div>
@@ -62,7 +62,7 @@ const PrivateForm = () => {
 						</label>
 						<AutoComplete
 							handleChange={handleChange}
-							defaultVal="United States of America"
+							defaultVal={values.country}
 							name="country"
 							options={countryList}
 						/>

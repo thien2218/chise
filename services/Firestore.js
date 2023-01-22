@@ -35,7 +35,7 @@ class Firestore {
 			followers: [],
 			following: [],
 			privateInfo: {
-				gender: "Male",
+				gender: "male",
 				country: "United States of America",
 				birthday: new Date().toLocaleDateString('en-ca'),
 			},
@@ -106,7 +106,8 @@ class Firestore {
 
 	// Create
 	async createPin(values) {
-		return addDoc(collection(this.db, "pins"), values);
+      const { imgFile, ...otherValues } = values;
+		return addDoc(collection(this.db, "pins"), otherValues);
 	}
 
 	// Read

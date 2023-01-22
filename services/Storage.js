@@ -1,5 +1,5 @@
 import app from "./firebase-config";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 class Storage {
 	constructor(app) {
@@ -8,16 +8,21 @@ class Storage {
 
 	// Upload
 	async uploadImg(file, folder) {
-		const imgRef = ref(this.storage, `${folder}_images/${file.name}`);
+      const path = `${folder}_images/${file.name}`
+		const imgRef = ref(this.storage, path);
       
 		return await uploadBytes(imgRef, file).then(async (snap) => {
 			return await getDownloadURL(snap.ref).then((downloadUrl) => {
-				return downloadUrl;
+				return { downloadUrl, path };
 			});
 		});
 	}
 
 	// Delete
+   async deleteImg(path) {
+      const imgRef = ref(this.storage, path);
+      return await deleteObject(imgRef);
+   }
 }
 
 export default new Storage(app);

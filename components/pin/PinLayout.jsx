@@ -27,9 +27,9 @@ const PinLayout = ({ pinData, pins }) => {
                <div className="rounded-2xl bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid mlg:grid-cols-2">
                   <div className="mlg:p-4">
                      <div className="overflow-hidden mlg:rounded-lg rounded-t-lg">
-                        <AdjustedImg ratio={currPin.imgRatio} src={currPin.imgUrl} scale={2}>
+                        <AdjustedImg ratio={currPin.imgRatio} src={currPin.pinImgUrl} scale={2}>
                            <div className="absolute h-full w-full group p-6 flex justify-end">
-                              <Link href={currPin.imgUrl}>
+                              <Link href={currPin.pinImgUrl}>
                                  <a
                                     className="px-3 py-2 font-semibold h-max md:opacity-0  md:group-hover:opacity-100 opacity-100 bg-white rounded-full flex items-center"
                                     target="_blank"

@@ -14,9 +14,8 @@ const ProfileUpload = ({ username, handlePreview }) => {
 
             <input
                type="file"
-               name="profile"
-               id="profile"
-               className="absolute opacity-0 -top-1/2 h-[150%] w-full cursor-pointer"
+               name="profileUrl"
+               className="absolute opacity-0 -top-full h-[200%] w-full cursor-pointer"
                accept=".jpg,.png,.webp,.jpeg"
                onChange={handlePreview}
             />

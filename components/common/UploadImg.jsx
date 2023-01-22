@@ -1,15 +1,13 @@
-import { useState, Children, cloneElement, isValidElement } from "react";
+import { Children, cloneElement, isValidElement } from "react";
 
 const UploadImg = ({
 	children,
-	defaultSrc,
+	imgUrl,
 	setValues,
 	imgRatio,
 	selectedImg: SelectedImg,
 }) => {
-	const [imgSrc, setImgSrc] = useState(defaultSrc ?? null);
-
-	const compressImg = (file) => {
+	const compressImg = (file, name) => {
 		if (!file) return;
 
 		const reader = new FileReader();
@@ -31,7 +29,6 @@ const UploadImg = ({
 				canvas.height = H;
 				canvas.width = W;
 
-				setImgSrc(newSrc);
 				const ctx = canvas.getContext("2d");
 				ctx.drawImage(imgEle, 0, 0, W, H);
 
@@ -43,7 +40,8 @@ const UploadImg = ({
 							{ type: "image/webp" }
 						);
 						setValues((prev) => ({
-                     ...prev,
+							...prev,
+                     [name]: newSrc,
 							imgFile: newFile,
 							imgRatio: newRatio,
 						}));
@@ -58,30 +56,33 @@ const UploadImg = ({
 	};
 
 	const handlePreview = (e) => {
+		const { name } = e.target;
 		const file = e.target.files[0];
-		compressImg(file);
+		compressImg(file, name);
 	};
 
 	const unselectImg = (e) => {
 		e.preventDefault();
-      setValues((prev) => {
-         const { imgFile, imgRatio, ...rest } = prev;
-         return rest;
-      });
-		setImgSrc(null);
+		const { name } = e.target;
+
+		setValues((prev) => {
+			const { imgFile, imgRatio, ...rest } = prev;
+         rest[name] = "";
+			return rest;
+		});
 	};
 
 	const childrenWithProps = Children.map(children, (child) => {
 		if (isValidElement(child)) {
-			return cloneElement(child, { handlePreview });
+			return cloneElement(child, { handlePreview, unselectImg });
 		}
 		return child;
 	});
 
-	if (imgSrc)
+	if (imgUrl)
 		return (
 			<SelectedImg
-				imgSrc={imgSrc}
+				imgUrl={imgUrl}
 				imgRatio={imgRatio}
 				unselectImg={unselectImg}
 				handlePreview={handlePreview}

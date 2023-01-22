@@ -11,7 +11,7 @@ const DbProvider = ({ children }) => {
 	const { setAuthError, checkUserExists } = useValidation();
 
 	// -----------USER-----------
-	const createUser = async ({ profileUrl, username, name, about }) => {
+	const createUser = async ({ profileUrl, username, name, ...rest }) => {
 		const displayName = name + "@" + username;
 		const emailAsUsername = authUser.username === username;
 
@@ -19,7 +19,7 @@ const DbProvider = ({ children }) => {
 			const updatedUser = await Auth.updateUser(displayName, profileUrl);
 			setAuthUser({ ...updatedUser, isNewUser: true });
 
-			await Firestore.createUser({ ...updatedUser, about });
+			await Firestore.createUser({ ...updatedUser, ...rest });
 		} else {
 			setAuthError({
 				invalid: "This username has already existed",
@@ -64,7 +64,7 @@ const DbProvider = ({ children }) => {
 		});
 	};
 
-	const updatePin = async (id, { imgFile, ...values }) => {
+	const updatePin = async (id, values) => {
 		await Firestore.updatePin(id, values);
 	};
 
@@ -81,26 +81,8 @@ const DbProvider = ({ children }) => {
 		return await Storage.uploadImg(imgFile, folder);
 	};
 
-   const downloadImg = (imgUrl) => {
-		const xhr = new XMLHttpRequest();
-
-		xhr.responseType = "blob";
-		xhr.onload = (event) => {
-			const blob = xhr.response;
-         const time = new Date().getTime();
-         const fileName = `pin_image${time}.webp`;
-         const file = new File([blob], fileName, { type: blob.type });
-
-         const url = URL.createObjectURL(file);
-         const a = document.createElement("a");
-         a.href = url;
-         a.download = file.name;
-         a.click();
-         a.remove();
-		};
-
-		xhr.open("GET", imgUrl);
-		xhr.send();
+	const deleteImg = async (path) => {
+		await Storage.deleteImg(path);
 	};
 
 	const value = {
@@ -112,7 +94,7 @@ const DbProvider = ({ children }) => {
 		updateSavedByList,
 		deletePin,
 		uploadImg,
-      downloadImg,
+		deleteImg,
 	};
 
 	return <DbContext.Provider value={value}>{children}</DbContext.Provider>;

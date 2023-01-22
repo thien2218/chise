@@ -25,7 +25,7 @@ const TagsField = ({ name, maxCount, desc, placeholder, setValues, tags }) => {
          setTag("");
 			setValues((prev) => ({
 				...prev,
-				[name]: [...tags, tag],
+				[name]: [...tags, tag.trim()],
 			}));
 		} else if (e.keyCode === 8 && tags.length && !tag) {
          // Else if backspace (delete) and there is at least one item in tags and tag is an empty string
@@ -40,8 +40,14 @@ const TagsField = ({ name, maxCount, desc, placeholder, setValues, tags }) => {
 
 	const handleChange = (e) => {
       const { value } = e.target;
-      setTag(value.trim());
+      setTag(value);
    };
+
+   const handleBlur = (e) => {
+      setIsFocused(false)
+      const { value } = e.target;
+      if (value) setTag(value.trim());
+   }
 
 	return (
 		<div className="mt-6 w-full">
@@ -59,7 +65,7 @@ const TagsField = ({ name, maxCount, desc, placeholder, setValues, tags }) => {
                name="tags"
 					className="outline-none flex-1 min-w-[120px]"
 					onFocus={() => setIsFocused(true)}
-					onBlur={() => setIsFocused(false)}
+					onBlur={handleBlur}
 					placeholder={!tags.length ? placeholder : allowInput ? "Add more tags" : ""}
 					onKeyDown={handleKeyDown}
 					onChange={handleChange}

@@ -79,19 +79,24 @@ const ProfileForm = ({ fields }) => {
 	};
 
 	const submit = async ({ imgFile, profileUrl, imgRatio, ...values }) => {
-		const newProfileUrl = imgFile
-			? await uploadImg(imgFile, "profile")
-			: profileUrl;
+		let newProfileUrl = profileUrl;
+		let profilePath = "";
 
-		await createUser({ ...values, profileUrl: newProfileUrl });
+		if (imgFile) {
+			const { downloadUrl, path } = await uploadImg(imgFile, "profile");
+			newProfileUrl = downloadUrl;
+			profilePath = path;
+		}
+
+		await createUser({ ...values, profilePath, profileUrl: newProfileUrl });
 	};
 
 	return (
 		<form className="relative w-full max-w-sm px-10 pb-8 pt-24 bg-white rounded-2xl shadow-lg">
 			<UploadImg
+            imgUrl={values.profileUrl}
 				setValues={setValues}
 				selectedImg={ProfileCopy}
-				defaultSrc={authUser.profileUrl}
 			>
 				<ProfileUpload username={authUser.username} />
 			</UploadImg>
@@ -109,7 +114,7 @@ const ProfileForm = ({ fields }) => {
 			))}
 
 			<div className="w-full mb-2">
-				<label className="ml-2 text-sm pointer-events-none" htmlFor="about">
+				<label className="text-sm pointer-events-none" htmlFor="about">
 					About (optional)
 				</label>
 

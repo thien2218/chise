@@ -12,15 +12,15 @@ const LibProvider = ({ children }) => {
 	const genderList = [
       {
          label: "Male",
-         value: "Male",
+         value: "male",
       },
       {
          label: "Female",
-         value: "Female",
+         value: "female",
       },
       {
          label: "Other",
-         value: "Other",
+         value: "other",
       }
    ];
 
@@ -34,11 +34,34 @@ const LibProvider = ({ children }) => {
 		return new Date().toLocaleDateString('en-ca');
 	};
 
+   const downloadImg = (imgUrl) => {
+		const xhr = new XMLHttpRequest();
+
+		xhr.responseType = "blob";
+		xhr.onload = (event) => {
+			const blob = xhr.response;
+         const time = new Date().getTime();
+         const fileName = `pin_image${time}.webp`;
+         const file = new File([blob], fileName, { type: blob.type });
+
+         const url = URL.createObjectURL(file);
+         const a = document.createElement("a");
+         a.href = url;
+         a.download = file.name;
+         a.click();
+         a.remove();
+		};
+
+		xhr.open("GET", imgUrl);
+		xhr.send();
+	};
+
 	const value = {
 		isEqual,
 		genderList,
 		countryList,
 		getCurrDate,
+      downloadImg,
 	};
 
 	return <LibContext.Provider value={value}>{children}</LibContext.Provider>;

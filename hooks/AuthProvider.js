@@ -15,17 +15,17 @@ const AuthProvider = ({ children }) => {
    const emailShortRegex = /^.*?(?=@)/;
 
 	const login = async ({ email, password }) => {
-		const { authError } = await Auth.login(email, password);
+		const { error } = await Auth.login(email, password);
 		setFormLoading(true);
-		if (authError) setAuthError(authError);
+		if (error) setAuthError(error);
 	};
 
 	const signup = async ({ email, password }) => {
-		const { authError } = await Auth.signup(email, password);
+		const { error } = await Auth.signup(email, password);
 		setFormLoading(true);
 
-		if (authError) {
-			setAuthError(authError);
+		if (error) {
+			setAuthError(error);
 		} else {
 			const username = "@" + email.match(emailShortRegex)[0];
 			const updatedUser = await Auth.updateUser(username, "");
@@ -34,11 +34,11 @@ const AuthProvider = ({ children }) => {
 	};
 
 	const loginWithGoogle = async () => {
-		const { user, isNewUser, authError } = await Auth.loginWithGoogle();
+		const { user, isNewUser, error } = await Auth.loginWithGoogle();
 		const curUsername = user?.email.match(emailShortRegex)[0];
 
-		if (authError) {
-			setAuthError(authError);
+		if (error) {
+			setAuthError(error);
 		} else if (isNewUser && !(await checkUserExists(curUsername))) {
 			setLoading(true);
          const profileUrl = user.photoUrl ?? "";

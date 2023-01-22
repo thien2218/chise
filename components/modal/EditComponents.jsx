@@ -12,10 +12,10 @@ export const EditField = ({ children, label, htmlFor }) => {
 	);
 };
 
-export const EditImgField = ({ imgRatio, imgSrc, handlePreview }) => {
+export const EditImgField = ({ imgRatio, imgUrl, handlePreview }) => {
 	return (
 		<div className="overflow-hidden rounded-lg">
-			<AdjustedImg ratio={imgRatio} src={imgSrc} scale={1}>
+			<AdjustedImg ratio={imgRatio} src={imgUrl} scale={1}>
 				<div className="relative w-full h-full overflow-hidden bg-black/40 opacity-0 hover:opacity-100 p-4">
 					<div className="rounded-lg h-full w-full border-dashed border-white border-[2px] flex-center flex-col text-center text-white gap-2 cursor-pointer">
 						<IoArrowUpCircle className="text-3xl" />
@@ -24,9 +24,8 @@ export const EditImgField = ({ imgRatio, imgSrc, handlePreview }) => {
 
 					<input
 						type="file"
-						name="pinImg"
-						id="pinImg"
-						className="absolute left-0 -top-1/2 h-[150%] w-full cursor-pointer opacity-0"
+                  name="pinImgUrl"
+						className="absolute left-0 -top-full h-[200%] w-full cursor-pointer opacity-0"
 						accept=".jpg,.png,.webp,.jpeg"
 						onChange={handlePreview}
 					/>

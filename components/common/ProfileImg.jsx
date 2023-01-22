@@ -4,14 +4,15 @@ import Avvvatars from "avvvatars-react";
 const ProfileImg = ({ profileUrl, username, size }) => {
    if (profileUrl) {
       return (
-         <Image
-            src={profileUrl}
-            height={size * 4}
-            width={size * 4}
-            className="rounded-full"
-            objectFit="cover"
-            priority
-         />
+         <div className="relative" style={{ height: `${size * 0.25}rem`, aspectRatio: "1" }}>
+            <Image
+               src={profileUrl}
+               className="rounded-full"
+               layout="fill"
+               objectFit="cover"
+               priority
+            />
+         </div>
       )
    }
 

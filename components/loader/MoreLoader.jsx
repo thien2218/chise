@@ -25,11 +25,11 @@ const MoreLoader = ({ isLoadingMore, noMorePin }) => {
 			) : (
 				<>
 					<span className="text-dark-gray">
-						Nothing more to show...yet! Create your own ideas here
+						Nothing more to show...yet! Create new ideas here
 					</span>
 					<Link href="/create">
 						<a>
-							<button className="primary-btn px-3 py-3 text-sm rounded-full">
+							<button className="primary-btn px-3 py-2.5 mt-1 text-sm rounded-full">
 								Create Pin
 							</button>
 						</a>

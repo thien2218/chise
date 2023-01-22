@@ -1,5 +1,5 @@
 import { HiLink, HiFlag, HiDownload, HiPencil } from "react-icons/hi";
-import { useAuth } from "../../hooks";
+import { useAuth, useLib } from "../../hooks";
 import ActionBtn from "../common/ActionBtn";
 import EditModal from "../modal/EditModal";
 import ReportModal from "../modal/ReportModal";
@@ -7,12 +7,16 @@ import ReportModal from "../modal/ReportModal";
 const PinActions = ({ currPin, setCurrPin }) => {
 	const { authUser } = useAuth();
 	const { id, creator } = currPin;
-	const isCreator = creator.username === authUser.username;
+	const { downloadImg } = useLib();
+	const isCreator = creator.id === authUser.id;
 
 	return (
 		<div className="flex justify-between">
 			<div className="flex items-center">
-				<button className="p-3 hover:bg-dimmed-500 rounded-full text-2xl">
+				<button
+					onClick={() => downloadImg(currPin.pinImgUrl)}
+					className="p-3 hover:bg-dimmed-500 rounded-full text-2xl"
+				>
 					<HiDownload />
 				</button>
 

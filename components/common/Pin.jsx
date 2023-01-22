@@ -3,7 +3,7 @@ import AdjustedImg from "./AdjustedImg";
 import Link from "next/link";
 import { HiPencil, HiFlag, HiDownload } from "react-icons/hi";
 import { IoLink } from "react-icons/io5";
-import { useAuth, useDb } from "../../hooks";
+import { useAuth, useLib } from "../../hooks";
 import ActionBtn from "./ActionBtn";
 import ProfileImg from "./ProfileImg";
 import EditModal from "../modal/EditModal";
@@ -14,8 +14,8 @@ const Pin = ({ pin }) => {
 	const { id, creator } = currPin;
 	
    const { authUser } = useAuth();
-   const { downloadImg } = useDb();
-	const isCreator = creator.username === authUser.username;
+   const { downloadImg } = useLib();
+	const isCreator = creator.id === authUser.id;
 
 	const shortenLink = (link) => {
 		const protocolRegex = /(?:(https|http):\/\/)(?:www\.)?/;
@@ -32,7 +32,7 @@ const Pin = ({ pin }) => {
 			<div className="overflow-hidden rounded-lg">
 				<AdjustedImg
 					ratio={currPin.imgRatio}
-					src={currPin.imgUrl}
+					src={currPin.pinImgUrl}
 					scale={1}
 				>
 					<div className="relative w-full h-full opacity-100 md:opacity-0 md:hover:opacity-100 transition duration-100 flex flex-col justify-between">
@@ -78,7 +78,7 @@ const Pin = ({ pin }) => {
 
 							<div className="flex h-8 gap-2.5  ml-auto">
 								<button
-									onClick={() => downloadImg(currPin.imgUrl)}
+									onClick={() => downloadImg(currPin.pinImgUrl)}
 									className="aspect-square flex-center bg-white/70 hover:bg-white/[.85] rounded-full z-[9] transition"
 								>
 									<HiDownload className="text-lg" />

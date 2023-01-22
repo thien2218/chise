@@ -4,19 +4,27 @@ import { IoIosArrowDown } from "react-icons/io";
 import { HiCheck } from "react-icons/hi";
 
 const Dropdown = ({ options, defaultVal, handleChange, name }) => {
-	const [selected, setSelected] = useState(defaultVal);
+	const currOption = options.find((opt) => opt.value === defaultVal);
+	const [selected, setSelected] = useState(currOption);
 
-	useEffect(() => {
-		handleChange({
-			target: {
-				name,
-				value: selected.value,
-			},
-		});
-	}, [selected]);
+   useEffect(() => {
+      const currOption = options.find((opt) => opt.value === defaultVal);
+      setSelected(currOption);
+   }, [defaultVal]);
 
 	return (
-		<Listbox value={selected} onChange={setSelected}>
+		<Listbox
+			value={selected.value}
+			onChange={(value) => {
+				const e = {
+					target: {
+						name,
+						value,
+					},
+				};
+				handleChange(e);
+			}}
+		>
 			<div className="relative mt-1">
 				<Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-4 pr-10 text-left bg-dimmed-400 hover:bg-dimmed-500 focus-visible:ring-blue-500">
 					<span className="block truncate">{selected.label}</span>
@@ -38,9 +46,9 @@ const Dropdown = ({ options, defaultVal, handleChange, name }) => {
 						{options.map((option, idx) => (
 							<Listbox.Option
 								key={idx}
-								value={option}
+								value={option.value}
 								className={({ active }) =>
-									`relative cursor-default select-none py-2 pl-9 pr-4 ${
+									`relative cursor-default select-none py-2.5 px-4 ${
 										active ? "bg-dimmed-400" : ""
 									}`
 								}
@@ -55,7 +63,7 @@ const Dropdown = ({ options, defaultVal, handleChange, name }) => {
 											{option.label}
 										</span>
 										{selected && (
-											<span className="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-500">
+											<span className="text-blue-500 text-lg absolute inset-y-0 right-0 flex items-center mr-3 pl-1.5">
 												<HiCheck />
 											</span>
 										)}

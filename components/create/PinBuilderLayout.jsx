@@ -21,10 +21,11 @@ const PinBuilder = () => {
 	const handleCreatePin = async () => {
       if (!values.imgFile || invalidUrlMsg || !values.tags.length) return;
       
-      values.imgUrl = await uploadImg(values.imgFile, "pin");
-      const { imgFile, ...otherValues } = values;
-      
-		await createPin(otherValues);
+      const { downloadUrl, path } = await uploadImg(values.imgFile, "pin");
+      values.pinImgUrl = downloadUrl;
+      values.pinImgPath = path;
+
+		await createPin(values);
 		router.push("/");
 	};
 
@@ -43,7 +44,7 @@ const PinBuilder = () => {
 				<div className="rounded-2xl bg-white shadow-[rgb(0_0_0_/_10%)_0px_1px_20px_0px] grid mlg:grid-cols-[1fr_1.4fr] md:p-10 p-6">
 					<ImgBuilder
 						setValues={setValues}
-						imgRatio={values.imgRatio}
+						values={values}
 					/>
 
 					<ContentBuilder
