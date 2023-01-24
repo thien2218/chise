@@ -1,7 +1,9 @@
 import { useEffect } from "react";
-import { useValidation } from "../../hooks";
+import { useValidation, useDb } from "../../hooks";
 import TextField from "../common/TextField";
 import ProfileImg from "../common/ProfileImg";
+import Modal from "../headlessui/Modal";
+import UploadModal from "../modal/UploadModal";
 
 const PublicInfo = ({
 	user,
@@ -12,6 +14,7 @@ const PublicInfo = ({
 	setError,
 }) => {
 	const { checkUsername, checkName, checkLength } = useValidation();
+	const { updateUser, deleteImg } = useDb();
 
 	useEffect(() => {
 		setValues(user);
@@ -66,6 +69,20 @@ const PublicInfo = ({
 		});
 	};
 
+	const handleDeleteImg = async () => {
+		const updatedValues = {
+			...values,
+			profileUrl: "",
+         profilePath: "",
+		};
+
+		setValues(updatedValues);
+		setInitObj(updatedValues);
+
+		await updateUser(user.id, updatedValues);
+		if (values.profilePath) await deleteImg(values.profilePath);
+	};
+
 	return (
 		<div className="mb-12">
 			<h1 className="text-3xl font-medium">Public profile</h1>
@@ -78,14 +95,34 @@ const PublicInfo = ({
 
 				<div className="flex items-center gap-4">
 					<ProfileImg
-						profileUrl={user.profileUrl}
-						username={user.username}
+						profileUrl={values.profileUrl}
+						username={values.username}
 						size={20}
 					/>
 
-					<button className="relative py-2 px-3 font-medium rounded-full secondary-btn overflow-hidden">
-						Change
-					</button>
+					<Modal
+						title="Choose a profile picture"
+						maxW="max-w-lg"
+						customProps={{
+							profilePath: values.profilePath,
+							setInitObj,
+							setValues,
+						}}
+						dialogChild={UploadModal}
+					>
+						<button className="relative py-2 px-3 font-medium rounded-full secondary-btn overflow-hidden">
+							Change
+						</button>
+					</Modal>
+
+					{values.profileUrl && (
+						<button
+							className="relative py-2 px-3 font-medium rounded-full secondary-btn overflow-hidden"
+							onClick={handleDeleteImg}
+						>
+							Delete
+						</button>
+					)}
 				</div>
 			</div>
 

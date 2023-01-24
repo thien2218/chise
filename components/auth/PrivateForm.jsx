@@ -32,7 +32,7 @@ const PrivateForm = () => {
 		}));
 
 		if (isEqual(initObj, values)) return;
-		await updateUser(authUser.id, { privateInfo: values });
+		await updateUser(authUser.id, { ...authUser, privateInfo: values });
 	};
 
 	return (

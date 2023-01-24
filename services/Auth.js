@@ -39,7 +39,6 @@ class Auth {
 			displayName,
 			photoURL,
 		}).then(() => {
-         console.log("updated");
 			return this.extractUserData(this.auth.currentUser);
 		});
 	}

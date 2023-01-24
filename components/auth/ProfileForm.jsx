@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import TextField from "../common/TextField";
 import { useAuth, useValidation, useDb } from "../../hooks";
-import ProfileCopy from "./ProfileCopy";
-import ProfileUpload from "./ProfileUpload";
+import { ProfileDefault, ProfileSelected } from "./ProfileUpload";
 import UploadImg from "../common/UploadImg";
 import { useLayout } from "../common/Layout";
 
@@ -24,11 +23,11 @@ const ProfileForm = ({ fields }) => {
 	const [values, setValues] = useState({});
 
 	const { createUser, uploadImg } = useDb();
-	const { setIsProcessing } = useLayout();
+	const { isProcessing, setIsProcessing } = useLayout();
 
 	useEffect(() => {
 		const { username, name, profileUrl } = authUser;
-		setValues({ username, name, profileUrl, about: "" });
+		setValues({ username, name, profileUrl });
 	}, [authUser]);
 
 	const {
@@ -92,13 +91,23 @@ const ProfileForm = ({ fields }) => {
 	};
 
 	return (
-		<form className="relative w-full max-w-sm px-10 pb-8 pt-24 bg-white rounded-2xl shadow-lg">
+		<form
+			className={`relative w-full max-w-sm pb-8 pt-20 px-10 bg-white rounded-2xl shadow-lg ${
+				isProcessing ? "pointer-events-none select-none" : ""
+			}`}
+		>
+			<div
+				className={`absolute h-full w-full top-0 left-0 bg-gray-400/40 pointer-events-none rounded-2xl ${
+					isProcessing ? "opacity-100" : "opacity-0"
+				}`}
+			/>
+
 			<UploadImg
-            imgUrl={values.profileUrl}
+				imgUrl={values.profileUrl}
 				setValues={setValues}
-				selectedImg={ProfileCopy}
+				selectedImg={ProfileSelected}
 			>
-				<ProfileUpload username={authUser.username} />
+				<ProfileDefault username={values.username} />
 			</UploadImg>
 
 			{fields.map((field, id) => (

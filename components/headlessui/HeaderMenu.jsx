@@ -21,10 +21,15 @@ const HeaderMenu = ({ children }) => {
 			>
 				<Menu.Items className="absolute right-0 top-12 translate-y-2 -translate-x-2 w-44 rounded-lg shadow-[0_0_15px_-2px_rgb(0_0_0/.1)]">
 					<div className="p-2 flex flex-col bg-white">
-                  <div className="p-2">
-                     <span className="block text-lg font-medium">{authUser?.name}</span>
-                     <span className="block text-xs text-gray-400">@{authUser?.username}</span>
-                  </div>
+						<div className="p-2">
+							<span className="block text-lg font-medium leading-snug max-h-[50px]">
+								{authUser?.name}
+							</span>
+                     
+							<span className="block text-xs text-gray-400">
+								@{authUser?.username}
+							</span>
+						</div>
 						<Link href={`/${authUser?.id}/created`}>
 							<Menu.Item>
 								{({ active }) => (

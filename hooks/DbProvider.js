@@ -38,6 +38,8 @@ const DbProvider = ({ children }) => {
 				combinedName,
 				values.profileUrl
 			);
+
+         setAuthUser({ email, emailVerified, ...rest });
 			await Firestore.updateCreator(id, { creator: rest });
 		}
 

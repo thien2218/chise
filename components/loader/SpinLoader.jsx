@@ -13,7 +13,7 @@ const SpinLoader = () => {
 				<title>Chise | Loading</title>
 			</Head>
 
-			<div className="w-full pt-24 flex-center flex-col bg-white">
+			<div className="fixed inset-0 flex-center flex-col bg-white">
 				<div className="lds-spinner">
 					<div></div>
 					<div></div>

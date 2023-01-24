@@ -49,8 +49,8 @@ const UserInfo = ({ user }) => {
 			{authUser.username === user.username ? (
 				<div className="my-1 pt-2">
 					<button className="secondary-btn px-4 py-3 rounded-full">
-						<Link href={`/${authUser.id}/settings/public`}>
-							<a>Edit Profile</a>
+						<Link href={`/${authUser.id}/settings/info`}>
+							<a>Edit profile</a>
 						</Link>
 					</button>
 				</div>

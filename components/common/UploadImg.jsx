@@ -5,9 +5,10 @@ const UploadImg = ({
 	imgUrl,
 	setValues,
 	imgRatio,
+   customProps,
 	selectedImg: SelectedImg,
 }) => {
-	const compressImg = (file, name) => {
+	const compressImg = (file, prop) => {
 		if (!file) return;
 
 		const reader = new FileReader();
@@ -41,7 +42,7 @@ const UploadImg = ({
 						);
 						setValues((prev) => ({
 							...prev,
-                     [name]: newSrc,
+                     [prop]: newSrc,
 							imgFile: newFile,
 							imgRatio: newRatio,
 						}));
@@ -56,18 +57,18 @@ const UploadImg = ({
 	};
 
 	const handlePreview = (e) => {
-		const { name } = e.target;
+		const { id } = e.target;
 		const file = e.target.files[0];
-		compressImg(file, name);
+		compressImg(file, id);
 	};
 
 	const unselectImg = (e) => {
 		e.preventDefault();
-		const { name } = e.target;
+		const { id } = e.target;
 
 		setValues((prev) => {
 			const { imgFile, imgRatio, ...rest } = prev;
-         rest[name] = "";
+         rest[id] = "";
 			return rest;
 		});
 	};
@@ -86,6 +87,7 @@ const UploadImg = ({
 				imgRatio={imgRatio}
 				unselectImg={unselectImg}
 				handlePreview={handlePreview}
+            {...customProps}
 			/>
 		);
 

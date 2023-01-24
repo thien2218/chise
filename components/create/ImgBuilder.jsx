@@ -8,7 +8,7 @@ const SelectedImg = ({ imgUrl, imgRatio, unselectImg }) => {
 			<div className="overflow-hidden rounded-lg">
 				<AdjustedImg ratio={imgRatio} src={imgUrl} scale={1.5}>
 					<button
-                  name="pinImgUrl"
+                  id="pinImgUrl"
 						className="absolute bg-white rounded-full h-12 w-12 p-1 hover:bg-dimmed-500 cursor-pointer right-4 top-4 border-4 border-white flex-center"
 						onClick={unselectImg}
 					>
@@ -34,7 +34,7 @@ const UploadField = ({ handlePreview }) => {
 
 			<input
 				type="file"
-            name="pinImgUrl"
+            id="pinImgUrl"
 				className="absolute left-0 -top-full h-[200%] w-full cursor-pointer opacity-0"
 				accept=".jpg,.png,.webp,.jpeg"
 				onChange={handlePreview}

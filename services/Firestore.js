@@ -32,6 +32,9 @@ class Firestore {
 
 		const values = {
          about: "",
+         profilePath: "",
+         bgrUrl: "",
+         bgrPath: "",
 			followers: [],
 			following: [],
 			privateInfo: {

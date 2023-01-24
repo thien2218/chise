@@ -36,7 +36,7 @@ const VarcharField = ({
 	};
 
 	return (
-		<div className="mt-6">
+		<div className="mt-5">
 			<div
 				contentEditable
 				className={`${isTitle ? "heading" : ""} relative w-full focus:outline-none empty:before:content-[attr(placeholder)] empty:before:text-dark-gray cursor-text peer after:absolute after:w-full after:h-[1px] after:bg-black/30 after:bottom-0 after:left-0 pb-2.5 focus:after:h-[2px] focus:after:bg-blue-500`}

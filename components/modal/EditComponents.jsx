@@ -24,7 +24,7 @@ export const EditImgField = ({ imgRatio, imgUrl, handlePreview }) => {
 
 					<input
 						type="file"
-                  name="pinImgUrl"
+                  id="pinImgUrl"
 						className="absolute left-0 -top-full h-[200%] w-full cursor-pointer opacity-0"
 						accept=".jpg,.png,.webp,.jpeg"
 						onChange={handlePreview}

@@ -12,8 +12,6 @@ const AccManage = ({ values, setValues, setInitObj }) => {
          email: authUser.email,
       }
 
-      console.log(authUser);
-      
 		setValues(initObj);
 		setInitObj(initObj);
 	}, []);

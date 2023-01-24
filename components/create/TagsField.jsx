@@ -44,9 +44,15 @@ const TagsField = ({ name, maxCount, desc, placeholder, setValues, tags }) => {
    };
 
    const handleBlur = (e) => {
-      setIsFocused(false)
+      setIsFocused(false);
       const { value } = e.target;
-      if (value) setTag(value.trim());
+      if (value) {
+         setTag("");
+			setValues((prev) => ({
+				...prev,
+				[name]: [...tags, value.trim()],
+			}));
+      }
    }
 
 	return (

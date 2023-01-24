@@ -27,7 +27,7 @@ const AuthForm = ({ fields, submit }) => {
 		handleSubmit,
 	} = useValidation();
 	const { loginWithGoogle } = useAuth();
-	const { setIsProcessing } = useLayout();
+	const { isProcessing, setIsProcessing } = useLayout();
 
 	const handleBlur = (e) => {
 		const value = e.target.value.trim();
@@ -67,7 +67,17 @@ const AuthForm = ({ fields, submit }) => {
 	};
 
 	return (
-		<form className="w-full max-w-sm py-8 px-10 bg-white rounded-2xl shadow-lg">
+		<form
+			className={`relative overflow-hidden w-full max-w-sm py-8 px-10 bg-white rounded-2xl shadow-lg ${
+				isProcessing ? "pointer-events-none select-none" : ""
+			}`}
+		>
+			<div
+				className={`absolute h-full w-full top-0 left-0 bg-gray-400/40 pointer-events-none ${
+					isProcessing ? "opacity-100" : "opacity-0"
+				}`}
+			/>
+
 			<h1 className="text-[2rem] heading text-center mb-4">
 				Welcome to ChiSe
 			</h1>
