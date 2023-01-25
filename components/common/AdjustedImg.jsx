@@ -14,6 +14,7 @@ const AdjustedImg = ({ children, ratio, src, scale }) => {
 						layout="fill"
 						objectFit="cover"
                   className="absolute"
+                  alt="Image with preset ratio"
 						src={src}
 					/>
                {children}
