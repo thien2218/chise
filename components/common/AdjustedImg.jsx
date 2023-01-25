@@ -11,6 +11,7 @@ const AdjustedImg = ({ children, ratio, src, scale }) => {
 			<div className="absolute w-full h-full">
 				<div className="relative w-full h-full">
 					<Image
+                  alt="Image with ratio"
 						layout="fill"
 						objectFit="cover"
                   className="absolute"

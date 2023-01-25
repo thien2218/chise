@@ -19,7 +19,7 @@ const MoreLoader = ({ isLoadingMore, noMorePin }) => {
 					<span className="text-xl text-center font-semibold text-dark-gray">
 						Enjoy the feed?
 						<br />
-						Let's add some more
+						Let&apos;s add some more
 					</span>
 				</>
 			) : (

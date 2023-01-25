@@ -10,6 +10,7 @@ const ProfileImg = ({ profileUrl, username, size }) => {
                className="rounded-full"
                layout="fill"
                objectFit="cover"
+               alt="Profile image"
                priority
             />
          </div>
