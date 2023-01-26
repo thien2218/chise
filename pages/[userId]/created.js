@@ -6,17 +6,7 @@ const Created = ({ user, pins }) => {
 	return <UserLayout user={user} pins={pins} />;
 };
 
-export async function getStaticPaths() {
-	const ids = await Firestore.getUserIds();
-
-	const paths = ids.map((userId) => ({
-		params: { userId },
-	}));
-
-	return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params: { userId } }) {
+export async function getServerSideProps({ params: { userId } }) {
 	const user = await Firestore.getUser(userId);
    
    const q = Firestore.queryPinsCreatedBy(userId);
@@ -24,7 +14,6 @@ export async function getStaticProps({ params: { userId } }) {
 
 	return {
 		props: { user, pins },
-		revalidate: 10,
 	};
 }
 

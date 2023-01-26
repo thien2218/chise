@@ -11,23 +11,10 @@ const Info = ({ user }) => {
 	);
 };
 
-export async function getStaticPaths() {
-	const ids = await Firestore.getUserIds();
-
-	const paths = ids.map((userId) => ({
-		params: { userId },
-	}));
-
-	return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params: { userId } }) {
+export async function getServerSideProps({ params: { userId } }) {
 	const user = await Firestore.getUser(userId);
-
-	return {
-		props: { user },
-		revalidate: 120,
-	};
+	const returnData = { props: { user } };
+	return returnData;
 }
 
 export default withAuth(Info);

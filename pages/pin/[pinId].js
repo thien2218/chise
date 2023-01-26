@@ -6,17 +6,7 @@ const PinContent = ({ pinData, pins }) => {
 	return <PinLayout pinData={pinData} pins={pins} />;
 };
 
-export async function getStaticPaths() {
-	const pins = await Firestore.getPinsByQuery();
-
-	const paths = pins.map((pin) => ({
-		params: { pinId: pin.id },
-	}));
-
-	return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params: { pinId } }) {
+export async function getServerSideProps({ params: { pinId } }) {
 	let pinData;
 	const pins = (await Firestore.getPinsByQuery()).filter(
 		(data) => {
@@ -29,7 +19,6 @@ export async function getStaticProps({ params: { pinId } }) {
 
 	return {
 		props: { pinData, pins },
-		revalidate: 180,
 	};
 }
 
