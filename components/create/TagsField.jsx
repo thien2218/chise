@@ -58,8 +58,8 @@ const TagsField = ({ name, maxCount, desc, placeholder, setValues, tags }) => {
 	return (
 		<div className="mt-6 w-full">
 			<div
-				className={`relative flex gap-2 flex-wrap w-full focus:outline-none after:absolute after:w-full after:h-[1px] after:bg-black/30 after:bottom-0 after:left-0 pb-2.5 ${
-					isFocused ? "after:h-[2px] after:bg-blue-500" : ""
+				className={`relative flex gap-2 flex-wrap w-full focus:outline-none after:absolute after:w-full after:bottom-0 after:left-0 pb-2.5 ${
+					isFocused ? "after:h-[2px] after:bg-blue-500" : "after:h-[1px] after:bg-black/30"
 				}`}
 			>
             {tags.map((tag, idx) => (
@@ -80,8 +80,8 @@ const TagsField = ({ name, maxCount, desc, placeholder, setValues, tags }) => {
 			</div>
 
 			<div
-				className={`flex justify-between text-xs opacity-0 ${
-					isFocused ? "opacity-100" : ""
+				className={`flex justify-between text-xs ${
+					isFocused ? "opacity-100" : "opacity-0"
 				} mt-[2px] text-dark-gray`}
 			>
 				<span className="leading-[18px]">{desc}</span>
