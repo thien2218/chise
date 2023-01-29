@@ -63,7 +63,6 @@ const MasonryLayout = ({ pins, setPins }) => {
             {pins.map((pin, id) => (
                <Pin pin={pin} key={id} />
             ))}
-         
          </Masonry>
 
          <MoreLoader isLoadingMore={isLoadingMore} noMorePin={noMorePin} />

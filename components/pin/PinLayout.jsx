@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PinActions from "./PinActions";
 import PinUserInfo from "./PinUserInfo";
 import PinCommentSection from "./PinCommentSection";
@@ -10,9 +10,15 @@ import MasonryLayout from "../common/MasonryLayout";
 
 const PinLayout = ({ pinData, pins }) => {
    const [currPin, setCurrPin] = useState(pinData);
+   const [currPins, setCurrPins] = useState(pins);
 	const { creator } = pinData;
 	const { back } = useRouter();
 
+   useEffect(() => {
+      setCurrPin(pinData);
+      setCurrPins(pins);
+   }, [pinData]);
+   
 	return (
 		<>
          <article>
@@ -57,7 +63,7 @@ const PinLayout = ({ pinData, pins }) => {
 
          <span className="block text-center py-3 px-8 mb-1 text-xl font-medium">More like this</span>
 
-         <MasonryLayout pins={pins} />
+         <MasonryLayout pins={currPins} setPins={setCurrPins} />
       </>
 	);
 };

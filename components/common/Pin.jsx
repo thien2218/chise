@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdjustedImg from "./AdjustedImg";
 import Link from "next/link";
 import { HiPencil, HiFlag, HiDownload } from "react-icons/hi";
@@ -11,6 +11,11 @@ import ReportModal from "../modal/ReportModal";
 
 const Pin = ({ pin }) => {
 	const [currPin, setCurrPin] = useState(pin);
+
+   useEffect(() => {
+      setCurrPin(pin);
+   }, [pin]);
+
 	const { id, creator } = currPin;
 	
    const { authUser } = useAuth();
